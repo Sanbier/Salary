@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Lương Theo Công Thức Chi Tiết</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Định nghĩa font Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .section-title {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 80%;
+            background-color: #3b82f6; /* Blue 500 */
+            border-radius: 4px;
+        }
+        .input-group label {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            color: #374151; /* gray-700 */
+        }
+        .result-value {
+            font-weight: 700;
+            color: #16a34a; /* green-600 */
+        }
+        .final-result {
+            font-size: 1.5rem; /* text-2xl */
+            color: #b91c1c; /* red-700 */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8">
+        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2">
+            Bảng Tính Lương HYOSUNG
+        </h1>
+
+        <!-- 1. SỐ LIỆU ĐẦU VÀO & MỨC LƯƠNG -->
+        <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8">
+            <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Lương Cơ Bản -->
+                <div class="input-group">
+                    <label for="luong_co_ban_input" class="text-blue-700 font-bold">Lương Cơ Bản</label>
+                    <input type="number" id="luong_co_ban_input" value="7480000" min="0" class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
+                </div>
+                <!-- Lương Tính Tăng Ca -->
+                <div class="input-group">
+                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
+                    <input type="number" id="luong_tinh_tang_ca_input" value="8880000" min="0" class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
+                </div>
+                <!-- Số Ngày Đi Làm -->
+                <div class="input-group">
+                    <label for="ngay_di_lam">Số Ngày Đi Làm</label>
+                    <input type="number" id="ngay_di_lam" value="26" min="0" class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <!-- Phụ cấp Chuyên Cần -->
+                <div class="input-group">
+                    <label for="pc_chuyen_can_input">Chuyên Cần</label>
+                    <input type="number" id="pc_chuyen_can_input" value="300000" min="0" class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <!-- Phụ cấp Trách Nhiệm (NEW INPUT) -->
+                <div class="input-group">
+                    <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
+                    <input type="number" id="pc_trach_nhiem_input" value="1100000" min="0" class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                
+                <!-- Tăng ca và ca đêm - ĐÃ SẮP XẾP LẠI VỊ TRÍ -->
+                <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner">
+                    <!-- Cột Trái: Ca Đêm 30%, 50%, 70%, 90% -->
+                    <div class="flex flex-col space-y-4">
+                        <div class="input-group">
+                            <label for="cd_30">Giờ Ca Đêm 30%</label>
+                            <input type="number" id="cd_30" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_50">Giờ Ca Đêm 50%</label>
+                            <input type="number" id="cd_50" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_70">Giờ Ca Đêm 70%</label>
+                            <input type="number" id="cd_70" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_90">Giờ Ca Đêm 90%</label>
+                            <input type="number" id="cd_90" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                    </div>
+
+                    <!-- Cột Phải: Tăng Ca Thường, Ngày Nghỉ, Ngày Lễ -->
+                    <div class="flex flex-col space-y-4">
+                        <div class="input-group">
+                            <label for="tc_thuong">Giờ Tăng Ca Thường</label>
+                            <input type="number" id="tc_thuong" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                        <div class="input-group">
+                            <label for="tc_nghi">Giờ Tăng Ca Ngày Nghỉ</label>
+                            <input type="number" id="tc_nghi" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                        <div class="input-group">
+                            <label for="tc_le">Giờ Tăng Ca Ngày Lễ</label>
+                            <input type="number" id="tc_le" value="0" min="0" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TỔNG THU NHẬP | THỰC LÃNH -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <!-- Tổng Thu Nhập -->
+            <div class="p-6 bg-yellow-100 rounded-xl shadow-lg border-l-4 border-yellow-500">
+                <p class="text-sm font-medium text-yellow-800">TỔNG THU NHẬP</p>
+                <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1">0 VNĐ</p>
+            </div>
+            <!-- Thực Lãnh -->
+            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500">
+                <p class="text-sm font-medium text-red-800">THỰC LÃNH</p>
+                <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1">0 VNĐ</p>
+            </div>
+        </div>
+
+
+        <!-- KHỐI CHỨA CÁC MỤC CHI TIẾT (2, 3, 4, 5) - Tạo giao diện "1 Tab" -->
+        <div class="border border-gray-300 rounded-xl overflow-hidden shadow-lg"> 
+
+            <!-- 2. THÔNG TIN CƠ BẢN (Collapsible) -->
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
+                    2. Thông Tin Cơ Bản <span id="ttcb_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                </h2>
+                <!-- Mặc định ẩn (collapsed) -->
+                <div id="content_ttcb" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                    <p>Lương Cơ Bản: <span id="display_luong_co_ban" class="font-bold text-blue-600">7,480,000 VNĐ</span></p>
+                    <p>Ngày Đi Làm Thực Tế: <span id="display_ngay_lam" class="font-bold text-gray-700">26</span> ngày</p>
+                    <p>Tiền 1 Giờ Làm: <span id="tien_1_gio_lam" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền 1 Ngày Làm: <span id="tien_1_ngay_lam" class="result-value">0 VNĐ</span></p>
+                    <p>Số Giờ Làm Việc: <span id="so_gio_lam_viec" class="result-value">0</span> giờ</p>
+                    <p class="pt-2 border-t mt-2">Lương Thực Tế: <span id="luong_thuc_te" class="text-base font-bold text-green-700">0 VNĐ</span></p>
+                </div>
+            </div>
+
+            <!-- 3. TÍNH GIỜ TĂNG CA (Collapsible) -->
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_tc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
+                    3. Tính Giờ Tăng Ca <span id="tc_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                </h2>
+                
+                <!-- Visible Total -->
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Giờ Tăng Ca: <span id="tong_gio_tang_ca" class="text-base font-bold text-green-700">0 VNĐ</span>
+                </p>
+
+                <!-- Collapsible Detail Content -->
+                <div id="content_tc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                    <p>Lương Tính Tăng Ca: <span id="display_luong_tinh_tang_ca" class="font-bold text-blue-600">8,880,000 VNĐ</span></p>
+                    <p>Tiền 1 Giờ Tăng Ca (Base): <span id="tien_1_gio_tc" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Thường (150%): <span id="tc_thuong_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Ngày Nghỉ (200%): <span id="tc_nghi_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Ngày Lễ (300%): <span id="tc_le_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền Ca Đêm 30% (Phụ cấp): <span id="cd_30_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền Ca Đêm 50% (Phụ cấp): <span id="cd_50_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền Ca Đêm 70% (Phụ cấp): <span id="cd_70_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền Ca Đêm 90% (Phụ cấp): <span id="cd_90_tien" class="result-value">0 VNĐ</span></p>
+                </div>
+            </div>
+
+            <!-- 4. CÁC KHOẢN PHỤ CẤP (Collapsible) -->
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_pc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
+                    4. Các Khoản Phụ Cấp <span id="pc_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                </h2>
+                
+                <!-- Visible Total -->
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Các Khoản Phụ Cấp: <span id="tong_phu_cap" class="text-base font-bold text-green-700">0 VNĐ</span>
+                </p>
+
+                <!-- Collapsible Detail Content -->
+                <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                    <p>Phụ Cấp Trình Độ (5769.25 x Ngày): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
+                    <p>Phụ Cấp Trách Nhiệm (Đầu vào): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Thâm Niên (Cố định): <span class="font-bold text-gray-700">150,000 VNĐ</span></p>
+                    <p>Phụ Cấp Chuyên Cần (Đầu vào): <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Hỗ Trợ Đi Lại (Cố định): <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
+                    <p>Tiền Thưởng (Cố định): <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
+                </div>
+            </div>
+
+            <!-- 5. CÁC KHOẢN KHẤU TRỪ (Collapsible) -->
+            <div class="bg-white p-5">
+                <h2 id="toggle_kt" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
+                    5. Các Khoản Khấu Trừ <span id="kt_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                </h2>
+                
+                <!-- Visible Total -->
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Các Khoản Khấu Trừ: <span id="tong_khau_tru" class="text-base font-bold text-red-700">0 VNĐ</span>
+                </p>
+                
+                <!-- Collapsible Detail Content -->
+                <div id="content_kt" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                    <p class="text-sm italic text-gray-500 mb-3">Tính trên Lương Tính Giờ Tăng Ca: <span id="display_kh_luong_bh" class="font-medium">8,880,000 VNĐ</span></p>
+                    <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Bảo Hiểm Xã Hội (8%): <span id="kh_bhxh" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Phí Công Đoàn (Cố định): <span class="font-bold text-red-600">49,600 VNĐ</span></p>
+                    <p>Tiền Tiết Kiệm (Cố định): <span class="font-bold text-red-600">200,000 VNĐ</span></p>
+                    <p>Tiền Từ Thiện (Cố định): <span class="font-bold text-red-600">8,000 VNĐ</span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Hàm định dạng số sang tiền tệ Việt Nam Đồng
+        const formatVND = (amount) => {
+            if (typeof amount !== 'number' || isNaN(amount)) return '0 VNĐ';
+            // Sử dụng Intl.NumberFormat để định dạng, làm tròn đến số nguyên
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.round(amount));
+        };
+
+        // ----------------------------------------------------
+        // CÁC HẰNG SỐ CỐ ĐỊNH
+        // ----------------------------------------------------
+        const NGAY_CHUAN = 26;
+        const GIO_CHUAN_NGAY = 8;
+        
+        // 3. Các Khoản Phụ Cấp Cố Định
+        const PC_HE_SO_TRINH_DO = 5769.25;
+        const PC_THAM_NIEN = 150000;
+        const PC_HO_TRO_DI_LAI = 250000;
+        const PC_TIEN_THUONG = 50000;
+
+        // 4. Các Khoản Khấu Trừ Cố Định & Tỷ lệ
+        const KH_BHYT_RATE = 0.015;
+        const KH_BHTN_RATE = 0.01;
+        const KH_BHXH_RATE = 0.08;
+        const KH_PHI_CONG_DOAN = 49600;
+        const KH_TIEN_TIET_KIEM = 200000;
+        const KH_TIEN_TU_THIEN = 8000; // Cố định 8,000 VNĐ
+
+        // ----------------------------------------------------
+        // HÀM TÍNH TOÁN LƯƠNG
+        // ----------------------------------------------------
+
+        function calculateSalary() {
+            // 1. Số Liệu Đầu Vào (Input)
+            const luong_co_ban_input = parseFloat(document.getElementById('luong_co_ban_input').value) || 0;
+            const luong_tinh_tang_ca_input = parseFloat(document.getElementById('luong_tinh_tang_ca_input').value) || 0;
+            const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
+            const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
+            const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
+            
+            // Xử lý giá trị 0 cho các trường Giờ Tăng Ca và Ca Đêm (Đảm bảo giá trị là số 0 nếu rỗng)
+            const tc_thuong = parseFloat(document.getElementById('tc_thuong').value) || 0;
+            const tc_nghi = parseFloat(document.getElementById('tc_nghi').value) || 0;
+            const tc_le = parseFloat(document.getElementById('tc_le').value) || 0;
+            const cd_30 = parseFloat(document.getElementById('cd_30').value) || 0;
+            const cd_50 = parseFloat(document.getElementById('cd_50').value) || 0;
+            const cd_70 = parseFloat(document.getElementById('cd_70').value) || 0;
+            const cd_90 = parseFloat(document.getElementById('cd_90').value) || 0;
+
+            const LuongCoBan = luong_co_ban_input;
+            const LuongTinhTangCa = luong_tinh_tang_ca_input;
+            const NgayDiLamThucTe = Math.max(0, ngay_di_lam);
+
+
+            // 2. Thông Tin Cơ Bản
+            document.getElementById('display_luong_co_ban').textContent = formatVND(LuongCoBan);
+            document.getElementById('display_ngay_lam').textContent = NgayDiLamThucTe;
+
+            // Kiểm tra Lương Cơ Bản để tránh chia cho 0
+            const Tien1GioLam = LuongCoBan > 0 ? LuongCoBan / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
+            document.getElementById('tien_1_gio_lam').textContent = formatVND(Tien1GioLam);
+
+            const Tien1NgayLam = LuongCoBan > 0 ? LuongCoBan / NGAY_CHUAN : 0;
+            document.getElementById('tien_1_ngay_lam').textContent = formatVND(Tien1NgayLam);
+
+            const SoGioLamViec = NgayDiLamThucTe * GIO_CHUAN_NGAY;
+            document.getElementById('so_gio_lam_viec').textContent = SoGioLamViec;
+
+            const LuongThucTe = Tien1GioLam * SoGioLamViec; // Tiền 1 Giờ Làm * Số Giờ Làm Việc
+            document.getElementById('luong_thuc_te').textContent = formatVND(LuongThucTe);
+
+
+            // 3. Tính Giờ Tăng Ca
+            document.getElementById('display_luong_tinh_tang_ca').textContent = formatVND(LuongTinhTangCa);
+
+            // Kiểm tra Lương Tính Tăng Ca để tránh chia cho 0
+            const Tien1GioTangCaBase = LuongTinhTangCa > 0 ? LuongTinhTangCa / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
+            document.getElementById('tien_1_gio_tc').textContent = formatVND(Tien1GioTangCaBase);
+
+            // Công thức: Tiền 1 Giờ Tăng Ca * Số Giờ * Hệ số
+            const TangCaThuong = Tien1GioTangCaBase * tc_thuong * 1.5;
+            const TangCaNgayNghi = Tien1GioTangCaBase * tc_nghi * 2.0;
+            const TangCaNgayLe = Tien1GioTangCaBase * tc_le * 3.0;
+            const CaDem30 = Tien1GioTangCaBase * cd_30 * 0.3; // Phụ cấp ca đêm tính trên tiền 1 giờ Tăng ca
+            const CaDem50 = Tien1GioTangCaBase * cd_50 * 0.5;
+            const CaDem70 = Tien1GioTangCaBase * cd_70 * 0.7;
+            const CaDem90 = Tien1GioTangCaBase * cd_90 * 0.9;
+
+            document.getElementById('tc_thuong_tien').textContent = formatVND(TangCaThuong);
+            document.getElementById('tc_nghi_tien').textContent = formatVND(TangCaNgayNghi);
+            document.getElementById('tc_le_tien').textContent = formatVND(TangCaNgayLe);
+            document.getElementById('cd_30_tien').textContent = formatVND(CaDem30);
+            document.getElementById('cd_50_tien').textContent = formatVND(CaDem50);
+            document.getElementById('cd_70_tien').textContent = formatVND(CaDem70);
+            document.getElementById('cd_90_tien').textContent = formatVND(CaDem90);
+
+            const TongGioTangCa = TangCaThuong + TangCaNgayNghi + TangCaNgayLe + CaDem30 + CaDem50 + CaDem70 + CaDem90;
+            document.getElementById('tong_gio_tang_ca').textContent = formatVND(TongGioTangCa);
+
+
+            // 4. Các Khoản Phụ Cấp
+            const PhuCapTrinhDo = PC_HE_SO_TRINH_DO * NgayDiLamThucTe;
+            document.getElementById('pc_trinh_do').textContent = formatVND(PhuCapTrinhDo);
+            
+            // Lấy Chuyên Cần và Trách Nhiệm từ input
+            const PC_CHUYEN_CAN = pc_chuyen_can_input;
+            const PC_TRACH_NHIEM = pc_trach_nhiem_input;
+            
+            document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
+            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM); // Cập nhật hiển thị Trách Nhiệm
+
+            const TongPhuCap = PhuCapTrinhDo + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
+            document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
+
+
+            // 5. Các Khoản Khấu Trừ
+            const LuongTinhGiaTangCa = LuongTinhTangCa; // Lương Tính Giờ Tăng Ca
+            document.getElementById('display_kh_luong_bh').textContent = formatVND(LuongTinhGiaTangCa);
+
+            const KH_BHYT = LuongTinhGiaTangCa * KH_BHYT_RATE;
+            const KH_BHTN = LuongTinhGiaTangCa * KH_BHTN_RATE;
+            const KH_BHXH = LuongTinhGiaTangCa * KH_BHXH_RATE;
+            document.getElementById('kh_bhyt').textContent = formatVND(KH_BHYT);
+            document.getElementById('kh_bhtn').textContent = formatVND(KH_BHTN);
+            document.getElementById('kh_bhxh').textContent = formatVND(KH_BHXH);
+
+            const TongKhauTru = KH_BHYT + KH_BHTN + KH_BHXH + KH_PHI_CONG_DOAN + KH_TIEN_TIET_KIEM + KH_TIEN_TU_THIEN;
+            document.getElementById('tong_khau_tru').textContent = formatVND(TongKhauTru);
+
+
+            // 6. Tổng Thu Nhập
+            const TongThuNhap = LuongThucTe + TongGioTangCa + TongPhuCap;
+            document.getElementById('tong_thu_nhap').textContent = formatVND(TongThuNhap);
+
+
+            // 7. Thực Lãnh
+            const ThucLanh = TongThuNhap - TongKhauTru;
+            document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh);
+        }
+
+        // ----------------------------------------------------
+        // HÀM XỬ LÝ COLLAPSIBLE (CHẾ ĐỘ THU NHỎ)
+        // ----------------------------------------------------
+        function setupCollapsibles() {
+            // Bao gồm mục 2 mới
+            const toggles = [
+                { id: 'toggle_ttcb', contentId: 'content_ttcb', arrowId: 'ttcb_arrow' },
+                { id: 'toggle_tc', contentId: 'content_tc', arrowId: 'tc_arrow' },
+                { id: 'toggle_pc', contentId: 'content_pc', arrowId: 'pc_arrow' },
+                { id: 'toggle_kt', contentId: 'content_kt', arrowId: 'kt_arrow' },
+            ];
+
+            toggles.forEach(item => {
+                const toggleEl = document.getElementById(item.id);
+                const contentEl = document.getElementById(item.contentId);
+                const arrowEl = document.getElementById(item.arrowId);
+
+                if (toggleEl && contentEl) {
+                    // Mặc định tất cả đều bị ẩn
+                    contentEl.classList.add('hidden'); 
+                    if (arrowEl) {
+                        arrowEl.textContent = '▼'; // Đặt mũi tên chỉ xuống
+                        arrowEl.classList.remove('rotate-180');
+                        arrowEl.classList.add('rotate-0');
+                    }
+
+                    toggleEl.addEventListener('click', () => {
+                        const isHidden = contentEl.classList.contains('hidden');
+                        
+                        // Toggle visibility
+                        contentEl.classList.toggle('hidden');
+
+                        // Toggle arrow rotation
+                        if (arrowEl) {
+                            if (isHidden) {
+                                arrowEl.classList.remove('rotate-0');
+                                arrowEl.classList.add('rotate-180');
+                                arrowEl.textContent = '▲'; 
+                            } else {
+                                arrowEl.classList.remove('rotate-180');
+                                arrowEl.classList.add('rotate-0');
+                                arrowEl.textContent = '▼';
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
+        // ----------------------------------------------------
+        // KHỞI TẠO VÀ SỰ KIỆN
+        // ----------------------------------------------------
+        window.onload = function() {
+            // Lắng nghe sự kiện thay đổi trên tất cả các trường input
+            const inputs = document.querySelectorAll('#input-section input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateSalary);
+            });
+            
+            // Cài đặt chế độ thu nhỏ
+            setupCollapsibles();
+
+            // Thực hiện tính toán lần đầu với giá trị mặc định
+            calculateSalary();
+        }
+
+    </script>
+</body>
+</html>
