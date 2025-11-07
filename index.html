@@ -56,32 +56,44 @@
                 <div class="input-group">
                     <label for="luong_co_ban_input" class="text-blue-700 font-bold">Lương Cơ Bản</label>
                     <input type="number" id="luong_co_ban_input" value="0" min="0" 
+                        autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
                 </div>
                 <div class="input-group">
                     <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
+                        autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
                 </div>
                 <div class="input-group">
                     <label for="ngay_di_lam">Số Ngày Đi Làm</label>
                     <input type="number" id="ngay_di_lam" value="0" min="0" 
+                        autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 <div class="input-group">
                     <label for="pc_chuyen_can_input">Chuyên Cần</label>
                     <input type="number" id="pc_chuyen_can_input" value="0" min="0" 
+                        autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 <div class="input-group">
                     <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
                     <input type="number" id="pc_trach_nhiem_input" value="0" min="0" 
+                        autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <div class="input-group">
+                    <label for="pc_tham_nien_input" class="text-green-700 font-bold">Thâm Niên</label>
+                    <input type="number" id="pc_tham_nien_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-green-400 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150 bg-white">
                 </div>
                 
                 <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner">
@@ -89,24 +101,28 @@
                         <div class="input-group">
                             <label for="cd_30">Giờ Ca Đêm 30%</label>
                             <input type="number" id="cd_30" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_50">Giờ Ca Đêm 50%</label>
                             <input type="number" id="cd_50" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_70">Giờ Ca Đêm 70%</label>
                             <input type="number" id="cd_70" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_90">Giờ Ca Đêm 90%</label>
                             <input type="number" id="cd_90" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
@@ -116,22 +132,63 @@
                         <div class="input-group">
                             <label for="tc_thuong">Giờ Tăng Ca Thường</label>
                             <input type="number" id="tc_thuong" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="tc_nghi">Giờ Tăng Ca Ngày Nghỉ</label>
                             <input type="number" id="tc_nghi" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="tc_le">Giờ Tăng Ca Ngày Lễ</label>
                             <input type="number" id="tc_le" value="0" min="0" 
+                                autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
                                 class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="md:col-span-2">
+                    <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset Đã Lưu</label>
+                    <select id="preset_select" 
+                            class="w-full p-2 border border-purple-300 rounded-md bg-white focus:ring-purple-500 focus:border-purple-500 transition duration-150">
+                        <option value="">-- Chọn Preset để Tải Số Liệu --</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end">
+                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400" disabled>
+                        Tải Preset
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                <div class="md:col-span-2">
+                    <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
+                    <input type="text" id="preset_name_input" placeholder="Ví dụ: Lương tháng 10 - Tên bạn" 
+                           class="w-full p-2 border border-green-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150">
+                </div>
+                <div class="flex items-end space-x-2">
+                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
+                        Lưu Preset
+                    </button>
+                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-red-300" disabled>
+                        Xóa Preset
+                    </button>
                 </div>
             </div>
         </div>
@@ -198,7 +255,7 @@
                 <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
                     <p>Phụ Cấp Trình Độ (5769.22 x Ngày): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
                     <p>Phụ Cấp Trách Nhiệm (Đầu vào): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p>Phụ Cấp Thâm Niên (Cố định): <span class="font-bold text-gray-700">150,000 VNĐ</span></p>
+                    <p class="text-green-700 font-bold">Phụ Cấp Thâm Niên (Đầu vào): <span id="pc_tham_nien_result" class="font-bold text-green-700">0 VNĐ</span></p>
                     <p>Phụ Cấp Chuyên Cần (Đầu vào): <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
                     <p>Hỗ Trợ Đi Lại (Cố định): <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
                     <p>Tiền Thưởng (Cố định): <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
@@ -242,14 +299,13 @@
         };
 
         // ----------------------------------------------------
-        // CÁC HẰNG SỐ CỐ ĐỊNH
+        // CÁC HẰNG SỐ CỐ ĐỊNH (Cố định hóa các hằng số không cần nhập)
         // ----------------------------------------------------
         const NGAY_CHUAN = 26;
         const GIO_CHUAN_NGAY = 8;
         
         // 3. Các Khoản Phụ Cấp Cố Định
-        const PC_HE_SO_TRINH_DO = 5769.22;
-        const PC_THAM_NIEN = 150000;
+        const PC_HE_SO_TRINH_DO = 5769.22; // Phụ cấp trình độ (tiền/ngày)
         const PC_HO_TRO_DI_LAI = 250000;
         const PC_TIEN_THUONG = 50000;
 
@@ -259,7 +315,7 @@
         const KH_BHXH_RATE = 0.08;
         const KH_PHI_CONG_DOAN = 49600;
         const KH_TIEN_TIET_KIEM = 200000;
-        const KH_TIEN_TU_THIEN = 8000; // Cố định 8,000 VNĐ
+        const KH_TIEN_TU_THIEN = 8000;
 
         // ----------------------------------------------------
         // HÀM TÍNH TOÁN LƯƠNG
@@ -273,8 +329,9 @@
             const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
             const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
             const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
+            const pc_tham_nien_input = parseFloat(document.getElementById('pc_tham_nien_input').value) || 0; 
             
-            // Xử lý giá trị 0 cho các trường Giờ Tăng Ca và Ca Đêm (Đảm bảo giá trị là số 0 nếu rỗng)
+            // Tăng ca và Ca đêm
             const tc_thuong = parseFloat(document.getElementById('tc_thuong').value) || 0;
             const tc_nghi = parseFloat(document.getElementById('tc_nghi').value) || 0;
             const tc_le = parseFloat(document.getElementById('tc_le').value) || 0;
@@ -292,7 +349,6 @@
             document.getElementById('display_luong_co_ban').textContent = formatVND(LuongCoBan);
             document.getElementById('display_ngay_lam').textContent = NgayDiLamThucTe;
 
-            // Kiểm tra Lương Cơ Bản để tránh chia cho 0
             const Tien1GioLam = LuongCoBan > 0 ? LuongCoBan / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
             document.getElementById('tien_1_gio_lam').textContent = formatVND(Tien1GioLam);
 
@@ -302,14 +358,13 @@
             const SoGioLamViec = NgayDiLamThucTe * GIO_CHUAN_NGAY;
             document.getElementById('so_gio_lam_viec').textContent = SoGioLamViec;
 
-            const LuongThucTe = Tien1GioLam * SoGioLamViec; // Tiền 1 Giờ Làm * Số Giờ Làm Việc
+            const LuongThucTe = Tien1GioLam * SoGioLamViec;
             document.getElementById('luong_thuc_te').textContent = formatVND(LuongThucTe);
 
 
             // 3. Tính Giờ Tăng Ca
             document.getElementById('display_luong_tinh_tang_ca').textContent = formatVND(LuongTinhTangCa);
 
-            // Kiểm tra Lương Tính Tăng Ca để tránh chia cho 0
             const Tien1GioTangCaBase = LuongTinhTangCa > 0 ? LuongTinhTangCa / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
             document.getElementById('tien_1_gio_tc').textContent = formatVND(Tien1GioTangCaBase);
 
@@ -317,7 +372,7 @@
             const TangCaThuong = Tien1GioTangCaBase * tc_thuong * 1.5;
             const TangCaNgayNghi = Tien1GioTangCaBase * tc_nghi * 2.0;
             const TangCaNgayLe = Tien1GioTangCaBase * tc_le * 3.0;
-            const CaDem30 = Tien1GioTangCaBase * cd_30 * 0.3; // Phụ cấp ca đêm tính trên tiền 1 giờ Tăng ca
+            const CaDem30 = Tien1GioTangCaBase * cd_30 * 0.3;
             const CaDem50 = Tien1GioTangCaBase * cd_50 * 0.5;
             const CaDem70 = Tien1GioTangCaBase * cd_70 * 0.7;
             const CaDem90 = Tien1GioTangCaBase * cd_90 * 0.9;
@@ -338,12 +393,14 @@
             const PhuCapTrinhDo = PC_HE_SO_TRINH_DO * NgayDiLamThucTe;
             document.getElementById('pc_trinh_do').textContent = formatVND(PhuCapTrinhDo);
             
-            // Lấy Chuyên Cần và Trách Nhiệm từ input
+            // Lấy các phụ cấp từ input
             const PC_CHUYEN_CAN = pc_chuyen_can_input;
             const PC_TRACH_NHIEM = pc_trach_nhiem_input;
+            const PC_THAM_NIEN = pc_tham_nien_input; // DÙNG INPUT MỚI
             
             document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
-            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM); // Cập nhật hiển thị Trách Nhiệm
+            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM);
+            document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN); // Cập nhật hiển thị Thâm Niên
 
             const TongPhuCap = PhuCapTrinhDo + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
             document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
@@ -375,10 +432,137 @@
         }
 
         // ----------------------------------------------------
+        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE)
+        // ----------------------------------------------------
+
+        // Cập nhật PRESET_INPUT_IDS để bao gồm pc_tham_nien_input
+        const PRESET_INPUT_IDS = [
+            'luong_co_ban_input', 'luong_tinh_tang_ca_input', 'ngay_di_lam', 
+            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', // ĐÃ THÊM MỤC NÀY
+            'tc_thuong', 'tc_nghi', 'tc_le', 'cd_30', 'cd_50', 'cd_70', 'cd_90'
+        ];
+        
+        // Load danh sách Preset từ LocalStorage
+        function loadPresets() {
+            const selectElement = document.getElementById('preset_select');
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            
+            // Xóa các option cũ
+            selectElement.innerHTML = '<option value="">-- Chọn Preset để Tải Số Liệu --</option>';
+
+            // Thêm các preset đã lưu
+            for (const name in storedPresets) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                selectElement.appendChild(option);
+            }
+            
+            // Cập nhật trạng thái nút
+            updatePresetButtons();
+        }
+
+        // Lưu Preset hiện tại
+        function savePreset() {
+            const nameInput = document.getElementById('preset_name_input');
+            let presetName = nameInput.value.trim();
+
+            if (!presetName) {
+                alert("Vui lòng nhập Tên Preset để lưu!");
+                return;
+            }
+
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            const newPresetData = {};
+
+            // Lấy dữ liệu từ các input hiện tại
+            PRESET_INPUT_IDS.forEach(id => {
+                newPresetData[id] = document.getElementById(id).value;
+            });
+
+            // Lưu hoặc cập nhật Preset
+            storedPresets[presetName] = newPresetData;
+            localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
+            
+            alert(`Preset "${presetName}" đã được lưu/cập nhật thành công!`);
+            
+            // Tải lại danh sách và chọn tên vừa lưu
+            loadPresets();
+            document.getElementById('preset_select').value = presetName;
+            nameInput.value = ''; // Xóa tên input sau khi lưu
+            updatePresetButtons();
+        }
+
+        // Tải dữ liệu từ Preset đã chọn vào các Input Field
+        function loadPresetData() {
+            const selectElement = document.getElementById('preset_select');
+            const presetName = selectElement.value;
+
+            if (!presetName) {
+                alert("Vui lòng chọn một Preset để tải!");
+                return;
+            }
+
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            const presetData = storedPresets[presetName];
+
+            if (presetData) {
+                // Đổ dữ liệu vào các Input
+                PRESET_INPUT_IDS.forEach(id => {
+                    // Đảm bảo dữ liệu được lấy ra là chuỗi, nếu không tồn tại thì là '0'
+                    document.getElementById(id).value = String(presetData[id] || '0');
+                });
+
+                // Chạy lại tính toán
+                calculateSalary();
+                alert(`Preset "${presetName}" đã được tải thành công!`);
+            }
+        }
+        
+        // Xóa Preset đã chọn
+        function deletePreset() {
+            const selectElement = document.getElementById('preset_select');
+            const presetName = selectElement.value;
+            
+            if (!presetName) return;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa Preset "${presetName}"?`)) {
+                const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+                delete storedPresets[presetName];
+                localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
+                
+                alert(`Preset "${presetName}" đã được xóa!`);
+                loadPresets();
+            }
+        }
+
+        // Cập nhật trạng thái nút Tải/Xóa
+        function updatePresetButtons() {
+            const selectElement = document.getElementById('preset_select');
+            const loadBtn = document.getElementById('load_preset_btn');
+            const deleteBtn = document.getElementById('delete_preset_btn');
+            const presetNameInput = document.getElementById('preset_name_input');
+            
+            const selectedName = selectElement.value;
+
+            // Kích hoạt/Vô hiệu hóa nút Tải/Xóa
+            const shouldBeActive = selectedName !== "";
+            loadBtn.disabled = !shouldBeActive;
+            deleteBtn.disabled = !shouldBeActive;
+            
+            // Tự động điền tên preset đã chọn vào ô input nếu muốn cập nhật
+            if (shouldBeActive) {
+                presetNameInput.value = selectedName;
+            } else {
+                 // Nếu không chọn preset nào, đặt lại ô input trống để người dùng nhập tên mới
+                 presetNameInput.value = '';
+            }
+        }
+
+        // ----------------------------------------------------
         // HÀM XỬ LÝ COLLAPSIBLE (CHẾ ĐỘ THU NHỎ)
         // ----------------------------------------------------
         function setupCollapsibles() {
-            // Bao gồm mục 2 mới
             const toggles = [
                 { id: 'toggle_ttcb', contentId: 'content_ttcb', arrowId: 'ttcb_arrow' },
                 { id: 'toggle_tc', contentId: 'content_tc', arrowId: 'tc_arrow' },
@@ -436,6 +620,15 @@
             
             // Cài đặt chế độ thu nhỏ
             setupCollapsibles();
+            
+            // SỰ KIỆN PRESET
+            document.getElementById('save_preset_btn').addEventListener('click', savePreset);
+            document.getElementById('load_preset_btn').addEventListener('click', loadPresetData);
+            document.getElementById('delete_preset_btn').addEventListener('click', deletePreset);
+            document.getElementById('preset_select').addEventListener('change', updatePresetButtons);
+
+            // Tải danh sách preset khi trang được tải
+            loadPresets(); 
 
             // Thực hiện tính toán lần đầu với giá trị mặc định (0)
             calculateSalary();
