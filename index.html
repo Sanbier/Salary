@@ -1,383 +1,735 @@
-<!DOCTYPE html>
-<html lang="vi" class="transition-all duration-500">
+<!DOCTYPE<!DOCTYPE html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng Tính Lương HYOSUNG</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Tính Lương</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" sizes="180x180">
+    <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="192x192">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+      <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Định nghĩa font Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .section-title {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 80%;
+            background-color: #3b82f6; /* Blue 500 */
+            border-radius: 4px;
+            transition: height 0.3s ease; /* Thêm transition cho thanh màu xanh */
+        }
+        .section-title:hover::before {
+             height: 100%; /* Thanh sidebar cao hơn khi hover */
+        }
+        .input-group label {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            color: #374151; /* gray-700 */
+        }
+        .result-value {
+            font-weight: 700;
+            color: #16a34a; /* green-600 */
+            transition: all 0.2s ease-out; /* Thêm transition cho giá trị kết quả */
+        }
+        .final-result {
+            font-size: 1.5rem; /* text-2xl */
+            color: #b91c1c; /* red-700 */
+        }
 
-  <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg">
-  <link rel="apple-touch-icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg">
+        /* --- KEYFRAMES CHO ANIMATION --- */
 
-  <script>
-  tailwind.config = { darkMode: 'class' }
-</script>
-<script src="https://cdn.tailwindcss.com"></script>
+        /* Animation cho fade-in lúc tải trang */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-on-load {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
 
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f3f4f6;
-      transition: background-color 0.5s, color 0.5s;
-    }
-    .dark body { background-color: #111827; color: #e5e7eb; }
-    .dark .bg-white { background-color: #1f2937; color: #e5e7eb; }
-    .dark .text-gray-800 { color: #f3f4f6; }
-    .dark .text-blue-800 { color: #93c5fd; }
-    .dark .shadow-2xl { box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-
-    .section-title { position: relative; padding-left: 1rem; }
-    .section-title::before {
-      content: '';
-      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-      width: 6px; height: 70%;
-      background-color: #3b82f6; border-radius: 4px;
-    }
-    .result-value { font-weight: 700; color: #16a34a; transition: all 0.3s; }
-    .final-result { font-size: 1.5rem; color: #b91c1c; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in-on-load { animation: fadeIn 0.8s ease-out forwards; }
-    @keyframes resultUpdate {
-      0% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-    .animate-update { animation: resultUpdate 0.4s ease-out; }
-  </style>
+        /* Animation cho Input Focus */
+        @keyframes inputFocusBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .input-bounce-effect:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* ring-blue-500/50 */
+            animation: inputFocusBounce 0.3s ease-out;
+        }
+        
+        /* Animation cho Kết quả khi cập nhật */
+        @keyframes resultUpdate {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .animate-update {
+            animation: resultUpdate 0.4s ease-out;
+        }
+    </style>
 </head>
-<body class="p-4 sm:p-6 md:p-8 transition-all duration-500 bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
-  <div class="flex justify-between items-center max-w-3xl mx-auto mb-4">
-    <h1 class="text-2xl font-bold text-blue-700 dark:text-blue-300">Bảng Tính Lương HYOSUNG</h1>
-    <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:scale-105 transition" title="Chuyển giao diện">
-      🌙
-    </button>
-  </div>
-  <div class="max-w-3xl mx-auto mb-6">
-    <p class="text-center">
-      <a href="tinhgio.html"
-         class="inline-block bg-pink-600 hover:bg-pink-700 active:scale-95 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-150">
-        🚀 Mở Công Cụ Tính Lịch Trình Chạy Máy
-      </a>
-    </p>
-  </div>
+<body class="p-4 sm:p-6 md:p-8">
+    <div<div class="max-w-3xl mx-auto mb-6">
+        <p class="text-center">
+            <a href="tinhgio.html" 
+               class="inline-block bg-pink-600 hover:bg-pink-700 active:scale-95 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-150">
+                🚀 Mở Công Cụ Tính Lịch Trình Chạy Máy
+            </a>
+        </p>
+    </div>
+    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8 fade-in-on-load">
+        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2">
+            Bảng Tính Lương HYOSUNG
+        </h1>
 
-  <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8 fade-in-on-load dark:bg-gray-800">
-    <h1 class="text-3xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-6 border-b-4 border-blue-500 pb-2">
-      Bảng Tính Lương HYOSUNG
-    </h1>
+        <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8 transition duration-300 hover:shadow-xl">
+            <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="input-group">
+                    <label for="luong_co_ban_input" class="text-blue-700 font-bold">Lương Cơ Bản</label>
+                    <input type="number" id="luong_co_ban_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
+                    <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="ngay_di_lam">Số Ngày Đi Làm</label>
+                    <input type="number" id="ngay_di_lam" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="pc_chuyen_can_input">Chuyên Cần</label>
+                    <input type="number" id="pc_chuyen_can_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
+                    <input type="number" id="pc_trach_nhiem_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="pc_tham_nien_input" class="text-blue-700 font-bold">Thâm Niên</label>
+                    <input type="number" id="pc_tham_nien_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                <div class="input-group">
+                    <label for="pc_tay_nghe_input" class="text-blue-700 font-bold">Tay Nghề</label>
+                    <input type="number" id="pc_tay_nghe_input" value="0" min="0" 
+                        autocomplete="off" 
+                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                
+                <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner transition duration-300 hover:shadow-md">
+                    <div class="flex flex-col space-y-4">
+                        <div class="input-group">
+                            <label for="cd_30">Ca Đêm 30%</label>
+                            <input type="number" id="cd_30" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_50">Ca Đêm 50%</label>
+                            <input type="number" id="cd_50" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_70">Ca Đêm 70%</label>
+                            <input type="number" id="cd_70" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                        <div class="input-group">
+                            <label for="cd_90">Ca Đêm 90%</label>
+                            <input type="number" id="cd_90" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                    </div>
 
-    <!-- INPUT -->
-    <div id="input-section" class="bg-blue-50 dark:bg-gray-700 p-5 rounded-xl shadow-lg mb-8 transition duration-300 hover:shadow-xl">
-      <h2 class="text-xl font-bold section-title text-blue-800 dark:text-blue-300 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
-      <div class="grid grid-cols-2 gap-4">
-        <template id="inputTemplate">
-          <div class="input-group">
-            <label></label>
-            <input type="number" value="0" min="0"
-                   autocomplete="off"
-                   onfocus="if(this.value=='0') this.value='';"
-                   onblur="if(this.value=='') this.value='0';"
-                   class="w-full p-2 border border-blue-300 dark:border-gray-500 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white dark:bg-gray-900">
-          </div>
-        </template>
-
-        <!-- Các input thực -->
-        <div><label for="luong_co_ban_input" class="font-bold text-blue-700">Lương Cơ Bản</label><input type="number" id="luong_co_ban_input" value="0" class="w-full p-2 border border-blue-400 rounded-md"></div>
-        <div><label for="luong_tinh_tang_ca_input" class="font-bold text-blue-700">Lương Tính Tăng Ca</label><input type="number" id="luong_tinh_tang_ca_input" value="0" class="w-full p-2 border border-blue-400 rounded-md"></div>
-        <div><label for="ngay_di_lam">Số Ngày Đi Làm</label><input type="number" id="ngay_di_lam" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-        <div><label for="pc_chuyen_can_input">Chuyên Cần</label><input type="number" id="pc_chuyen_can_input" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-        <div><label for="pc_trach_nhiem_input">Trách Nhiệm</label><input type="number" id="pc_trach_nhiem_input" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-        <div><label for="pc_tham_nien_input">Thâm Niên</label><input type="number" id="pc_tham_nien_input" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-        <div><label for="pc_tay_nghe_input">Tay Nghề</label><input type="number" id="pc_tay_nghe_input" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-
-        <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-inner transition duration-300 hover:shadow-md">
-          <div class="flex flex-col space-y-4">
-            <div><label for="cd_30">Ca Đêm 30%</label><input id="cd_30" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-            <div><label for="cd_50">Ca Đêm 50%</label><input id="cd_50" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-            <div><label for="cd_70">Ca Đêm 70%</label><input id="cd_70" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-            <div><label for="cd_90">Ca Đêm 90%</label><input id="cd_90" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-          </div>
-          <div class="flex flex-col space-y-4">
-            <div><label for="tc_thuong">Tăng Ca Thường</label><input id="tc_thuong" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-            <div><label for="tc_nghi">Tăng Ca Ngày Nghỉ</label><input id="tc_nghi" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-            <div><label for="tc_le">Tăng Ca Ngày Lễ</label><input id="tc_le" type="number" value="0" class="w-full p-2 border border-blue-300 rounded-md"></div>
-          </div>
+                    <div class="flex flex-col space-y-4">
+                        <div class="input-group">
+                            <label for="tc_thuong">Tăng Ca Thường</label>
+                            <input type="number" id="tc_thuong" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                        <div class="input-group">
+                            <label for="tc_nghi">Tăng Ca Ngày Nghỉ</label>
+                            <input type="number" id="tc_nghi" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                        <div class="input-group">
+                            <label for="tc_le">Tăng Ca Ngày Lễ</label>
+                            <input type="number" id="tc_le" value="0" min="0" 
+                                autocomplete="off" 
+                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        
+        <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500 transition duration-300 hover:shadow-xl">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="md:col-span-2">
+                    <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset Đã Lưu</label>
+                    <select id="preset_select" 
+                            class="w-full p-2 border border-purple-300 rounded-md bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-150 hover:border-purple-500">
+                        <option value="">-- Chọn Preset để Tải Số Liệu --</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end">
+                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400 disabled:shadow-none">
+                        Tải Preset
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                <div class="md:col-span-2">
+                    <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
+                    <input type="text" id="preset_name_input" placeholder="Ví dụ: Nghĩa Đẹp Trai" 
+                           class="w-full p-2 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-150 input-bounce-effect">
+                </div>
+                <div class="flex items-end space-x-2">
+                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
+                        Lưu Preset
+                    </button>
+                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-red-300 disabled:shadow-none" disabled>
+                        Xóa Preset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-6 bg-yellow-100 rounded-xl shadow-lg border-l-4 border-yellow-500 transition duration-300 hover:scale-[1.01]">
+                <p class="text-sm font-medium text-yellow-800">TỔNG THU NHẬP</p>
+                <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1 result-display">0 VNĐ</p>
+            </div>
+            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300 hover:scale-[1.01]">
+                <p class="text-sm font-medium text-red-800">THỰC LÃNH</p>
+                <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1 result-display">0 VNĐ</p>
+            </div>
+        </div>
+
+
+        <div class="border border-gray-300 rounded-xl overflow-hidden shadow-lg"> 
+
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    2. Thông Tin Cơ Bản <span id="ttcb_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
+                </h2>
+                <div id="content_ttcb" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
+                    <p>Lương Cơ Bản: <span id="display_luong_co_ban" class="font-bold text-blue-600">0 VNĐ</span></p>
+                    <p>Ngày Đi Làm Thực Tế: <span id="display_ngay_lam" class="font-bold text-gray-700">0</span> ngày</p>
+                    <p>Tiền 1 Giờ Làm: <span id="tien_1_gio_lam" class="result-value">0 VNĐ</span></p>
+                    <p>Tiền 1 Ngày Làm: <span id="tien_1_ngay_lam" class="result-value">0 VNĐ</span></p>
+                    <p>Số Giờ Làm Việc: <span id="so_gio_lam_viec" class="result-value">0</span> giờ</p>
+                    <p class="pt-2 border-t mt-2">Lương Thực Tế: <span id="luong_thuc_te" class="text-base font-bold text-green-700">0 VNĐ</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_tc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    3. Tính Giờ Tăng Ca <span id="tc_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
+                </h2>
+                
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Giờ Tăng Ca: <span id="tong_gio_tang_ca" class="text-base font-bold text-green-700">0 VNĐ</span>
+                </p>
+
+                <div id="content_tc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
+                    <p>Lương Tính Tăng Ca: <span id="display_luong_tinh_tang_ca" class="font-bold text-blue-600">0 VNĐ</span></p>
+                    <p>Tiền 1 Giờ Tăng Ca (Base): <span id="tien_1_gio_tc" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Thường (150%): <span id="tc_thuong_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Ngày Nghỉ (200%): <span id="tc_nghi_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Tăng Ca Ngày Lễ (300%): <span id="tc_le_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Ca Đêm 30% (Phụ cấp): <span id="cd_30_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Ca Đêm 50% (Phụ cấp): <span id="cd_50_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Ca Đêm 70% (Phụ cấp): <span id="cd_70_tien" class="result-value">0 VNĐ</span></p>
+                    <p>Ca Đêm 90% (Phụ cấp): <span id="cd_90_tien" class="result-value">0 VNĐ</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 border-b border-gray-200">
+                <h2 id="toggle_pc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    4. Các Khoản Phụ Cấp <span id="pc_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
+                </h2>
+                
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Các Khoản Phụ Cấp: <span id="tong_phu_cap" class="text-base font-bold text-green-700">0 VNĐ</span>
+                </p>
+
+                <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
+                    <p>Phụ Cấp Tay Nghề: <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
+                    <p>Phụ Cấp Trách Nhiệm: <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên: <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề: <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Chuyên Cần: <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Hỗ Trợ Đi Lại: <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
+                    <p>Tiền Thưởng: <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5">
+                <h2 id="toggle_kt" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    5. Các Khoản Khấu Trừ <span id="kt_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
+                </h2>
+                
+                <p class="pt-2 border-t mt-2 text-sm">
+                    Tổng Các Khoản Khấu Trừ: <span id="tong_khau_tru" class="text-base font-bold text-red-700">0 VNĐ</span>
+                </p>
+                
+                <div id="content_kt" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
+                    <p class="text-sm italic text-gray-500 mb-3">Tính trên Lương Tính Giờ Tăng Ca: <span id="display_kh_luong_bh" class="font-medium">0 VNĐ</span></p>
+                    <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Bảo Hiểm Xã Hội (8%): <span id="kh_bhxh" class="font-bold text-red-600">0 VNĐ</span></p>
+                    <p>Phí Công Đoàn: <span class="font-bold text-red-600">49,600 VNĐ</span></p>
+                    <p>Tiền Tiết Kiệm: <span class="font-bold text-red-600">200,000 VNĐ</span></p>
+                    <p>Tiền Từ Thiện: <span class="font-bold text-red-600">8,000 VNĐ</span></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- PRESET -->
-    <div id="preset-manager" class="bg-gray-100 dark:bg-gray-700 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
-      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center"><span class="mr-2">👤</span>Quản Lý Preset Cá Nhân</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <div class="md:col-span-2">
-          <label for="preset_select" class="text-sm font-medium text-purple-700 dark:text-purple-300">Chọn Preset</label>
-          <select id="preset_select" class="w-full p-2 border border-purple-300 rounded-md bg-white dark:bg-gray-900"></select>
-        </div>
-        <div class="flex items-end">
-          <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 disabled:bg-gray-400">Tải Preset</button>
-        </div>
-      </div>
+    <script>
+        // Hàm định dạng số sang tiền tệ Việt Nam Đồng
+        const formatVND = (amount) => {
+            if (typeof amount !== 'number' || isNaN(amount)) return '0 VNĐ';
+            // Sử dụng Intl.NumberFormat để định dạng, làm tròn đến số nguyên
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.round(amount));
+        };
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
-        <div class="md:col-span-2">
-          <label for="preset_name_input" class="text-sm font-medium text-green-700 dark:text-green-300">Tên Preset</label>
-          <input type="text" id="preset_name_input" placeholder="VD: Nghĩa Đẹp Trai" class="w-full p-2 border border-green-300 rounded-md bg-white dark:bg-gray-900">
-        </div>
-        <div class="flex items-end space-x-2">
-          <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Lưu</button>
-          <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md disabled:bg-red-300" disabled>Xóa</button>
-        </div>
-      </div>
-    </div>
+        // ----------------------------------------------------
+        // CÁC HẰNG SỐ CỐ ĐỊNH (Cố định hóa các hằng số không cần nhập)
+        // ----------------------------------------------------
+        const NGAY_CHUAN = 26;
+        const GIO_CHUAN_NGAY = 8;
+        
+        // 3. Các Khoản Phụ Cấp Cố Định
+        const PC_HE_SO_TRINH_DO = 5769.22; // Phụ cấp trình độ/Tay nghề (tiền/ngày)
+        const PC_HO_TRO_DI_LAI = 250000;
+        const PC_TIEN_THUONG = 50000;
 
-    <!-- KẾT QUẢ -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-      <div class="p-6 bg-yellow-100 dark:bg-yellow-900 rounded-xl shadow-lg border-l-4 border-yellow-500"><p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">TỔNG THU NHẬP</p><p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1 result-display">0 VNĐ</p></div>
-      <div class="p-6 bg-red-100 dark:bg-red-900 rounded-xl shadow-lg border-l-4 border-red-500"><p class="text-sm font-medium text-red-800 dark:text-red-200">THỰC LÃNH</p><p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1 result-display">0 VNĐ</p></div>
-    </div>
+        // 4. Các Khoản Khấu Trừ Cố Định & Tỷ lệ
+        const KH_BHYT_RATE = 0.015;
+        const KH_BHTN_RATE = 0.01;
+        const KH_BHXH_RATE = 0.08;
+        const KH_PHI_CONG_DOAN = 49600;
+        const KH_TIEN_TIET_KIEM = 200000;
+        const KH_TIEN_TU_THIEN = 8000;
 
-    <!-- CÁC MỤC CHI TIẾT -->
-    <div class="border border-gray-300 dark:border-gray-600 rounded-xl overflow-hidden shadow-lg">
+        // ----------------------------------------------------
+        // HÀM TÍNH TOÁN LƯƠNG
+        // ----------------------------------------------------
 
-      <div class="bg-white dark:bg-gray-800 p-5 border-b border-gray-200 dark:border-gray-700">
-        <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 flex justify-between items-center cursor-pointer">2. Thông Tin Cơ Bản <span id="ttcb_arrow" class="text-blue-500">▼</span></h2>
-        <div id="content_ttcb" class="hidden pt-4 space-y-2 text-sm">
-          <p>Lương Cơ Bản: <span id="display_luong_co_ban" class="font-bold text-blue-600">0 VNĐ</span></p>
-          <p>Ngày Đi Làm Thực Tế: <span id="display_ngay_lam" class="font-bold">0</span> ngày</p>
-          <p>Tiền 1 Giờ Làm: <span id="tien_1_gio_lam" class="result-value">0 VNĐ</span></p>
-          <p>Tiền 1 Ngày Làm: <span id="tien_1_ngay_lam" class="result-value">0 VNĐ</span></p>
-          <p>Số Giờ Làm Việc: <span id="so_gio_lam_viec" class="result-value">0</span> giờ</p>
-          <p>Lương Thực Tế: <span id="luong_thuc_te" class="font-bold text-green-700">0 VNĐ</span></p>
-        </div>
-      </div>
+        // Hàm trigger animation cập nhật
+        function triggerUpdateAnimation(elementId) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.classList.remove('animate-update');
+                // Force reflow/repaint
+                void el.offsetWidth; 
+                el.classList.add('animate-update');
+            }
+        }
 
-      <div class="bg-white dark:bg-gray-800 p-5 border-b border-gray-200 dark:border-gray-700">
-        <h2 id="toggle_tc" class="text-xl font-bold section-title text-gray-800 flex justify-between items-center cursor-pointer">3. Tính Giờ Tăng Ca <span id="tc_arrow" class="text-blue-500">▼</span></h2>
-        <p class="pt-2 text-sm">Tổng Giờ Tăng Ca: <span id="tong_gio_tang_ca" class="font-bold text-green-700">0 VNĐ</span></p>
-        <div id="content_tc" class="hidden pt-4 space-y-2 text-sm">
-          <p>Lương Tính Tăng Ca: <span id="display_luong_tinh_tang_ca" class="font-bold text-blue-600">0 VNĐ</span></p>
-          <p>Tiền 1 Giờ Tăng Ca: <span id="tien_1_gio_tc" class="result-value">0 VNĐ</span></p>
-          <p>Tăng Ca Thường (150%): <span id="tc_thuong_tien" class="result-value">0 VNĐ</span></p>
-          <p>Tăng Ca Ngày Nghỉ (200%): <span id="tc_nghi_tien" class="result-value">0 VNĐ</span></p>
-          <p>Tăng Ca Ngày Lễ (300%): <span id="tc_le_tien" class="result-value">0 VNĐ</span></p>
-          <p>Ca Đêm 30%: <span id="cd_30_tien" class="result-value">0 VNĐ</span></p>
-          <p>Ca Đêm 50%: <span id="cd_50_tien" class="result-value">0 VNĐ</span></p>
-          <p>Ca Đêm 70%: <span id="cd_70_tien" class="result-value">0 VNĐ</span></p>
-          <p>Ca Đêm 90%: <span id="cd_90_tien" class="result-value">0 VNĐ</span></p>
-        </div>
-      </div>
+        let previousThucLanh = 0;
+        let previousTongThuNhap = 0;
 
-      <div class="bg-white dark:bg-gray-800 p-5 border-b border-gray-200 dark:border-gray-700">
-        <h2 id="toggle_pc" class="text-xl font-bold section-title text-gray-800 flex justify-between items-center cursor-pointer">4. Các Khoản Phụ Cấp <span id="pc_arrow" class="text-blue-500">▼</span></h2>
-        <p class="pt-2 text-sm">Tổng Phụ Cấp: <span id="tong_phu_cap" class="font-bold text-green-700">0 VNĐ</span></p>
-        <div id="content_pc" class="hidden pt-4 space-y-2 text-sm">
-          <p>Phụ Cấp Tay Nghề (Công Thức): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
-          <p>Phụ Cấp Trách Nhiệm: <span id="pc_trach_nhiem_result">0 VNĐ</span></p>
-          <p>Phụ Cấp Thâm Niên: <span id="pc_tham_nien_result">0 VNĐ</span></p>
-          <p>Phụ Cấp Tay Nghề (Input): <span id="pc_tay_nghe_result">0 VNĐ</span></p>
-          <p>Phụ Cấp Chuyên Cần: <span id="pc_chuyen_can_result">0 VNĐ</span></p>
-          <p>Hỗ Trợ Đi Lại: <span>250,000 VNĐ</span></p>
-          <p>Tiền Thưởng: <span>50,000 VNĐ</span></p>
-        </div>
-      </div>
+        function calculateSalary() {
+            // 1. Số Liệu Đầu Vào (Input)
+            // Lấy giá trị từ input, nếu rỗng thì dùng 0
+            const luong_co_ban_input = parseFloat(document.getElementById('luong_co_ban_input').value) || 0;
+            const luong_tinh_tang_ca_input = parseFloat(document.getElementById('luong_tinh_tang_ca_input').value) || 0;
+            const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
+            const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
+            const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
+            const pc_tham_nien_input = parseFloat(document.getElementById('pc_tham_nien_input').value) || 0; 
+            const pc_tay_nghe_input = parseFloat(document.getElementById('pc_tay_nghe_input').value) || 0; // INPUT MỚI
+            
+            // Tăng ca và Ca đêm
+            const tc_thuong = parseFloat(document.getElementById('tc_thuong').value) || 0;
+            const tc_nghi = parseFloat(document.getElementById('tc_nghi').value) || 0;
+            const tc_le = parseFloat(document.getElementById('tc_le').value) || 0;
+            const cd_30 = parseFloat(document.getElementById('cd_30').value) || 0;
+            const cd_50 = parseFloat(document.getElementById('cd_50').value) || 0;
+            const cd_70 = parseFloat(document.getElementById('cd_70').value) || 0;
+            const cd_90 = parseFloat(document.getElementById('cd_90').value) || 0;
 
-      <div class="bg-white dark:bg-gray-800 p-5">
-        <h2 id="toggle_kt" class="text-xl font-bold section-title text-gray-800 flex justify-between items-center cursor-pointer">5. Các Khoản Khấu Trừ <span id="kt_arrow" class="text-blue-500">▼</span></h2>
-        <p class="pt-2 text-sm">Tổng Khấu Trừ: <span id="tong_khau_tru" class="font-bold text-red-700">0 VNĐ</span></p>
-        <div id="content_kt" class="hidden pt-4 space-y-2 text-sm">
-          <p>BHYT (1.5%): <span id="kh_bhyt" class="text-red-600">0 VNĐ</span></p>
-          <p>BHTN (1%): <span id="kh_bhtn" class="text-red-600">0 VNĐ</span></p>
-          <p>BHXH (8%): <span id="kh_bhxh" class="text-red-600">0 VNĐ</span></p>
-          <p>Phí Công Đoàn: 49,600 VNĐ</p>
-          <p>Tiết Kiệm: 200,000 VNĐ</p>
-          <p>Từ Thiện: 8,000 VNĐ</p>
-        </div>
-      </div>
-    </div>
-  </div>
-<script>
-  const formatVND = v =>
-    new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-    }).format(Math.max(0, Math.round(v || 0)));
+            const LuongCoBan = luong_co_ban_input;
+            const LuongTinhTangCa = luong_tinh_tang_ca_input;
+            const NgayDiLamThucTe = Math.max(0, ngay_di_lam);
 
-  const NGAY_CHUAN = 26, GIO_CHUAN_NGAY = 8;
-  const PC_HE_SO_TRINH_DO = 5769.22;
-  const PC_HO_TRO_DI_LAI = 250000, PC_TIEN_THUONG = 50000;
-  const KH_BHYT_RATE = 0.015, KH_BHTN_RATE = 0.01, KH_BHXH_RATE = 0.08;
-  const KH_PHI_CONG_DOAN = 49600, KH_TIEN_TIET_KIEM = 200000, KH_TIEN_TU_THIEN = 8000;
 
-  const PRESET_KEYS = [
-    'luong_co_ban_input', 'luong_tinh_tang_ca_input', 'ngay_di_lam',
-    'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', 'pc_tay_nghe_input',
-    'tc_thuong', 'tc_nghi', 'tc_le', 'cd_30', 'cd_50', 'cd_70', 'cd_90'
-  ];
+            // 2. Thông Tin Cơ Bản
+            document.getElementById('display_luong_co_ban').textContent = formatVND(LuongCoBan);
+            document.getElementById('display_ngay_lam').textContent = NgayDiLamThucTe;
 
-  let prevIncome = 0, prevNet = 0, debounceTimer;
+            const Tien1GioLam = LuongCoBan > 0 ? LuongCoBan / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
+            document.getElementById('tien_1_gio_lam').textContent = formatVND(Tien1GioLam);
 
-  const triggerUpdate = id => {
-    const el = document.getElementById(id);
-    el.classList.remove('animate-update'); void el.offsetWidth;
-    el.classList.add('animate-update');
-  };
+            const Tien1NgayLam = LuongCoBan > 0 ? LuongCoBan / NGAY_CHUAN : 0;
+            document.getElementById('tien_1_ngay_lam').textContent = formatVND(Tien1NgayLam);
 
-  function calcSalary() {
-    const g = id => Math.max(0, parseFloat(document.getElementById(id).value) || 0);
-    const LuongCoBan = g('luong_co_ban_input'),
-          LuongTangCa = g('luong_tinh_tang_ca_input'),
-          NgayDiLam = g('ngay_di_lam'),
-          pcCC = g('pc_chuyen_can_input'),
-          pcTNhiem = g('pc_trach_nhiem_input'),
-          pcThamNien = g('pc_tham_nien_input'),
-          pcTayNghe = g('pc_tay_nghe_input'),
-          tcThuong = g('tc_thuong'), tcNghi = g('tc_nghi'), tcLe = g('tc_le'),
-          cd30 = g('cd_30'), cd50 = g('cd_50'), cd70 = g('cd_70'), cd90 = g('cd_90');
+            const SoGioLamViec = NgayDiLamThucTe * GIO_CHUAN_NGAY;
+            document.getElementById('so_gio_lam_viec').textContent = SoGioLamViec;
 
-    const tien1Ngay = LuongCoBan / NGAY_CHUAN;
-    const tien1Gio = LuongCoBan / NGAY_CHUAN / GIO_CHUAN_NGAY;
-    const soGio = NgayDiLam * GIO_CHUAN_NGAY;
-    const luongThucTe = tien1Gio * soGio;
+            const LuongThucTe = Tien1GioLam * SoGioLamViec;
+            document.getElementById('luong_thuc_te').textContent = formatVND(LuongThucTe);
 
-    document.getElementById('display_luong_co_ban').textContent = formatVND(LuongCoBan);
-    document.getElementById('display_ngay_lam').textContent = NgayDiLam;
-    document.getElementById('tien_1_gio_lam').textContent = formatVND(tien1Gio);
-    document.getElementById('tien_1_ngay_lam').textContent = formatVND(tien1Ngay);
-    document.getElementById('so_gio_lam_viec').textContent = soGio;
-    document.getElementById('luong_thuc_te').textContent = formatVND(luongThucTe);
 
-    const tien1GioTC = LuongTangCa / NGAY_CHUAN / GIO_CHUAN_NGAY;
-    const tcThuongTien = tien1GioTC * tcThuong * 1.5;
-    const tcNghiTien = tien1GioTC * tcNghi * 2;
-    const tcLeTien = tien1GioTC * tcLe * 3;
-    const cd30t = tien1GioTC * cd30 * 0.3;
-    const cd50t = tien1GioTC * cd50 * 0.5;
-    const cd70t = tien1GioTC * cd70 * 0.7;
-    const cd90t = tien1GioTC * cd90 * 0.9;
-    const tongTangCa = tcThuongTien + tcNghiTien + tcLeTien + cd30t + cd50t + cd70t + cd90t;
+            // 3. Tính Giờ Tăng Ca
+            document.getElementById('display_luong_tinh_tang_ca').textContent = formatVND(LuongTinhTangCa);
 
-    ['tc_thuong_tien','tc_nghi_tien','tc_le_tien','cd_30_tien','cd_50_tien','cd_70_tien','cd_90_tien']
-      .forEach((id,i)=>document.getElementById(id).textContent =
-        formatVND([tcThuongTien,tcNghiTien,tcLeTien,cd30t,cd50t,cd70t,cd90t][i]));
-    document.getElementById('tien_1_gio_tc').textContent = formatVND(tien1GioTC);
-    document.getElementById('display_luong_tinh_tang_ca').textContent = formatVND(LuongTangCa);
-    document.getElementById('tong_gio_tang_ca').textContent = formatVND(tongTangCa);
+            const Tien1GioTangCaBase = LuongTinhTangCa > 0 ? LuongTinhTangCa / NGAY_CHUAN / GIO_CHUAN_NGAY : 0;
+            document.getElementById('tien_1_gio_tc').textContent = formatVND(Tien1GioTangCaBase);
 
-    const pcTayNgheAuto = PC_HE_SO_TRINH_DO * NgayDiLam;
-    const tongPhuCap = pcTayNgheAuto + pcTNhiem + pcThamNien + pcTayNghe + pcCC + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
-    document.getElementById('pc_trinh_do').textContent = formatVND(pcTayNgheAuto);
-    document.getElementById('pc_trach_nhiem_result').textContent = formatVND(pcTNhiem);
-    document.getElementById('pc_tham_nien_result').textContent = formatVND(pcThamNien);
-    document.getElementById('pc_tay_nghe_result').textContent = formatVND(pcTayNghe);
-    document.getElementById('pc_chuyen_can_result').textContent = formatVND(pcCC);
-    document.getElementById('tong_phu_cap').textContent = formatVND(tongPhuCap);
+            // Công thức: Tiền 1 Giờ Tăng Ca * Số Giờ * Hệ số
+            const TangCaThuong = Tien1GioTangCaBase * tc_thuong * 1.5;
+            const TangCaNgayNghi = Tien1GioTangCaBase * tc_nghi * 2.0;
+            const TangCaNgayLe = Tien1GioTangCaBase * tc_le * 3.0;
+            const CaDem30 = Tien1GioTangCaBase * cd_30 * 0.3;
+            const CaDem50 = Tien1GioTangCaBase * cd_50 * 0.5;
+            const CaDem70 = Tien1GioTangCaBase * cd_70 * 0.7;
+            const CaDem90 = Tien1GioTangCaBase * cd_90 * 0.9;
 
-    const bhyt = LuongTangCa * KH_BHYT_RATE, bhtn = LuongTangCa * KH_BHTN_RATE, bhxh = LuongTangCa * KH_BHXH_RATE;
-    const tongKhauTru = bhyt + bhtn + bhxh + KH_PHI_CONG_DOAN + KH_TIEN_TIET_KIEM + KH_TIEN_TU_THIEN;
-    document.getElementById('kh_bhyt').textContent = formatVND(bhyt);
-    document.getElementById('kh_bhtn').textContent = formatVND(bhtn);
-    document.getElementById('kh_bhxh').textContent = formatVND(bhxh);
-    document.getElementById('tong_khau_tru').textContent = formatVND(tongKhauTru);
+            document.getElementById('tc_thuong_tien').textContent = formatVND(TangCaThuong);
+            document.getElementById('tc_nghi_tien').textContent = formatVND(TangCaNgayNghi);
+            document.getElementById('tc_le_tien').textContent = formatVND(TangCaNgayLe);
+            document.getElementById('cd_30_tien').textContent = formatVND(CaDem30);
+            document.getElementById('cd_50_tien').textContent = formatVND(CaDem50);
+            document.getElementById('cd_70_tien').textContent = formatVND(CaDem70);
+            document.getElementById('cd_90_tien').textContent = formatVND(CaDem90);
 
-    const tongThuNhap = luongThucTe + tongTangCa + tongPhuCap;
-    const thucLanh = tongThuNhap - tongKhauTru;
-    document.getElementById('tong_thu_nhap').textContent = formatVND(tongThuNhap);
-    document.getElementById('thuc_lanh').textContent = formatVND(thucLanh);
+            const TongGioTangCa = TangCaThuong + TangCaNgayNghi + TangCaNgayLe + CaDem30 + CaDem50 + CaDem70 + CaDem90;
+            document.getElementById('tong_gio_tang_ca').textContent = formatVND(TongGioTangCa);
 
-    if (tongThuNhap !== prevIncome) triggerUpdate('tong_thu_nhap');
-    if (thucLanh !== prevNet) triggerUpdate('thuc_lanh');
-    prevIncome = tongThuNhap; prevNet = thucLanh;
-  }
 
-  function setupToggles() {
-    [['toggle_ttcb','content_ttcb','ttcb_arrow'],
-     ['toggle_tc','content_tc','tc_arrow'],
-     ['toggle_pc','content_pc','pc_arrow'],
-     ['toggle_kt','content_kt','kt_arrow']].forEach(([btn,content,arrow])=>{
-      const b=document.getElementById(btn), c=document.getElementById(content), a=document.getElementById(arrow);
-      b.addEventListener('click',()=>{
-        const hide=c.classList.toggle('hidden');
-        a.textContent=hide?'▼':'▲';
-      });
-    });
-  }
+            // 4. Các Khoản Phụ Cấp
+            // Phụ cấp Tay Nghề tính theo công thức cũ (trước đây là Trình Độ)
+            const PhuCapTayNgheCongThuc = PC_HE_SO_TRINH_DO * NgayDiLamThucTe; 
+            document.getElementById('pc_trinh_do').textContent = formatVND(PhuCapTayNgheCongThuc);
+            
+            // Lấy các phụ cấp từ input
+            const PC_CHUYEN_CAN = pc_chuyen_can_input;
+            const PC_TRACH_NHIEM = pc_trach_nhiem_input;
+            const PC_THAM_NIEN = pc_tham_nien_input;
+            const PC_TAY_NGHE = pc_tay_nghe_input; // PHỤ CẤP TAY NGHỀ MỚI (INPUT)
 
-  function loadPresets() {
-    const s=document.getElementById('preset_select');
-    const data=JSON.parse(localStorage.getItem('salaryPresets')||'{}');
-    s.innerHTML='<option value="">-- Chọn Preset --</option>';
-    for(const k in data){const o=document.createElement('option');o.value=o.textContent=k;s.appendChild(o);}
-  }
+            document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
+            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM);
+            document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN);
+            document.getElementById('pc_tay_nghe_result').textContent = formatVND(PC_TAY_NGHE); // HIỂN THỊ MỤC MỚI
 
-  function savePreset() {
-    const name=document.getElementById('preset_name_input').value.trim();
-    if(!name){alert('Nhập tên preset!');return;}
-    const store=JSON.parse(localStorage.getItem('salaryPresets')||'{}');
-    const data={}; PRESET_KEYS.forEach(id=>data[id]=document.getElementById(id).value);
-    store[name]=data; localStorage.setItem('salaryPresets',JSON.stringify(store));
-    alert(`Preset "${name}" đã lưu!`); loadPresets();
-  }
+            const TongPhuCap = PhuCapTayNgheCongThuc + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_TAY_NGHE + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
+            document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
 
-  function loadPresetData() {
-    const name=document.getElementById('preset_select').value;
-    if(!name){alert('Chọn preset!');return;}
-    const store=JSON.parse(localStorage.getItem('salaryPresets')||'{}');
-    const data=store[name]; if(!data)return;
-    PRESET_KEYS.forEach(id=>document.getElementById(id).value=data[id]||0);
-    calcSalary(); alert(`Đã tải preset "${name}"`);
-  }
 
-  function deletePreset() {
-    const name=document.getElementById('preset_select').value;
-    if(!name)return;
-    if(confirm(`Xóa preset "${name}"?`)){
-      const store=JSON.parse(localStorage.getItem('salaryPresets')||'{}');
-      delete store[name]; localStorage.setItem('salaryPresets',JSON.stringify(store));
-      loadPresets();
-    }
-  }
+            // 5. Các Khoản Khấu Trừ
+            const LuongTinhGiaTangCa = LuongTinhTangCa; // Lương Tính Giờ Tăng Ca
+            document.getElementById('display_kh_luong_bh').textContent = formatVND(LuongTinhGiaTangCa);
 
-  function setupTheme() {
-    const root=document.documentElement, btn=document.getElementById('themeToggle');
-    const stored=localStorage.getItem('theme');
-    if(stored==='dark') root.classList.add('dark');
-    btn.textContent=root.classList.contains('dark')?'☀️':'🌙';
-    btn.addEventListener('click',()=>{
-      root.classList.toggle('dark');
-      const dark=root.classList.contains('dark');
-      btn.textContent=dark?'☀️':'🌙';
-      localStorage.setItem('theme',dark?'dark':'light');
-    });
-  }
+            const KH_BHYT = LuongTinhGiaTangCa * KH_BHYT_RATE;
+            const KH_BHTN = LuongTinhGiaTangCa * KH_BHTN_RATE;
+            const KH_BHXH = LuongTinhGiaTangCa * KH_BHXH_RATE;
+            document.getElementById('kh_bhyt').textContent = formatVND(KH_BHYT);
+            document.getElementById('kh_bhtn').textContent = formatVND(KH_BHTN);
+            document.getElementById('kh_bhxh').textContent = formatVND(KH_BHXH);
 
-  window.onload=()=>{
-    setupTheme(); setupToggles(); loadPresets();
+            const TongKhauTru = KH_BHYT + KH_BHTN + KH_BHXH + KH_PHI_CONG_DOAN + KH_TIEN_TIET_KIEM + KH_TIEN_TU_THIEN;
+            document.getElementById('tong_khau_tru').textContent = formatVND(TongKhauTru);
 
-    // ✅ Tự động ẩn 0 khi focus, trả lại 0 nếu trống
-    document.querySelectorAll('#input-section input[type="number"]').forEach(inp=>{
-      inp.addEventListener('focus',()=>{ if(inp.value==='0') inp.value=''; });
-      inp.addEventListener('blur',()=>{ if(inp.value.trim()==='') inp.value='0'; });
-    });
 
-    document.querySelectorAll('#input-section input').forEach(i=>{
-      i.addEventListener('input',()=>{
-        clearTimeout(debounceTimer);
-        debounceTimer=setTimeout(calcSalary,150);
-      });
-    });
-    document.getElementById('save_preset_btn').onclick=savePreset;
-    document.getElementById('load_preset_btn').onclick=loadPresetData;
-    document.getElementById('delete_preset_btn').onclick=deletePreset;
-    document.getElementById('preset_select').onchange=loadPresets;
-    calcSalary();
-  };
-</script>
+            // 6. Tổng Thu Nhập
+            const TongThuNhap = LuongThucTe + TongGioTangCa + TongPhuCap;
+            document.getElementById('tong_thu_nhap').textContent = formatVND(TongThuNhap);
+            
+            // Animation cho Tổng Thu Nhập
+            if (TongThuNhap !== previousTongThuNhap) {
+                triggerUpdateAnimation('tong_thu_nhap');
+                previousTongThuNhap = TongThuNhap;
+            }
+
+
+            // 7. Thực Lãnh
+            const ThucLanh = TongThuNhap - TongKhauTru;
+            document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh);
+            
+            // Animation cho Thực Lãnh
+            if (ThucLanh !== previousThucLanh) {
+                triggerUpdateAnimation('thuc_lanh');
+                previousThucLanh = ThucLanh;
+            }
+        }
+
+        // ----------------------------------------------------
+        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE)
+        // ----------------------------------------------------
+
+        // Cập nhật PRESET_INPUT_IDS để bao gồm pc_tham_nien_input và pc_tay_nghe_input
+        const PRESET_INPUT_IDS = [
+            'luong_co_ban_input', 'luong_tinh_tang_ca_input', 'ngay_di_lam', 
+            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', 'pc_tay_nghe_input', // ĐÃ THÊM MỤC NÀY
+            'tc_thuong', 'tc_nghi', 'tc_le', 'cd_30', 'cd_50', 'cd_70', 'cd_90'
+        ];
+        
+        // Load danh sách Preset từ LocalStorage
+        function loadPresets() {
+            const selectElement = document.getElementById('preset_select');
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            
+            // Xóa các option cũ
+            selectElement.innerHTML = '<option value="">-- Chọn Preset để Tải Số Liệu --</option>';
+
+            // Thêm các preset đã lưu
+            for (const name in storedPresets) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                selectElement.appendChild(option);
+            }
+            
+            // Cập nhật trạng thái nút
+            updatePresetButtons();
+        }
+
+        // Lưu Preset hiện tại
+        function savePreset() {
+            const nameInput = document.getElementById('preset_name_input');
+            let presetName = nameInput.value.trim();
+
+            if (!presetName) {
+                alert("Vui lòng nhập Tên Preset để lưu!");
+                return;
+            }
+
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            const newPresetData = {};
+
+            // Lấy dữ liệu từ các input hiện tại
+            PRESET_INPUT_IDS.forEach(id => {
+                newPresetData[id] = document.getElementById(id).value;
+            });
+
+            // Lưu hoặc cập nhật Preset
+            storedPresets[presetName] = newPresetData;
+            localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
+            
+            alert(`Preset "${presetName}" đã được lưu/cập nhật thành công!`);
+            
+            // Tải lại danh sách và chọn tên vừa lưu
+            loadPresets();
+            document.getElementById('preset_select').value = presetName;
+            nameInput.value = ''; // Xóa tên input sau khi lưu
+            updatePresetButtons();
+        }
+
+        // Tải dữ liệu từ Preset đã chọn vào các Input Field
+        function loadPresetData() {
+            const selectElement = document.getElementById('preset_select');
+            const presetName = selectElement.value;
+
+            if (!presetName) {
+                alert("Vui lòng chọn một Preset để tải!");
+                return;
+            }
+
+            const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+            const presetData = storedPresets[presetName];
+
+            if (presetData) {
+                // Đổ dữ liệu vào các Input
+                PRESET_INPUT_IDS.forEach(id => {
+                    // Đảm bảo dữ liệu được lấy ra là chuỗi, nếu không tồn tại thì là '0'
+                    document.getElementById(id).value = String(presetData[id] || '0');
+                });
+
+                // Chạy lại tính toán
+                calculateSalary();
+                alert(`Preset "${presetName}" đã được tải thành công!`);
+            }
+        }
+        
+        // Xóa Preset đã chọn
+        function deletePreset() {
+            const selectElement = document.getElementById('preset_select');
+            const presetName = selectElement.value;
+            
+            if (!presetName) return;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa Preset "${presetName}"?`)) {
+                const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
+                delete storedPresets[presetName];
+                localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
+                
+                alert(`Preset "${presetName}" đã được xóa!`);
+                loadPresets();
+            }
+        }
+
+        // Cập nhật trạng thái nút Tải/Xóa
+        function updatePresetButtons() {
+            const selectElement = document.getElementById('preset_select');
+            const loadBtn = document.getElementById('load_preset_btn');
+            const deleteBtn = document.getElementById('delete_preset_btn');
+            const presetNameInput = document.getElementById('preset_name_input');
+            
+            const selectedName = selectElement.value;
+
+            // Kích hoạt/Vô hiệu hóa nút Tải/Xóa
+            const shouldBeActive = selectedName !== "";
+            loadBtn.disabled = !shouldBeActive;
+            deleteBtn.disabled = !shouldBeActive;
+            
+            // Tự động điền tên preset đã chọn vào ô input nếu muốn cập nhật
+            if (shouldBeActive) {
+                presetNameInput.value = selectedName;
+            } else {
+                 // Nếu không chọn preset nào, đặt lại ô input trống để người dùng nhập tên mới
+                 presetNameInput.value = '';
+            }
+        }
+
+        // ----------------------------------------------------
+        // HÀM XỬ LÝ COLLAPSIBLE (CHẾ ĐỘ THU NHỎ)
+        // ----------------------------------------------------
+        function setupCollapsibles() {
+            const toggles = [
+                { id: 'toggle_ttcb', contentId: 'content_ttcb', arrowId: 'ttcb_arrow' },
+                { id: 'toggle_tc', contentId: 'content_tc', arrowId: 'tc_arrow' },
+                { id: 'toggle_pc', contentId: 'content_pc', arrowId: 'pc_arrow' },
+                { id: 'toggle_kt', contentId: 'content_kt', arrowId: 'kt_arrow' },
+            ];
+
+            toggles.forEach(item => {
+                const toggleEl = document.getElementById(item.id);
+                const contentEl = document.getElementById(item.contentId);
+                const arrowEl = document.getElementById(item.arrowId);
+
+                if (toggleEl && contentEl) {
+                    // Mặc định tất cả đều bị ẩn
+                    contentEl.style.maxHeight = '0';
+                    contentEl.classList.add('overflow-hidden'); 
+                    contentEl.classList.remove('hidden'); // Loại bỏ 'hidden' để sử dụng maxHeight
+                    
+                    if (arrowEl) {
+                        arrowEl.textContent = '▼'; // Đặt mũi tên chỉ xuống
+                        arrowEl.classList.remove('rotate-180');
+                        arrowEl.classList.add('rotate-0');
+                    }
+
+                    toggleEl.addEventListener('click', () => {
+                        // Tính toán chiều cao thực tế
+                        const isCollapsed = contentEl.style.maxHeight === '0px' || contentEl.style.maxHeight === '';
+                        
+                        // Toggle visibility
+                        if (isCollapsed) {
+                             // Mở rộng
+                            contentEl.style.maxHeight = contentEl.scrollHeight + 'px';
+                            if (arrowEl) {
+                                arrowEl.classList.remove('rotate-0');
+                                arrowEl.classList.add('rotate-180');
+                                arrowEl.textContent = '▲'; 
+                            }
+                        } else {
+                            // Thu gọn
+                            contentEl.style.maxHeight = '0';
+                            if (arrowEl) {
+                                arrowEl.classList.remove('rotate-180');
+                                arrowEl.classList.add('rotate-0');
+                                arrowEl.textContent = '▼';
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
+        // ----------------------------------------------------
+        // KHỞI TẠO VÀ SỰ KIỆN
+        // ----------------------------------------------------
+        window.onload = function() {
+            // Lắng nghe sự kiện thay đổi trên tất cả các trường input
+            const inputs = document.querySelectorAll('#input-section input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateSalary);
+            });
+            
+            // Cài đặt chế độ thu nhỏ (Dùng max-height thay vì class 'hidden' để có transition)
+            setupCollapsibles();
+            
+            // SỰ KIỆN PRESET
+            document.getElementById('save_preset_btn').addEventListener('click', savePreset);
+            document.getElementById('load_preset_btn').addEventListener('click', loadPresetData);
+            document.getElementById('delete_preset_btn').addEventListener('click', deletePreset);
+            document.getElementById('preset_select').addEventListener('change', updatePresetButtons);
+
+            // Tải danh sách preset khi trang được tải
+            loadPresets(); 
+
+            // Thực hiện tính toán lần đầu với giá trị mặc định (0)
+            calculateSalary();
+        }
+
+    </script>
 </body>
+
 </html>
