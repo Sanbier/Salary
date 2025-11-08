@@ -157,10 +157,10 @@
         
         <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
             <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân (Có Mật Khẩu)
+                <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 pb-4 border-b border-gray-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 pb-4 border-b border-gray-300">
                 <div class="md:col-span-1">
                     <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset</label>
                     <select id="preset_select" 
@@ -169,33 +169,21 @@
                     </select>
                 </div>
                 
-                <div class="md:col-span-1">
-                    <label for="preset_password_load" class="text-sm font-medium text-purple-700">Mật khẩu để Tải</label>
-                    <input type="password" id="preset_password_load" placeholder="Nhập mật khẩu"
-                           class="w-full p-2 border border-purple-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-150">
-                </div>
-
-                <div class="flex items-end">
+                <div class="flex items-end md:col-span-1">
                     <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400" disabled>
                         Tải Preset
                     </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-4">
                 <div class="md:col-span-1">
                     <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
                     <input type="text" id="preset_name_input" placeholder="Ví dụ: Lương tháng 10 - Tên bạn" 
                            class="w-full p-2 border border-green-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150">
                 </div>
                 
-                <div class="md:col-span-1">
-                    <label for="preset_password_save" class="text-sm font-medium text-green-700">Mật khẩu để Lưu</label>
-                    <input type="password" id="preset_password_save" placeholder="Nhập mật khẩu"
-                           class="w-full p-2 border border-green-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150">
-                </div>
-
-                <div class="flex items-end space-x-2">
+                <div class="flex items-end space-x-2 md:col-span-1">
                     <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
                         Lưu Preset
                     </button>
@@ -412,10 +400,10 @@
             const PC_THAM_NIEN = pc_tham_nien_input; 
             
             document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
-            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM);
+            document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NIEM);
             document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN);
 
-            const TongPhuCap = PhuCapTrinhDo + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
+            const TongPhuCap = PhuCapTrinhDo + PC_TRACH_NIEM + PC_THAM_NIEN + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
             document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
 
 
@@ -443,23 +431,9 @@
             const ThucLanh = TongThuNhap - TongKhauTru;
             document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh);
         }
-
+        
         // ----------------------------------------------------
-        // CÁC HÀM MÃ HÓA BẢO MẬT
-        // ----------------------------------------------------
-        // Hàm mã hóa/giải mã đơn giản bằng XOR, sử dụng mật khẩu làm key
-        function simpleXorEncryptDecrypt(data, key) {
-            let result = '';
-            for (let i = 0; i < data.length; i++) {
-                // Áp dụng XOR giữa mã ký tự của data và mã ký tự của key (lặp lại)
-                result += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-            }
-            return result;
-        }
-
-
-        // ----------------------------------------------------
-        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE)
+        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE - ĐÃ BỎ MẬT KHẨU)
         // ----------------------------------------------------
 
         // Lấy tất cả các input cần lưu
@@ -489,19 +463,13 @@
             updatePresetButtons();
         }
 
-        // Lưu Preset hiện tại
+        // Lưu Preset hiện tại (KHÔNG CẦN MẬT KHẨU)
         function savePreset() {
             const nameInput = document.getElementById('preset_name_input');
-            const passwordInput = document.getElementById('preset_password_save');
             let presetName = nameInput.value.trim();
-            const password = passwordInput.value;
 
             if (!presetName) {
                 alert("Vui lòng nhập Tên Preset để lưu!");
-                return;
-            }
-            if (!password) {
-                alert("Vui lòng nhập Mật khẩu để bảo vệ Preset!");
                 return;
             }
 
@@ -513,40 +481,32 @@
                 rawData[id] = document.getElementById(id).value;
             });
 
-            // 2. Mã hóa dữ liệu bằng mật khẩu
+            // 2. CHUYỂN DỮ LIỆU THÀNH CHUỖI JSON (KHÔNG MÃ HÓA)
             const rawDataString = JSON.stringify(rawData);
-            const encryptedData = btoa(simpleXorEncryptDecrypt(rawDataString, password)); // Mã hóa XOR sau đó Base64
 
-            // 3. Lưu dữ liệu đã mã hóa
+            // 3. Lưu dữ liệu thô
             storedPresets[presetName] = { 
-                data: encryptedData,
+                data: rawDataString,
             };
             
             localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
             
-            alert(`Preset "${presetName}" đã được lưu và MÃ HÓA thành công!`);
+            alert(`Preset "${presetName}" đã được lưu thành công!`);
             
             // Dọn dẹp
             loadPresets();
             document.getElementById('preset_select').value = presetName;
             nameInput.value = '';
-            passwordInput.value = ''; // Xóa mật khẩu sau khi lưu
             updatePresetButtons();
         }
 
-        // Tải dữ liệu từ Preset đã chọn vào các Input Field
+        // Tải dữ liệu từ Preset đã chọn vào các Input Field (KHÔNG CẦN MẬT KHẨU)
         function loadPresetData() {
             const selectElement = document.getElementById('preset_select');
-            const passwordInput = document.getElementById('preset_password_load');
             const presetName = selectElement.value;
-            const password = passwordInput.value;
 
             if (!presetName) {
                 alert("Vui lòng chọn một Preset để tải!");
-                return;
-            }
-            if (!password) {
-                alert("Vui lòng nhập Mật khẩu để giải mã Preset!");
                 return;
             }
 
@@ -555,29 +515,25 @@
 
             if (presetEntry) {
                 try {
-                    // 1. Giải mã Base64
-                    const decodedData = atob(presetEntry.data); 
+                    // 1. Lấy chuỗi dữ liệu JSON
+                    const presetDataString = presetEntry.data; 
                     
-                    // 2. Giải mã XOR bằng mật khẩu
-                    const decryptedDataString = simpleXorEncryptDecrypt(decodedData, password); 
+                    // 2. Phân tích cú pháp JSON
+                    const presetData = JSON.parse(presetDataString);
                     
-                    // 3. Phân tích cú pháp JSON
-                    const presetData = JSON.parse(decryptedDataString);
-                    
-                    // 4. Đổ dữ liệu vào các Input
+                    // 3. Đổ dữ liệu vào các Input
                     PRESET_INPUT_IDS.forEach(id => {
                         document.getElementById(id).value = String(presetData[id] || '0');
                     });
 
-                    // 5. Chạy lại tính toán
+                    // 4. Chạy lại tính toán
                     calculateSalary();
-                    alert(`Preset "${presetName}" đã được GIẢI MÃ và tải thành công!`);
-                    passwordInput.value = ''; // Xóa mật khẩu sau khi tải
+                    alert(`Preset "${presetName}" đã được tải thành công!`);
 
                 } catch (e) {
-                    // Lỗi xảy ra nếu mật khẩu sai hoặc dữ liệu bị hỏng
-                    console.error("Lỗi giải mã/tải Preset:", e);
-                    alert("Giải mã thất bại! Vui lòng kiểm tra lại Mật khẩu.");
+                    // Lỗi xảy ra nếu dữ liệu bị hỏng
+                    console.error("Lỗi tải Preset:", e);
+                    alert("Tải Preset thất bại! Dữ liệu có thể đã bị hỏng.");
                 }
 
             } else {
