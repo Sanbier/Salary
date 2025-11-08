@@ -1,280 +1,262 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Trình Chạy Máy - 3D Bảng</title>
-    <style>
-        /* ================================== */
-        /* CSS CHÍNH & HIỆU ỨNG CHIỀU SÂU */
-        /* ================================== */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5; 
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch Trình Chạy Máy</title>
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e7f0ff, #ffffff);
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100vh; margin: 0; padding: 40px 20px;
+}
+h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #0078ff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  letter-spacing: 1px;
+  margin-bottom: 35px;
+  animation: fadeIn 0.8s ease-out;
+}
 
-        h1 {
-            color: #007bff;
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
+/* CARD NỔI RÕ */
+.container {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15), inset 0 0 15px rgba(0,122,255,0.08);
+  width: 100%; max-width: 520px;
+  padding: 35px;
+  margin-bottom: 30px;
+  transition: all 0.4s ease;
+  position: relative;
+  border: 2px solid rgba(0,123,255,0.25);
+}
+.container:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 45px rgba(0,123,255,0.25), inset 0 0 20px rgba(0,123,255,0.08);
+}
 
-        /* Container cho Form và Result */
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 16px; 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
-            width: 100%;
-            max-width: 480px;
-            margin-bottom: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-        }
+/* INPUT */
+label {
+  display: block;
+  font-weight: 600;
+  color: #004b9a;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 2px solid #d6e4ff;
+  background: linear-gradient(145deg, #f9fbff, #eef5ff);
+  box-shadow: inset 2px 2px 4px rgba(0,0,0,0.05), inset -2px -2px 6px rgba(255,255,255,0.9);
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0,123,255,0.5), inset 0 0 10px rgba(0,123,255,0.15);
+  transform: scale(1.03);
+}
 
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #444;
-        }
+/* BUTTON */
+button {
+  background: linear-gradient(90deg, #007bff, #00aaff);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 12px;
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 6px 15px rgba(0,123,255,0.35);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0,123,255,0.5);
+}
+button:active {
+  transform: scale(0.98);
+}
+button::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -70%;
+  width: 50%; height: 100%;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-20deg);
+  transition: left 0.5s;
+}
+button:hover::after {
+  left: 130%;
+}
+.loading::before {
+  content: '';
+  display: inline-block;
+  width: 16px; height: 16px;
+  margin-right: 8px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
-        input {
-            padding: 14px;
-            margin: 5px 0 20px;
-            display: block;
-            width: calc(100% - 28px);
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        
-        input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-            outline: none;
-        }
+/* KẾT QUẢ */
+#result {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+h2 {
+  color: #006ae0;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
 
-        button {
-            background-color: #17a2b8;
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
-        }
+/* TABLE 3D NỔI RÕ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 25px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+  overflow: hidden;
+  border: 1px solid rgba(0,123,255,0.3);
+}
+th {
+  background: linear-gradient(180deg, #007bff, #005ecb);
+  color: white;
+  font-weight: 700;
+  padding: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0,123,255,0.1);
+  background: #fafdff;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+tr:nth-child(even) td {
+  background: #f1f6ff;
+}
+tr:hover td {
+  background: #e7f1ff;
+  box-shadow: inset 0 0 10px rgba(0,123,255,0.2);
+  transform: scale(1.01);
+}
+.animated-row {
+  opacity: 0;
+  animation: slideIn 0.4s ease-out forwards;
+}
 
-        button:hover {
-            background-color: #138496;
-            box-shadow: 0 8px 20px rgba(23, 162, 184, 0.5);
-        }
-
-        button:active {
-            transform: translateY(2px);
-        }
-        
-        /* ================================== */
-        /* CSS ANIMATION CHUNG */
-        /* ================================== */
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading::before {
-            content: '';
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 0.8s ease-in-out infinite;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #result.show {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        /* ================================== */
-        /* CSS BẢNG (TABLE) MỚI VỚI 3D & ANIMATION */
-        /* ================================== */
-
-        h2 {
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 10px;
-            color: #007bff;
-            font-weight: 600;
-            margin-bottom: 0; /* Giảm khoảng cách */
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho toàn bộ bảng */
-        }
-        
-        /* Tiêu đề bảng (TH) - Tạo hiệu ứng 3D */
-        th {
-            background: linear-gradient(180deg, #007bff, #0056b3); /* Màu chuyển từ sáng đến tối */
-            color: white;
-            font-weight: 600;
-            padding: 15px;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng dưới tiêu đề */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Tạo chiều sâu cho chữ */
-        }
-        
-        td {
-            border: none;
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee; /* Viền mỏng giữa các hàng */
-        }
-        
-        /* Hiệu ứng Hover cho hàng - Nhô lên */
-        tr:not(:first-child):hover { /* Áp dụng cho tất cả trừ hàng tiêu đề */
-            background-color: #e9f7ff;
-            transform: scale(1.02); /* Phóng to nhẹ */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-            position: relative;
-            z-index: 10;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        /* 3. Animation cho từng hàng (slide-in) */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        /* Áp dụng animation cho từng hàng khi chúng được tạo ra */
-        .animated-row {
-            opacity: 0;
-            animation: slideIn 0.3s ease-out forwards;
-        }
-    </style>
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
 <body>
 
-    <h1>Lịch Trình Chạy Máy</h1>
+<h1>🧾 Lịch Chạy Máy</h1>
 
-    <div class="container">
-        <label for="startTime">Thời Gian Start Vải:</label>
-        <input type="text" id="startTime" value="" placeholder="HH:MM">
+<div class="container">
+  <label for="startTime">⏰ Giờ Bắt Đầu:</label>
+  <input type="text" id="startTime" placeholder="HH:MM hoặc 8h30">
 
-        <label for="runTime">Một Roll Bao Nhiêu Phút:</label>
-        <input type="text" id="runTime" value="" placeholder="HH:MM"> 
+  <label for="runTime">⚙️ Thời Gian 1 Roll :</label>
+  <input type="text" id="runTime" placeholder="VD: 1:15 hoặc 75">
 
-        <label for="numRolls">Chạy Bao Nhiêu Roll:</label>
-        <input type="number" id="numRolls" value="0" min="0">
+  <label for="numRolls">🎞️ Số Roll Cần Chạy:</label>
+  <input type="number" id="numRolls" value="0" min="0"
+    onfocus="if(this.value=='0')this.value='';"
+    onblur="if(this.value=='')this.value='0';">
 
-        <button id="calculateBtn" onclick="calculateSchedule()">Tính toán Lịch trình</button>
-    </div>
+  <button id="calculateBtn" onclick="calculateSchedule()">🚀 Tính Lịch Trình</button>
+</div>
 
-    <div id="result" class="container">
-        <p style="text-align: center; color: #888;">Nhập thông tin và nhấn nút để xem lịch trình.</p>
-    </div>
+<div id="result" class="container">
+  <p style="text-align:center;color:#777;">Nhập thông tin để xem lịch trình...</p>
+</div>
 
-    <script>
-        const formatMinutesToTime = (minutes) => {
-            const minutesInDay = minutes % (24 * 60); 
-            const h = Math.floor(minutesInDay / 60);
-            const m = minutesInDay % 60;
-            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-        };
+<script>
+// Chuẩn hóa định dạng giờ nhập
+function parseTime(input) {
+  input = input.trim().toLowerCase().replace(/[h\s]/g, ':');
+  if (/^\d{1,2}:\d{1,2}$/.test(input)) {
+    let [h, m] = input.split(':').map(Number);
+    return h * 60 + (m || 0);
+  }
+  if (/^\d{3,4}$/.test(input)) {
+    let h = Math.floor(input / 100), m = input % 100;
+    return h * 60 + m;
+  }
+  let n = parseInt(input);
+  return isNaN(n) ? 0 : n;
+}
+function formatMinutesToTime(total) {
+  const day = Math.floor(total / (24 * 60));
+  const t = total % (24 * 60);
+  const h = Math.floor(t / 60), m = t % 60;
+  const time = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  return day > 0 ? `${time} (Ngày +${day})` : time;
+}
 
-        function calculateSchedule() {
-            const btn = document.getElementById('calculateBtn');
-            const resultDiv = document.getElementById('result');
-            
-            btn.innerHTML = '';
-            btn.classList.add('loading');
-            
-            // Giả lập thời gian tính toán
-            setTimeout(() => {
-                const startTimeStr = document.getElementById('startTime').value;
-                const runTimeStr = document.getElementById('runTime').value;
-                const numRolls = parseInt(document.getElementById('numRolls').value);
-                
-                resultDiv.innerHTML = ''; 
-                resultDiv.classList.remove('show');
+function calculateSchedule() {
+  const btn = document.getElementById('calculateBtn');
+  const resultDiv = document.getElementById('result');
+  btn.innerHTML = ''; btn.classList.add('loading');
 
-                const [startHour, startMinute] = startTimeStr ? startTimeStr.split(':').map(Number) : [0, 0];
-                let totalMinutes = startHour * 60 + startMinute;
+  setTimeout(() => {
+    const startStr = document.getElementById('startTime').value;
+    const runStr = document.getElementById('runTime').value;
+    const rolls = parseInt(document.getElementById('numRolls').value);
+    const startMin = parseTime(startStr);
+    const runMin = parseTime(runStr);
 
-                const [runHour, runMinute] = runTimeStr ? runTimeStr.split(':').map(Number) : [0, 0];
-                const runTimeMinutes = runHour * 60 + runMinute; 
-                
-                btn.classList.remove('loading');
-                btn.innerHTML = 'Tính toán Lịch trình';
-                
-                if (!startTimeStr || !runTimeStr || isNaN(numRolls) || numRolls <= 0 || runTimeMinutes <= 0) {
-                    resultDiv.innerHTML = '<p style="color: red; text-align: center;">Vui lòng nhập đầy đủ và chính xác dữ liệu.</p>';
-                    return;
-                }
-                
-                // 2. Tạo bảng lịch trình
-                let scheduleHTML = '<h2>Lịch trình chi tiết</h2>';
-                scheduleHTML += '<table>';
-                scheduleHTML += '<thead><tr><th>Roll</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead>'; // Thêm thead
-                scheduleHTML += '<tbody>'; // Thêm tbody
-                
-                // Vòng lặp tính toán từng Roll
-                for (let i = 1; i <= numRolls; i++) {
-                    const currentStartTime = totalMinutes;
-                    const currentEndTime = totalMinutes + runTimeMinutes;
+    btn.classList.remove('loading');
+    btn.innerHTML = '🚀 Tính Lịch Trình';
 
-                    const formattedStartTime = formatMinutesToTime(currentStartTime);
-                    const formattedEndTime = formatMinutesToTime(currentEndTime);
-                    
-                    // Thêm class 'animated-row' và style delay cho từng hàng
-                    scheduleHTML += `<tr class="animated-row" style="animation-delay: ${i * 0.05}s;"><td>Roll ${i}</td><td>${formattedStartTime}</td><td>${formattedEndTime}</td></tr>`;
+    if (!startStr || !runStr || isNaN(rolls) || rolls <= 0 || runMin <= 0) {
+      resultDiv.innerHTML = '<p style="color:red;text-align:center;">⚠️ Vui lòng nhập đủ và hợp lệ.</p>';
+      return;
+    }
 
-                    totalMinutes = currentEndTime; 
-                }
-
-                scheduleHTML += '</tbody></table>';
-                
-                // 3. Hiển thị kết quả và hiệu ứng fade-in
-                resultDiv.innerHTML = scheduleHTML;
-                resultDiv.classList.add('show');
-            }, 500); 
-        }
-    </script>
-
+    let total = startMin;
+    let html = '<h2>📋 Lịch trình chi tiết</h2>';
+    html += '<table><thead><tr><th>Roll</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead><tbody>';
+    for (let i = 1; i <= rolls; i++) {
+      const st = formatMinutesToTime(total);
+      const et = formatMinutesToTime(total + runMin);
+      html += `<tr class="animated-row" style="animation-delay:${i * 0.05}s;"><td>Roll ${i}</td><td>${st}</td><td>${et}</td></tr>`;
+      total += runMin;
+    }
+    html += '</tbody></table>';
+    resultDiv.innerHTML = html;
+    resultDiv.classList.add('show');
+  }, 400);
+}
+</script>
 </body>
 </html>
