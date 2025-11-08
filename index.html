@@ -1,4 +1,4 @@
-<!DOCTYPE<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,6 @@
     <link rel="apple-touch-icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" sizes="180x180">
     <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="192x192">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-      <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Định nghĩa font Inter */
@@ -84,10 +82,40 @@
         .animate-update {
             animation: resultUpdate 0.4s ease-out;
         }
+
+        /* --- STYLE CHO BONG BÓNG NỔI THỰC LÃNH (MỚI) --- */
+        #floating-result-bubble {
+            position: fixed; /* Rất quan trọng: Giữ cố định trên màn hình */
+            bottom: 1.5rem; 
+            right: 1.5rem;  
+            z-index: 100;   
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); /* Red gradient */
+            border: 2px solid rgba(255, 255, 255, 0.5); 
+            cursor: pointer;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        
+        /* Animation cho bong bóng khi cập nhật */
+        @keyframes bubbleUpdate {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px #fef2f2, 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        }
+        
+        .animate-update-bubble {
+            animation: bubbleUpdate 0.5s ease-out;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
-    <div<div class="max-w-3xl mx-auto mb-6">
+    
+    <div id="floating-result-bubble" 
+         class="fixed bottom-6 right-6 z-50 p-4 rounded-xl shadow-2xl transition duration-300 transform scale-100 hover:scale-[1.05] cursor-pointer">
+        <p class="text-xs font-medium text-white/80">THỰC LÃNH</p>
+        <p id="thuc_lanh_fab" class="text-xl font-extrabold text-white mt-1 result-display drop-shadow-lg">0 VNĐ</p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto mb-6">
         <p class="text-center">
             <a href="tinhgio.html" 
                class="inline-block bg-pink-600 hover:bg-pink-700 active:scale-95 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-150">
@@ -256,7 +284,7 @@
                 <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1 result-display">0 VNĐ</p>
             </div>
             <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300 hover:scale-[1.01]">
-                <p class="text-sm font-medium text-red-800">THỰC LÃNH</p>
+                <p class="text-sm font-medium text-red-800">THỰC LÃNH (GIỮ CHỖ)</p>
                 <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1 result-display">0 VNĐ</p>
             </div>
         </div>
@@ -310,13 +338,13 @@
                 </p>
 
                 <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
-                    <p>Phụ Cấp Tay Nghề: <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
-                    <p>Phụ Cấp Trách Nhiệm: <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên: <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề: <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
-                    <p>Phụ Cấp Chuyên Cần: <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p>Hỗ Trợ Đi Lại: <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
-                    <p>Tiền Thưởng: <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
+                    <p>Phụ Cấp Tay Nghề (Công Thức): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
+                    <p>Phụ Cấp Trách Nhiệm (Input): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên (Input): <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề (Input): <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Chuyên Cần (Input): <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Hỗ Trợ Đi Lại (Cố định): <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
+                    <p>Tiền Thưởng (Cố định): <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
                 </div>
             </div>
 
@@ -334,9 +362,9 @@
                     <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Xã Hội (8%): <span id="kh_bhxh" class="font-bold text-red-600">0 VNĐ</span></p>
-                    <p>Phí Công Đoàn: <span class="font-bold text-red-600">49,600 VNĐ</span></p>
-                    <p>Tiền Tiết Kiệm: <span class="font-bold text-red-600">200,000 VNĐ</span></p>
-                    <p>Tiền Từ Thiện: <span class="font-bold text-red-600">8,000 VNĐ</span></p>
+                    <p>Phí Công Đoàn (Cố định): <span class="font-bold text-red-600">49,600 VNĐ</span></p>
+                    <p>Tiền Tiết Kiệm (Cố định): <span class="font-bold text-red-600">200,000 VNĐ</span></p>
+                    <p>Tiền Từ Thiện (Cố định): <span class="font-bold text-red-600">8,000 VNĐ</span></p>
                 </div>
             </div>
         </div>
@@ -357,7 +385,7 @@
         };
 
         // ----------------------------------------------------
-        // CÁC HẰNG SỐ CỐ ĐỊNH (Cố định hóa các hằng số không cần nhập)
+        // CÁC HẰNG SỐ CỐ ĐỊNH 
         // ----------------------------------------------------
         const NGAY_CHUAN = 26;
         const GIO_CHUAN_NGAY = 8;
@@ -376,33 +404,43 @@
         const KH_TIEN_TU_THIEN = 8000;
 
         // ----------------------------------------------------
-        // HÀM TÍNH TOÁN LƯƠNG
+        // HÀM TÍNH TOÁN VÀ ANIMATION
         // ----------------------------------------------------
 
         // Hàm trigger animation cập nhật
         function triggerUpdateAnimation(elementId) {
             const el = document.getElementById(elementId);
             if (el) {
+                // Animation cho phần tử giá trị
                 el.classList.remove('animate-update');
-                // Force reflow/repaint
                 void el.offsetWidth; 
                 el.classList.add('animate-update');
             }
         }
+        
+        // Hàm trigger animation cho Bong bóng nổi
+        function triggerBubbleAnimation() {
+             const bubble = document.getElementById('floating-result-bubble');
+             if (bubble) {
+                 bubble.classList.remove('animate-update-bubble');
+                 void bubble.offsetWidth; 
+                 bubble.classList.add('animate-update-bubble');
+             }
+        }
+
 
         let previousThucLanh = 0;
         let previousTongThuNhap = 0;
 
         function calculateSalary() {
             // 1. Số Liệu Đầu Vào (Input)
-            // Lấy giá trị từ input, nếu rỗng thì dùng 0
             const luong_co_ban_input = parseFloat(document.getElementById('luong_co_ban_input').value) || 0;
             const luong_tinh_tang_ca_input = parseFloat(document.getElementById('luong_tinh_tang_ca_input').value) || 0;
             const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
             const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
             const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
             const pc_tham_nien_input = parseFloat(document.getElementById('pc_tham_nien_input').value) || 0; 
-            const pc_tay_nghe_input = parseFloat(document.getElementById('pc_tay_nghe_input').value) || 0; // INPUT MỚI
+            const pc_tay_nghe_input = parseFloat(document.getElementById('pc_tay_nghe_input').value) || 0; 
             
             // Tăng ca và Ca đêm
             const tc_thuong = parseFloat(document.getElementById('tc_thuong').value) || 0;
@@ -471,19 +509,19 @@
             const PC_CHUYEN_CAN = pc_chuyen_can_input;
             const PC_TRACH_NHIEM = pc_trach_nhiem_input;
             const PC_THAM_NIEN = pc_tham_nien_input;
-            const PC_TAY_NGHE = pc_tay_nghe_input; // PHỤ CẤP TAY NGHỀ MỚI (INPUT)
+            const PC_TAY_NGHE = pc_tay_nghe_input; 
 
             document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
             document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM);
             document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN);
-            document.getElementById('pc_tay_nghe_result').textContent = formatVND(PC_TAY_NGHE); // HIỂN THỊ MỤC MỚI
+            document.getElementById('pc_tay_nghe_result').textContent = formatVND(PC_TAY_NGHE); 
 
             const TongPhuCap = PhuCapTayNgheCongThuc + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_TAY_NGHE + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
             document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
 
 
             // 5. Các Khoản Khấu Trừ
-            const LuongTinhGiaTangCa = LuongTinhTangCa; // Lương Tính Giờ Tăng Ca
+            const LuongTinhGiaTangCa = LuongTinhTangCa; 
             document.getElementById('display_kh_luong_bh').textContent = formatVND(LuongTinhGiaTangCa);
 
             const KH_BHYT = LuongTinhGiaTangCa * KH_BHYT_RATE;
@@ -510,11 +548,15 @@
 
             // 7. Thực Lãnh
             const ThucLanh = TongThuNhap - TongKhauTru;
-            document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh);
             
-            // Animation cho Thực Lãnh
+            // Cập nhật giá trị Thực Lãnh ở cả hai nơi: Khối chính và Bong bóng nổi
+            document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh); // Khối giữ chỗ
+            document.getElementById('thuc_lanh_fab').textContent = formatVND(ThucLanh); // Bong bóng nổi
+            
+            // Animation cho Thực Lãnh (cả khối chính và bong bóng)
             if (ThucLanh !== previousThucLanh) {
-                triggerUpdateAnimation('thuc_lanh');
+                triggerUpdateAnimation('thuc_lanh'); // Animation khối chính
+                triggerBubbleAnimation(); // Animation bong bóng nổi
                 previousThucLanh = ThucLanh;
             }
         }
@@ -523,10 +565,9 @@
         // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE)
         // ----------------------------------------------------
 
-        // Cập nhật PRESET_INPUT_IDS để bao gồm pc_tham_nien_input và pc_tay_nghe_input
         const PRESET_INPUT_IDS = [
             'luong_co_ban_input', 'luong_tinh_tang_ca_input', 'ngay_di_lam', 
-            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', 'pc_tay_nghe_input', // ĐÃ THÊM MỤC NÀY
+            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', 'pc_tay_nghe_input', 
             'tc_thuong', 'tc_nghi', 'tc_le', 'cd_30', 'cd_50', 'cd_70', 'cd_90'
         ];
         
@@ -597,7 +638,6 @@
             if (presetData) {
                 // Đổ dữ liệu vào các Input
                 PRESET_INPUT_IDS.forEach(id => {
-                    // Đảm bảo dữ liệu được lấy ra là chuỗi, nếu không tồn tại thì là '0'
                     document.getElementById(id).value = String(presetData[id] || '0');
                 });
 
@@ -642,7 +682,6 @@
             if (shouldBeActive) {
                 presetNameInput.value = selectedName;
             } else {
-                 // Nếu không chọn preset nào, đặt lại ô input trống để người dùng nhập tên mới
                  presetNameInput.value = '';
             }
         }
@@ -667,21 +706,20 @@
                     // Mặc định tất cả đều bị ẩn
                     contentEl.style.maxHeight = '0';
                     contentEl.classList.add('overflow-hidden'); 
-                    contentEl.classList.remove('hidden'); // Loại bỏ 'hidden' để sử dụng maxHeight
+                    contentEl.classList.remove('hidden'); 
                     
                     if (arrowEl) {
-                        arrowEl.textContent = '▼'; // Đặt mũi tên chỉ xuống
+                        arrowEl.textContent = '▼'; 
                         arrowEl.classList.remove('rotate-180');
                         arrowEl.classList.add('rotate-0');
                     }
 
                     toggleEl.addEventListener('click', () => {
-                        // Tính toán chiều cao thực tế
                         const isCollapsed = contentEl.style.maxHeight === '0px' || contentEl.style.maxHeight === '';
                         
-                        // Toggle visibility
                         if (isCollapsed) {
                              // Mở rộng
+                            // Phải đặt setTimeout để đảm bảo contentEl.scrollHeight được tính đúng
                             contentEl.style.maxHeight = contentEl.scrollHeight + 'px';
                             if (arrowEl) {
                                 arrowEl.classList.remove('rotate-0');
@@ -713,7 +751,7 @@
                 input.addEventListener('input', calculateSalary);
             });
             
-            // Cài đặt chế độ thu nhỏ (Dùng max-height thay vì class 'hidden' để có transition)
+            // Cài đặt chế độ thu nhỏ
             setupCollapsibles();
             
             // SỰ KIỆN PRESET
