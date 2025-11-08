@@ -12,12 +12,25 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Định nghĩa font Inter */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        /* --- NHẬP CẢ HAI FONT CHỮ --- */
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700;900&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
+            /* Dùng Roboto cho văn bản thông thường để dễ đọc */
+            font-family: 'Roboto', sans-serif;
             background-color: #f3f4f6;
         }
+        
+        /* --- ÁP DỤNG FONT LOBSTER CHO TIÊU ĐỀ CHÍNH --- */
+        .lobster-title {
+            font-family: 'Lobster', cursive;
+            /* Điều chỉnh kích thước/độ đậm cho nổi bật hơn */
+            font-weight: 400; /* Lobster chỉ có 1 độ đậm */
+            letter-spacing: 1px;
+            color: #1f2937; /* Gray 800 */
+        }
+        
+        /* Các style khác giữ nguyên */
         .section-title {
             position: relative;
             padding-left: 1.5rem;
@@ -32,29 +45,28 @@
             height: 80%;
             background-color: #3b82f6; /* Blue 500 */
             border-radius: 4px;
-            transition: height 0.3s ease; /* Thêm transition cho thanh màu xanh */
+            transition: height 0.3s ease; 
         }
         .section-title:hover::before {
-             height: 100%; /* Thanh sidebar cao hơn khi hover */
+             height: 100%; 
         }
         .input-group label {
-            font-size: 0.875rem; /* text-sm */
-            font-weight: 500; /* font-medium */
-            color: #374151; /* gray-700 */
+            font-size: 0.875rem; 
+            font-weight: 500; 
+            color: #374151; 
         }
         .result-value {
             font-weight: 700;
             color: #16a34a; /* green-600 */
-            transition: all 0.2s ease-out; /* Thêm transition cho giá trị kết quả */
+            transition: all 0.2s ease-out; 
         }
         .final-result {
-            font-size: 1.5rem; /* text-2xl */
+            font-size: 1.5rem; 
             color: #b91c1c; /* red-700 */
         }
 
         /* --- KEYFRAMES CHO ANIMATION --- */
 
-        /* Animation cho fade-in lúc tải trang */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -63,17 +75,15 @@
             animation: fadeIn 0.8s ease-out forwards;
         }
 
-        /* Animation cho Input Focus */
         @keyframes inputFocusBounce {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
         }
         .input-bounce-effect:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* ring-blue-500/50 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); 
             animation: inputFocusBounce 0.3s ease-out;
         }
         
-        /* Animation cho Kết quả khi cập nhật */
         @keyframes resultUpdate {
             0% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.03); opacity: 1; }
@@ -85,17 +95,16 @@
 
         /* --- STYLE CHO BONG BÓNG NỔI THỰC LÃNH (FAB) --- */
         #floating-result-bubble {
-            position: fixed; /* Rất quan trọng: Giữ cố định trên màn hình */
+            position: fixed; 
             bottom: 1.5rem; 
             right: 1.5rem;  
             z-index: 100;   
-            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); /* Red gradient */
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); 
             border: 2px solid rgba(255, 255, 255, 0.5); 
             cursor: pointer;
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
         }
         
-        /* Animation cho bong bóng khi cập nhật */
         @keyframes bubbleUpdate {
             0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
             50% { transform: scale(1.05); box-shadow: 0 0 25px #fef2f2, 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
@@ -124,7 +133,7 @@
         </p>
     </div>
     <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8 fade-in-on-load">
-        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2 lobster-title">
             Bảng Tính Lương HYOSUNG
         </h1>
 
@@ -139,7 +148,7 @@
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
-                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tăng Ca</label>
+                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
@@ -338,13 +347,13 @@
                 </p>
 
                 <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
-                    <p>Phụ Cấp Tay Nghề: <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
-                    <p>Phụ Cấp Trách Nhiệm: <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Tay Nghề : <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
+                    <p>Phụ Cấp Trách Nhiệm : <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
                     <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên: <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề: <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
-                    <p>Phụ Cấp Chuyên Cần: <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p>Hỗ Trợ Đi Lại: <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
-                    <p>Tiền Thưởng: <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
+                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề : <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Chuyên Cần : <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Hỗ Trợ Đi Lại : <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
+                    <p>Tiền Thưởng : <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
                 </div>
             </div>
 
@@ -362,9 +371,9 @@
                     <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Xã Hội (8%): <span id="kh_bhxh" class="font-bold text-red-600">0 VNĐ</span></p>
-                    <p>Phí Công Đoàn: <span class="font-bold text-red-600">49,600 VNĐ</span></p>
+                    <p>Phí Công Đoàn : <span class="font-bold text-red-600">49,600 VNĐ</span></p>
                     <p>Tiền Tiết Kiệm: <span class="font-bold text-red-600">200,000 VNĐ</span></p>
-                    <p>Tiền Từ Thiện: <span class="font-bold text-red-600">8,000 VNĐ</span></p>
+                    <p>Tiền Từ Thiện : <span class="font-bold text-red-600">8,000 VNĐ</span></p>
                 </div>
             </div>
         </div>
