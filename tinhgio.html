@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Trình Chạy Máy - 3D & Animation</title>
+    <title>Lịch Trình Chạy Máy - 3D Bảng</title>
     <style>
         /* ================================== */
         /* CSS CHÍNH & HIỆU ỨNG CHIỀU SÂU */
         /* ================================== */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5; /* Nền tối hơn một chút */
+            background-color: #f0f2f5; 
             color: #333;
             margin: 0;
             padding: 20px;
@@ -31,15 +31,14 @@
         .container {
             background-color: #ffffff;
             padding: 30px;
-            border-radius: 16px; /* Bo tròn nhiều hơn */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sâu hơn */
+            border-radius: 16px; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
             width: 100%;
-            max-width: 480px; /* Rộng hơn một chút */
+            max-width: 480px;
             margin-bottom: 25px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
         
-        /* Hiệu ứng 'nhô lên' khi di chuột */
         .container:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
@@ -72,7 +71,7 @@
         }
 
         button {
-            background-color: #17a2b8; /* Màu Xanh Teal mới */
+            background-color: #17a2b8;
             color: white;
             padding: 15px 20px;
             border: none;
@@ -91,14 +90,13 @@
         }
 
         button:active {
-            transform: translateY(2px); /* Hiệu ứng nhấn xuống */
+            transform: translateY(2px);
         }
         
         /* ================================== */
-        /* CSS ANIMATION */
+        /* CSS ANIMATION CHUNG */
         /* ================================== */
 
-        /* 1. Keyframes cho hiệu ứng Loading (Quay) */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -116,7 +114,6 @@
             animation: spin 0.8s ease-in-out infinite;
         }
         
-        /* 2. Keyframes cho hiệu ứng Fade-in (Xuất hiện mượt mà) */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -127,51 +124,67 @@
         }
 
         /* ================================== */
-        /* BẢNG KẾT QUẢ */
+        /* CSS BẢNG (TABLE) MỚI VỚI 3D & ANIMATION */
         /* ================================== */
 
-        #result {
-            padding: 30px;
-            /* box-shadow và border-radius được áp dụng qua class container */
-        }
-        
         h2 {
             border-bottom: 3px solid #007bff;
             padding-bottom: 10px;
             color: #007bff;
             font-weight: 600;
+            margin-bottom: 0; /* Giảm khoảng cách */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 25px;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho toàn bộ bảng */
         }
         
-        th, td {
-            border: none; /* Bỏ viền trong bảng */
-            padding: 15px;
-            text-align: left;
-        }
-        
+        /* Tiêu đề bảng (TH) - Tạo hiệu ứng 3D */
         th {
-            background-color: #007bff;
+            background: linear-gradient(180deg, #007bff, #0056b3); /* Màu chuyển từ sáng đến tối */
             color: white;
             font-weight: 600;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng dưới tiêu đề */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Tạo chiều sâu cho chữ */
+        }
+        
+        td {
+            border: none;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee; /* Viền mỏng giữa các hàng */
+        }
+        
+        /* Hiệu ứng Hover cho hàng - Nhô lên */
+        tr:not(:first-child):hover { /* Áp dụng cho tất cả trừ hàng tiêu đề */
+            background-color: #e9f7ff;
+            transform: scale(1.02); /* Phóng to nhẹ */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            position: relative;
+            z-index: 10;
         }
         
         tr:nth-child(even) {
             background-color: #f8f9fa;
         }
+
+        /* 3. Animation cho từng hàng (slide-in) */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
         
-        tr:hover {
-            background-color: #e9f7ff; /* Hiệu ứng hover cho hàng */
-            transition: background-color 0.2s;
+        /* Áp dụng animation cho từng hàng khi chúng được tạo ra */
+        .animated-row {
+            opacity: 0;
+            animation: slideIn 0.3s ease-out forwards;
         }
     </style>
 </head>
@@ -197,7 +210,6 @@
     </div>
 
     <script>
-        // Hàm chuyển đổi tổng số phút thành định dạng HH:MM
         const formatMinutesToTime = (minutes) => {
             const minutesInDay = minutes % (24 * 60); 
             const h = Math.floor(minutesInDay / 60);
@@ -209,18 +221,17 @@
             const btn = document.getElementById('calculateBtn');
             const resultDiv = document.getElementById('result');
             
-            // Bắt đầu hiệu ứng loading
             btn.innerHTML = '';
             btn.classList.add('loading');
             
-            // Tạm dừng ngắn để thấy hiệu ứng loading
+            // Giả lập thời gian tính toán
             setTimeout(() => {
-                // 1. Lấy dữ liệu và kiểm tra
                 const startTimeStr = document.getElementById('startTime').value;
                 const runTimeStr = document.getElementById('runTime').value;
                 const numRolls = parseInt(document.getElementById('numRolls').value);
                 
                 resultDiv.innerHTML = ''; 
+                resultDiv.classList.remove('show');
 
                 const [startHour, startMinute] = startTimeStr ? startTimeStr.split(':').map(Number) : [0, 0];
                 let totalMinutes = startHour * 60 + startMinute;
@@ -228,23 +239,20 @@
                 const [runHour, runMinute] = runTimeStr ? runTimeStr.split(':').map(Number) : [0, 0];
                 const runTimeMinutes = runHour * 60 + runMinute; 
                 
-                // Kết thúc hiệu ứng loading và khôi phục nút
                 btn.classList.remove('loading');
                 btn.innerHTML = 'Tính toán Lịch trình';
                 
-                // Kiểm tra lỗi
                 if (!startTimeStr || !runTimeStr || isNaN(numRolls) || numRolls <= 0 || runTimeMinutes <= 0) {
                     resultDiv.innerHTML = '<p style="color: red; text-align: center;">Vui lòng nhập đầy đủ và chính xác dữ liệu.</p>';
-                    // Đảm bảo không có hiệu ứng fade-in nếu có lỗi
-                    resultDiv.classList.remove('show'); 
                     return;
                 }
                 
                 // 2. Tạo bảng lịch trình
                 let scheduleHTML = '<h2>Lịch trình chi tiết</h2>';
                 scheduleHTML += '<table>';
-                scheduleHTML += '<tr><th>Roll</th><th>Bắt đầu</th><th>Kết thúc</th></tr>';
-
+                scheduleHTML += '<thead><tr><th>Roll</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead>'; // Thêm thead
+                scheduleHTML += '<tbody>'; // Thêm tbody
+                
                 // Vòng lặp tính toán từng Roll
                 for (let i = 1; i <= numRolls; i++) {
                     const currentStartTime = totalMinutes;
@@ -253,17 +261,18 @@
                     const formattedStartTime = formatMinutesToTime(currentStartTime);
                     const formattedEndTime = formatMinutesToTime(currentEndTime);
                     
-                    scheduleHTML += `<tr><td>Roll ${i}</td><td>${formattedStartTime}</td><td>${formattedEndTime}</td></tr>`;
+                    // Thêm class 'animated-row' và style delay cho từng hàng
+                    scheduleHTML += `<tr class="animated-row" style="animation-delay: ${i * 0.05}s;"><td>Roll ${i}</td><td>${formattedStartTime}</td><td>${formattedEndTime}</td></tr>`;
 
                     totalMinutes = currentEndTime; 
                 }
 
-                scheduleHTML += '</table>';
+                scheduleHTML += '</tbody></table>';
                 
-                // 3. Hiển thị kết quả và thêm hiệu ứng fade-in
+                // 3. Hiển thị kết quả và hiệu ứng fade-in
                 resultDiv.innerHTML = scheduleHTML;
                 resultDiv.classList.add('show');
-            }, 500); // Thời gian giả lập tính toán (0.5 giây)
+            }, 500); 
         }
     </script>
 
