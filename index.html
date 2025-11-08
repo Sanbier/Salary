@@ -83,7 +83,7 @@
             animation: resultUpdate 0.4s ease-out;
         }
 
-        /* --- STYLE CHO BONG BÓNG NỔI THỰC LÃNH (MỚI) --- */
+        /* --- STYLE CHO BONG BÓNG NỔI THỰC LÃNH (FAB) --- */
         #floating-result-bubble {
             position: fixed; /* Rất quan trọng: Giữ cố định trên màn hình */
             bottom: 1.5rem; 
@@ -139,7 +139,7 @@
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
-                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
+                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
@@ -283,8 +283,8 @@
                 <p class="text-sm font-medium text-yellow-800">TỔNG THU NHẬP</p>
                 <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1 result-display">0 VNĐ</p>
             </div>
-            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300 hover:scale-[1.01]">
-                <p class="text-sm font-medium text-red-800">THỰC LÃNH (GIỮ CHỖ)</p>
+             <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300 hover:scale-[1.01]">
+                <p class="text-sm font-medium text-red-800">THỰC LÃNH (KHỐI CHÍNH)</p>
                 <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1 result-display">0 VNĐ</p>
             </div>
         </div>
@@ -301,7 +301,7 @@
                     <p>Ngày Đi Làm Thực Tế: <span id="display_ngay_lam" class="font-bold text-gray-700">0</span> ngày</p>
                     <p>Tiền 1 Giờ Làm: <span id="tien_1_gio_lam" class="result-value">0 VNĐ</span></p>
                     <p>Tiền 1 Ngày Làm: <span id="tien_1_ngay_lam" class="result-value">0 VNĐ</span></p>
-                    <p>Số Giờ Làm Việc: <span id="so_gio_lam_viec" class="result-value">0</span> giờ</p>
+                    <p>Số Giờ Làm Việc: <span id="so_gio_lam_viec" class="result-value">0 giờ</span></p>
                     <p class="pt-2 border-t mt-2">Lương Thực Tế: <span id="luong_thuc_te" class="text-base font-bold text-green-700">0 VNĐ</span></p>
                 </div>
             </div>
@@ -338,13 +338,13 @@
                 </p>
 
                 <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
-                    <p>Phụ Cấp Tay Nghề (Công Thức): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
-                    <p>Phụ Cấp Trách Nhiệm (Input): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên (Input): <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề (Input): <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
-                    <p>Phụ Cấp Chuyên Cần (Input): <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p>Hỗ Trợ Đi Lại (Cố định): <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
-                    <p>Tiền Thưởng (Cố định): <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
+                    <p>Phụ Cấp Tay Nghề: <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
+                    <p>Phụ Cấp Trách Nhiệm: <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên: <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p class="font-bold text-blue-700">Phụ Cấp Tay Nghề: <span id="pc_tay_nghe_result" class="font-bold text-blue-700">0 VNĐ</span></p>
+                    <p>Phụ Cấp Chuyên Cần: <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
+                    <p>Hỗ Trợ Đi Lại: <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
+                    <p>Tiền Thưởng: <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
                 </div>
             </div>
 
@@ -362,9 +362,9 @@
                     <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Xã Hội (8%): <span id="kh_bhxh" class="font-bold text-red-600">0 VNĐ</span></p>
-                    <p>Phí Công Đoàn (Cố định): <span class="font-bold text-red-600">49,600 VNĐ</span></p>
-                    <p>Tiền Tiết Kiệm (Cố định): <span class="font-bold text-red-600">200,000 VNĐ</span></p>
-                    <p>Tiền Từ Thiện (Cố định): <span class="font-bold text-red-600">8,000 VNĐ</span></p>
+                    <p>Phí Công Đoàn: <span class="font-bold text-red-600">49,600 VNĐ</span></p>
+                    <p>Tiền Tiết Kiệm: <span class="font-bold text-red-600">200,000 VNĐ</span></p>
+                    <p>Tiền Từ Thiện: <span class="font-bold text-red-600">8,000 VNĐ</span></p>
                 </div>
             </div>
         </div>
@@ -372,16 +372,18 @@
     </div>
 
     <script>
-        // Hàm định dạng số sang tiền tệ Việt Nam Đồng
+        // Hàm định dạng số sang tiền tệ Việt Nam Đồng (Đã thống nhất dùng VNĐ)
         const formatVND = (amount) => {
             if (typeof amount !== 'number' || isNaN(amount)) return '0 VNĐ';
-            // Sử dụng Intl.NumberFormat để định dạng, làm tròn đến số nguyên
-            return new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
+            
+            // 1. Dùng Intl.NumberFormat để định dạng số và dấu phân cách hàng nghìn
+            const formattedNumber = new Intl.NumberFormat('vi-VN', {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0
             }).format(Math.round(amount));
+
+            // 2. Trả về chuỗi kèm theo đơn vị VNĐ thống nhất
+            return formattedNumber + ' VNĐ';
         };
 
         // ----------------------------------------------------
@@ -467,7 +469,7 @@
             document.getElementById('tien_1_ngay_lam').textContent = formatVND(Tien1NgayLam);
 
             const SoGioLamViec = NgayDiLamThucTe * GIO_CHUAN_NGAY;
-            document.getElementById('so_gio_lam_viec').textContent = SoGioLamViec;
+            document.getElementById('so_gio_lam_viec').textContent = SoGioLamViec + ' giờ'; // Giữ lại đơn vị giờ
 
             const LuongThucTe = Tien1GioLam * SoGioLamViec;
             document.getElementById('luong_thuc_te').textContent = formatVND(LuongThucTe);
@@ -719,7 +721,6 @@
                         
                         if (isCollapsed) {
                              // Mở rộng
-                            // Phải đặt setTimeout để đảm bảo contentEl.scrollHeight được tính đúng
                             contentEl.style.maxHeight = contentEl.scrollHeight + 'px';
                             if (arrowEl) {
                                 arrowEl.classList.remove('rotate-0');
