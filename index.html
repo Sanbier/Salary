@@ -27,6 +27,10 @@
             height: 80%;
             background-color: #3b82f6; /* Blue 500 */
             border-radius: 4px;
+            transition: height 0.3s ease; /* Thêm transition cho thanh màu xanh */
+        }
+        .section-title:hover::before {
+             height: 100%; /* Thanh sidebar cao hơn khi hover */
         }
         .input-group label {
             font-size: 0.875rem; /* text-sm */
@@ -36,21 +40,53 @@
         .result-value {
             font-weight: 700;
             color: #16a34a; /* green-600 */
+            transition: all 0.2s ease-out; /* Thêm transition cho giá trị kết quả */
         }
         .final-result {
             font-size: 1.5rem; /* text-2xl */
             color: #b91c1c; /* red-700 */
         }
+
+        /* --- KEYFRAMES CHO ANIMATION --- */
+
+        /* Animation cho fade-in lúc tải trang */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-on-load {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Animation cho Input Focus */
+        @keyframes inputFocusBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .input-bounce-effect:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* ring-blue-500/50 */
+            animation: inputFocusBounce 0.3s ease-out;
+        }
+        
+        /* Animation cho Kết quả khi cập nhật */
+        @keyframes resultUpdate {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .animate-update {
+            animation: resultUpdate 0.4s ease-out;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
 
-    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8">
+    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8 fade-in-on-load">
         <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2">
             Bảng Tính Lương HYOSUNG
         </h1>
 
-        <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8">
+        <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8 transition duration-300 hover:shadow-xl">
             <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
@@ -58,80 +94,80 @@
                     <input type="number" id="luong_co_ban_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="ngay_di_lam">Số Ngày Đi Làm</label>
                     <input type="number" id="ngay_di_lam" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_chuyen_can_input">Chuyên Cần</label>
                     <input type="number" id="pc_chuyen_can_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
                     <input type="number" id="pc_trach_nhiem_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_tham_nien_input" class="text-blue-700 font-bold">Thâm Niên</label>
                     <input type="number" id="pc_tham_nien_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_tay_nghe_input" class="text-blue-700 font-bold">Tay Nghề</label>
                     <input type="number" id="pc_tay_nghe_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 
-                <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner">
+                <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner transition duration-300 hover:shadow-md">
                     <div class="flex flex-col space-y-4">
                         <div class="input-group">
                             <label for="cd_30">Giờ Ca Đêm 30%</label>
                             <input type="number" id="cd_30" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                         <div class="input-group">
                             <label for="cd_50">Giờ Ca Đêm 50%</label>
                             <input type="number" id="cd_50" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                         <div class="input-group">
                             <label for="cd_70">Giờ Ca Đêm 70%</label>
                             <input type="number" id="cd_70" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                         <div class="input-group">
                             <label for="cd_90">Giờ Ca Đêm 90%</label>
                             <input type="number" id="cd_90" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                     </div>
 
@@ -141,28 +177,28 @@
                             <input type="number" id="tc_thuong" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                         <div class="input-group">
                             <label for="tc_nghi">Giờ Tăng Ca Ngày Nghỉ</label>
                             <input type="number" id="tc_nghi" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                         <div class="input-group">
                             <label for="tc_le">Giờ Tăng Ca Ngày Lễ</label>
                             <input type="number" id="tc_le" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
+        <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500 transition duration-300 hover:shadow-xl">
             <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
                 <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân
             </h2>
@@ -171,13 +207,13 @@
                 <div class="md:col-span-2">
                     <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset Đã Lưu</label>
                     <select id="preset_select" 
-                            class="w-full p-2 border border-purple-300 rounded-md bg-white focus:ring-purple-500 focus:border-purple-500 transition duration-150">
+                            class="w-full p-2 border border-purple-300 rounded-md bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-150 hover:border-purple-500">
                         <option value="">-- Chọn Preset để Tải Số Liệu --</option>
                     </select>
                 </div>
 
                 <div class="flex items-end">
-                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400" disabled>
+                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400 disabled:shadow-none">
                         Tải Preset
                     </button>
                 </div>
@@ -187,13 +223,13 @@
                 <div class="md:col-span-2">
                     <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
                     <input type="text" id="preset_name_input" placeholder="Ví dụ: Lương tháng 10 - Tên bạn" 
-                           class="w-full p-2 border border-green-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150">
+                           class="w-full p-2 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="flex items-end space-x-2">
-                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
+                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
                         Lưu Preset
                     </button>
-                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-red-300" disabled>
+                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-red-300 disabled:shadow-none" disabled>
                         Xóa Preset
                     </button>
                 </div>
@@ -201,13 +237,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div class="p-6 bg-yellow-100 rounded-xl shadow-lg border-l-4 border-yellow-500">
+            <div class="p-6 bg-yellow-100 rounded-xl shadow-lg border-l-4 border-yellow-500 transition duration-300 hover:scale-[1.01]">
                 <p class="text-sm font-medium text-yellow-800">TỔNG THU NHẬP</p>
-                <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1">0 VNĐ</p>
+                <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1 result-display">0 VNĐ</p>
             </div>
-            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500">
+            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300 hover:scale-[1.01]">
                 <p class="text-sm font-medium text-red-800">THỰC LÃNH</p>
-                <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1">0 VNĐ</p>
+                <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1 result-display">0 VNĐ</p>
             </div>
         </div>
 
@@ -215,10 +251,10 @@
         <div class="border border-gray-300 rounded-xl overflow-hidden shadow-lg"> 
 
             <div class="bg-white p-5 border-b border-gray-200">
-                <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
-                    2. Thông Tin Cơ Bản <span id="ttcb_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    2. Thông Tin Cơ Bản <span id="ttcb_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
                 </h2>
-                <div id="content_ttcb" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                <div id="content_ttcb" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
                     <p>Lương Cơ Bản: <span id="display_luong_co_ban" class="font-bold text-blue-600">0 VNĐ</span></p>
                     <p>Ngày Đi Làm Thực Tế: <span id="display_ngay_lam" class="font-bold text-gray-700">0</span> ngày</p>
                     <p>Tiền 1 Giờ Làm: <span id="tien_1_gio_lam" class="result-value">0 VNĐ</span></p>
@@ -229,15 +265,15 @@
             </div>
 
             <div class="bg-white p-5 border-b border-gray-200">
-                <h2 id="toggle_tc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
-                    3. Tính Giờ Tăng Ca <span id="tc_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                <h2 id="toggle_tc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    3. Tính Giờ Tăng Ca <span id="tc_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
                 </h2>
                 
                 <p class="pt-2 border-t mt-2 text-sm">
                     Tổng Giờ Tăng Ca: <span id="tong_gio_tang_ca" class="text-base font-bold text-green-700">0 VNĐ</span>
                 </p>
 
-                <div id="content_tc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                <div id="content_tc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
                     <p>Lương Tính Tăng Ca: <span id="display_luong_tinh_tang_ca" class="font-bold text-blue-600">0 VNĐ</span></p>
                     <p>Tiền 1 Giờ Tăng Ca (Base): <span id="tien_1_gio_tc" class="result-value">0 VNĐ</span></p>
                     <p>Tăng Ca Thường (150%): <span id="tc_thuong_tien" class="result-value">0 VNĐ</span></p>
@@ -251,15 +287,15 @@
             </div>
 
             <div class="bg-white p-5 border-b border-gray-200">
-                <h2 id="toggle_pc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
-                    4. Các Khoản Phụ Cấp <span id="pc_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                <h2 id="toggle_pc" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    4. Các Khoản Phụ Cấp <span id="pc_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
                 </h2>
                 
                 <p class="pt-2 border-t mt-2 text-sm">
                     Tổng Các Khoản Phụ Cấp: <span id="tong_phu_cap" class="text-base font-bold text-green-700">0 VNĐ</span>
                 </p>
 
-                <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
                     <p>Phụ Cấp Tay Nghề (Công thức 5769.22 x Ngày): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
                     <p>Phụ Cấp Trách Nhiệm (Đầu vào): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
                     <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên (Đầu vào): <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
@@ -271,15 +307,15 @@
             </div>
 
             <div class="bg-white p-5">
-                <h2 id="toggle_kt" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
-                    5. Các Khoản Khấu Trừ <span id="kt_arrow" class="transition-transform duration-300 transform rotate-0">▼</span>
+                <h2 id="toggle_kt" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-blue-50 p-2 -m-2 rounded-lg transition duration-150 active:scale-[0.99]">
+                    5. Các Khoản Khấu Trừ <span id="kt_arrow" class="transition-transform duration-300 transform rotate-0 text-blue-500">▼</span>
                 </h2>
                 
                 <p class="pt-2 border-t mt-2 text-sm">
                     Tổng Các Khoản Khấu Trừ: <span id="tong_khau_tru" class="text-base font-bold text-red-700">0 VNĐ</span>
                 </p>
                 
-                <div id="content_kt" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
+                <div id="content_kt" class="space-y-2 text-sm pt-4 hidden border-t mt-4 transition-all duration-300 overflow-hidden">
                     <p class="text-sm italic text-gray-500 mb-3">Tính trên Lương Tính Giờ Tăng Ca: <span id="display_kh_luong_bh" class="font-medium">0 VNĐ</span></p>
                     <p>Bảo Hiểm Y Tế (1.5%): <span id="kh_bhyt" class="font-bold text-red-600">0 VNĐ</span></p>
                     <p>Bảo Hiểm Tai Nạn (1%): <span id="kh_bhtn" class="font-bold text-red-600">0 VNĐ</span></p>
@@ -328,6 +364,20 @@
         // ----------------------------------------------------
         // HÀM TÍNH TOÁN LƯƠNG
         // ----------------------------------------------------
+
+        // Hàm trigger animation cập nhật
+        function triggerUpdateAnimation(elementId) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.classList.remove('animate-update');
+                // Force reflow/repaint
+                void el.offsetWidth; 
+                el.classList.add('animate-update');
+            }
+        }
+
+        let previousThucLanh = 0;
+        let previousTongThuNhap = 0;
 
         function calculateSalary() {
             // 1. Số Liệu Đầu Vào (Input)
@@ -436,11 +486,23 @@
             // 6. Tổng Thu Nhập
             const TongThuNhap = LuongThucTe + TongGioTangCa + TongPhuCap;
             document.getElementById('tong_thu_nhap').textContent = formatVND(TongThuNhap);
+            
+            // Animation cho Tổng Thu Nhập
+            if (TongThuNhap !== previousTongThuNhap) {
+                triggerUpdateAnimation('tong_thu_nhap');
+                previousTongThuNhap = TongThuNhap;
+            }
 
 
             // 7. Thực Lãnh
             const ThucLanh = TongThuNhap - TongKhauTru;
             document.getElementById('thuc_lanh').textContent = formatVND(ThucLanh);
+            
+            // Animation cho Thực Lãnh
+            if (ThucLanh !== previousThucLanh) {
+                triggerUpdateAnimation('thuc_lanh');
+                previousThucLanh = ThucLanh;
+            }
         }
 
         // ----------------------------------------------------
@@ -589,7 +651,10 @@
 
                 if (toggleEl && contentEl) {
                     // Mặc định tất cả đều bị ẩn
-                    contentEl.classList.add('hidden'); 
+                    contentEl.style.maxHeight = '0';
+                    contentEl.classList.add('overflow-hidden'); 
+                    contentEl.classList.remove('hidden'); // Loại bỏ 'hidden' để sử dụng maxHeight
+                    
                     if (arrowEl) {
                         arrowEl.textContent = '▼'; // Đặt mũi tên chỉ xuống
                         arrowEl.classList.remove('rotate-180');
@@ -597,18 +662,22 @@
                     }
 
                     toggleEl.addEventListener('click', () => {
-                        const isHidden = contentEl.classList.contains('hidden');
+                        // Tính toán chiều cao thực tế
+                        const isCollapsed = contentEl.style.maxHeight === '0px' || contentEl.style.maxHeight === '';
                         
                         // Toggle visibility
-                        contentEl.classList.toggle('hidden');
-
-                        // Toggle arrow rotation
-                        if (arrowEl) {
-                            if (isHidden) {
+                        if (isCollapsed) {
+                             // Mở rộng
+                            contentEl.style.maxHeight = contentEl.scrollHeight + 'px';
+                            if (arrowEl) {
                                 arrowEl.classList.remove('rotate-0');
                                 arrowEl.classList.add('rotate-180');
                                 arrowEl.textContent = '▲'; 
-                            } else {
+                            }
+                        } else {
+                            // Thu gọn
+                            contentEl.style.maxHeight = '0';
+                            if (arrowEl) {
                                 arrowEl.classList.remove('rotate-180');
                                 arrowEl.classList.add('rotate-0');
                                 arrowEl.textContent = '▼';
@@ -630,7 +699,7 @@
                 input.addEventListener('input', calculateSalary);
             });
             
-            // Cài đặt chế độ thu nhỏ
+            // Cài đặt chế độ thu nhỏ (Dùng max-height thay vì class 'hidden' để có transition)
             setupCollapsibles();
             
             // SỰ KIỆN PRESET
