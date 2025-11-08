@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Tính Lương Hiện Đại</title>
+    <title>Bảng Tính Lương</title>
       <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -11,43 +11,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            /* Thay đổi nền sang màu xám nhạt cho Neumorphism */
-            background-color: #ecf0f3;
+            background-color: #f3f4f6;
         }
-        
-        /* Hiệu ứng Neumorphism cho khối chính */
-        .neumorphism-container {
-            border-radius: 20px;
-            box-shadow: 10px 10px 20px #c1c5c8, -10px -10px 20px #ffffff;
-            background-color: #ecf0f3;
-        }
-
-        /* Hiệu ứng Neumorphism cho các khối chứa thông tin (section) */
-        .neumorphism-section {
-            border-radius: 15px;
-            /* Bóng đổ chìm nhẹ */
-            box-shadow: inset 5px 5px 10px #c1c5c8, inset -5px -5px 10px #ffffff;
-            background-color: #ecf0f3;
-        }
-        
-        /* Hiệu ứng Neumorphism cho Input: Chìm vào trong */
-        .neumorphism-input {
-            border-radius: 8px;
-            border: none;
-            padding: 10px;
-            /* Bóng đổ chìm sâu hơn */
-            box-shadow: inset 2px 2px 5px #c1c5c8, inset -2px -2px 5px #ffffff;
-            background-color: #ecf0f3;
-            transition: all 0.2s ease-in-out;
-            color: #374151;
-        }
-
-        .neumorphism-input:focus {
-            outline: none;
-            /* Viền màu xanh nổi lên khi focus */
-            box-shadow: 0 0 0 2px #3b82f6; 
-        }
-
         .section-title {
             position: relative;
             padding-left: 1.5rem;
@@ -63,22 +28,9 @@
             background-color: #3b82f6; /* Blue 500 */
             border-radius: 4px;
         }
-        
-        /* Nút nhấn nổi nhẹ */
-        .neumorphism-btn {
-            border-radius: 12px;
-            box-shadow: 4px 4px 8px #c1c5c8, -4px -4px 8px #ffffff;
-            transition: all 0.2s ease-in-out;
-            border: 1px solid transparent;
-        }
-
-        .neumorphism-btn:active {
-            box-shadow: inset 2px 2px 5px #c1c5c8, inset -2px -2px 5px #ffffff;
-        }
-
         .input-group label {
             font-size: 0.875rem; /* text-sm */
-            font-weight: 600; /* font-semibold */
+            font-weight: 500; /* font-medium */
             color: #374151; /* gray-700 */
         }
         .result-value {
@@ -93,86 +45,86 @@
 </head>
 <body class="p-4 sm:p-6 md:p-8">
 
-    <div class="max-w-3xl mx-auto neumorphism-container p-6 sm:p-8 lg:p-10">
-        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8 pb-3 border-b-4 border-blue-500">
+    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-xl p-4 sm:p-6 lg:p-8">
+        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6 border-b-4 border-blue-500 pb-2">
             Bảng Tính Lương HYOSUNG
         </h1>
 
-        <div id="input-section" class="neumorphism-section p-6 mb-8">
-            <h2 class="text-xl font-bold section-title text-blue-800 mb-6">1. Số Liệu Đầu Vào & Mức Lương</h2>
-            <div class="grid grid-cols-2 gap-6">
+        <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8">
+            <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
+            <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
-                    <label for="luong_co_ban_input" class="text-blue-700">Lương Cơ Bản</label>
+                    <label for="luong_co_ban_input" class="text-blue-700 font-bold">Lương Cơ Bản</label>
                     <input type="number" id="luong_co_ban_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
                 </div>
                 <div class="input-group">
-                    <label for="luong_tinh_tang_ca_input" class="text-blue-700">Lương Tính Tăng Ca</label>
+                    <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-400 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
                 </div>
                 <div class="input-group">
                     <label for="ngay_di_lam">Số Ngày Đi Làm</label>
                     <input type="number" id="ngay_di_lam" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 <div class="input-group">
                     <label for="pc_chuyen_can_input">Chuyên Cần</label>
                     <input type="number" id="pc_chuyen_can_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 <div class="input-group">
                     <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
                     <input type="number" id="pc_trach_nhiem_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 <div class="input-group">
                     <label for="pc_tham_nien_input" class="text-blue-700 font-bold">Thâm Niên</label>
                     <input type="number" id="pc_tham_nien_input" value="0" min="0" 
                         autocomplete="off" 
                         onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                        class="w-full mt-1 neumorphism-input">
+                        class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                 </div>
                 
-                <div class="col-span-2 grid grid-cols-2 gap-6 mt-4 border-t pt-4 border-gray-300">
+                <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner">
                     <div class="flex flex-col space-y-4">
                         <div class="input-group">
                             <label for="cd_30">Giờ Ca Đêm 30%</label>
                             <input type="number" id="cd_30" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_50">Giờ Ca Đêm 50%</label>
                             <input type="number" id="cd_50" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_70">Giờ Ca Đêm 70%</label>
                             <input type="number" id="cd_70" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="cd_90">Giờ Ca Đêm 90%</label>
                             <input type="number" id="cd_90" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                     </div>
 
@@ -182,77 +134,78 @@
                             <input type="number" id="tc_thuong" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="tc_nghi">Giờ Tăng Ca Ngày Nghỉ</label>
                             <input type="number" id="tc_nghi" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                         <div class="input-group">
                             <label for="tc_le">Giờ Tăng Ca Ngày Lễ</label>
                             <input type="number" id="tc_le" value="0" min="0" 
                                 autocomplete="off" 
                                 onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full mt-1 neumorphism-input">
+                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div id="preset-manager" class="neumorphism-section p-6 mb-8">
-            <h2 class="text-xl font-bold section-title text-gray-800 mb-6">👤 Quản Lý Preset Cá Nhân</h2>
+        <div id="preset-manager" class="bg-gray-100 p-5 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">👤</span> Quản Lý Preset Cá Nhân
+            </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 pb-4 border-b border-gray-300">
-                <div class="md:col-span-1">
-                    <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset</label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="md:col-span-2">
+                    <label for="preset_select" class="text-sm font-medium text-purple-700">Chọn Preset Đã Lưu</label>
                     <select id="preset_select" 
-                            class="w-full mt-1 neumorphism-input border border-purple-300">
-                        <option value="">-- Chọn Preset để Tải --</option>
+                            class="w-full p-2 border border-purple-300 rounded-md bg-white focus:ring-purple-500 focus:border-purple-500 transition duration-150">
+                        <option value="">-- Chọn Preset để Tải Số Liệu --</option>
                     </select>
                 </div>
-                
-                <div class="flex items-end md:col-span-1">
-                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 neumorphism-btn disabled:bg-gray-400" disabled>
+
+                <div class="flex items-end">
+                    <button id="load_preset_btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-gray-400" disabled>
                         Tải Preset
                     </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                <div class="md:col-span-1">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                <div class="md:col-span-2">
                     <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
                     <input type="text" id="preset_name_input" placeholder="Ví dụ: Lương tháng 10 - Tên bạn" 
-                           class="w-full mt-1 neumorphism-input">
+                           class="w-full p-2 border border-green-300 rounded-md focus:ring-green-500 focus:border-green-500 transition duration-150">
                 </div>
-                
-                <div class="flex items-end space-x-2 md:col-span-1">
-                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 neumorphism-btn">
+                <div class="flex items-end space-x-2">
+                    <button id="save_preset_btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md">
                         Lưu Preset
                     </button>
-                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 neumorphism-btn disabled:bg-red-300" disabled>
+                    <button id="delete_preset_btn" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md disabled:bg-red-300" disabled>
                         Xóa Preset
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="p-6 rounded-xl neumorphism-container border-l-4 border-yellow-500 bg-yellow-100">
-                <p class="text-sm font-semibold text-yellow-800">TỔNG THU NHẬP</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-6 bg-yellow-100 rounded-xl shadow-lg border-l-4 border-yellow-500">
+                <p class="text-sm font-medium text-yellow-800">TỔNG THU NHẬP</p>
                 <p id="tong_thu_nhap" class="text-2xl font-extrabold text-yellow-700 mt-1">0 VNĐ</p>
             </div>
-            <div class="p-6 rounded-xl neumorphism-container border-l-4 border-red-500 bg-red-100">
-                <p class="text-sm font-semibold text-red-800">THỰC LÃNH</p>
+            <div class="p-6 bg-red-100 rounded-xl shadow-lg border-l-4 border-red-500">
+                <p class="text-sm font-medium text-red-800">THỰC LÃNH</p>
                 <p id="thuc_lanh" class="text-3xl font-extrabold final-result mt-1">0 VNĐ</p>
             </div>
         </div>
 
 
-        <div class="neumorphism-container rounded-xl overflow-hidden"> 
+        <div class="border border-gray-300 rounded-xl overflow-hidden shadow-lg"> 
 
             <div class="bg-white p-5 border-b border-gray-200">
                 <h2 id="toggle_ttcb" class="text-xl font-bold section-title text-gray-800 cursor-pointer flex justify-between items-center hover:bg-gray-50 p-2 -m-2 rounded-lg transition duration-150">
@@ -302,7 +255,7 @@
                 <div id="content_pc" class="space-y-2 text-sm pt-4 hidden border-t mt-4">
                     <p>Phụ Cấp Trình Độ (5769.22 x Ngày): <span id="pc_trinh_do" class="result-value">0 VNĐ</span></p>
                     <p>Phụ Cấp Trách Nhiệm (Đầu vào): <span id="pc_trach_nhiem_result" class="font-bold text-gray-700">0 VNĐ</span></p>
-                    <p class="text-blue-700 font-bold">Phụ Cấp Thâm Niên (Đầu vào): <span id="pc_tham_nien_result" class="font-bold text-blue-700">0 VNĐ</span></p>
+                    <p class="font-bold text-gray-700">Phụ Cấp Thâm Niên (Đầu vào): <span id="pc_tham_nien_result" class="font-bold text-gray-700">0 VNĐ</span></p>
                     <p>Phụ Cấp Chuyên Cần (Đầu vào): <span id="pc_chuyen_can_result" class="font-bold text-gray-700">0 VNĐ</span></p>
                     <p>Hỗ Trợ Đi Lại (Cố định): <span class="font-bold text-gray-700">250,000 VNĐ</span></p>
                     <p>Tiền Thưởng (Cố định): <span class="font-bold text-gray-700">50,000 VNĐ</span></p>
@@ -443,11 +396,12 @@
             // Lấy các phụ cấp từ input
             const PC_CHUYEN_CAN = pc_chuyen_can_input;
             const PC_TRACH_NHIEM = pc_trach_nhiem_input;
-            const PC_THAM_NIEN = pc_tham_nien_input; 
+            const PC_THAM_NIEN = pc_tham_nien_input; // DÙNG INPUT MỚI
             
             document.getElementById('pc_chuyen_can_result').textContent = formatVND(PC_CHUYEN_CAN);
             document.getElementById('pc_trach_nhiem_result').textContent = formatVND(PC_TRACH_NHIEM);
-            document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN);
+            // Cập nhật màu hiển thị Thâm Niên trong mục 4. Các Khoản Phụ Cấp (Không cần màu xanh lá nữa)
+            document.getElementById('pc_tham_nien_result').textContent = formatVND(PC_THAM_NIEN); 
 
             const TongPhuCap = PhuCapTrinhDo + PC_TRACH_NHIEM + PC_THAM_NIEN + PC_CHUYEN_CAN + PC_HO_TRO_DI_LAI + PC_TIEN_THUONG;
             document.getElementById('tong_phu_cap').textContent = formatVND(TongPhuCap);
@@ -479,24 +433,23 @@
         }
 
         // ----------------------------------------------------
-        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE - ĐÃ BỎ MẬT KHẨU)
+        // QUẢN LÝ PRESET CÁ NHÂN (LOCAL STORAGE)
         // ----------------------------------------------------
 
-        // Lấy tất cả các input cần lưu
+        // Cập nhật PRESET_INPUT_IDS để bao gồm pc_tham_nien_input
         const PRESET_INPUT_IDS = [
             'luong_co_ban_input', 'luong_tinh_tang_ca_input', 'ngay_di_lam', 
-            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input',
+            'pc_chuyen_can_input', 'pc_trach_nhiem_input', 'pc_tham_nien_input', // ĐÃ THÊM MỤC NÀY
             'tc_thuong', 'tc_nghi', 'tc_le', 'cd_30', 'cd_50', 'cd_70', 'cd_90'
         ];
         
         // Load danh sách Preset từ LocalStorage
         function loadPresets() {
             const selectElement = document.getElementById('preset_select');
-            // Cố gắng phân tích cú pháp JSON; nếu thất bại, trả về đối tượng rỗng
             const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
             
             // Xóa các option cũ
-            selectElement.innerHTML = '<option value="">-- Chọn Preset để Tải --</option>';
+            selectElement.innerHTML = '<option value="">-- Chọn Preset để Tải Số Liệu --</option>';
 
             // Thêm các preset đã lưu
             for (const name in storedPresets) {
@@ -510,7 +463,7 @@
             updatePresetButtons();
         }
 
-        // Lưu Preset hiện tại (KHÔNG CẦN MẬT KHẨU)
+        // Lưu Preset hiện tại
         function savePreset() {
             const nameInput = document.getElementById('preset_name_input');
             let presetName = nameInput.value.trim();
@@ -521,34 +474,27 @@
             }
 
             const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
-            const rawData = {};
+            const newPresetData = {};
 
-            // 1. Lấy dữ liệu thô
+            // Lấy dữ liệu từ các input hiện tại
             PRESET_INPUT_IDS.forEach(id => {
-                // Sử dụng .value để lấy giá trị hiện tại
-                rawData[id] = document.getElementById(id).value;
+                newPresetData[id] = document.getElementById(id).value;
             });
 
-            // 2. CHUYỂN DỮ LIỆU THÀNH CHUỖI JSON
-            const rawDataString = JSON.stringify(rawData);
-
-            // 3. Lưu dữ liệu thô (không mã hóa)
-            storedPresets[presetName] = { 
-                data: rawDataString,
-            };
-            
+            // Lưu hoặc cập nhật Preset
+            storedPresets[presetName] = newPresetData;
             localStorage.setItem('salaryPresets', JSON.stringify(storedPresets));
             
-            alert(`Preset "${presetName}" đã được lưu thành công!`);
+            alert(`Preset "${presetName}" đã được lưu/cập nhật thành công!`);
             
-            // Dọn dẹp
+            // Tải lại danh sách và chọn tên vừa lưu
             loadPresets();
             document.getElementById('preset_select').value = presetName;
-            nameInput.value = '';
+            nameInput.value = ''; // Xóa tên input sau khi lưu
             updatePresetButtons();
         }
 
-        // Tải dữ liệu từ Preset đã chọn vào các Input Field (KHÔNG CẦN MẬT KHẨU)
+        // Tải dữ liệu từ Preset đã chọn vào các Input Field
         function loadPresetData() {
             const selectElement = document.getElementById('preset_select');
             const presetName = selectElement.value;
@@ -559,33 +505,18 @@
             }
 
             const storedPresets = JSON.parse(localStorage.getItem('salaryPresets') || '{}');
-            const presetEntry = storedPresets[presetName];
+            const presetData = storedPresets[presetName];
 
-            if (presetEntry) {
-                try {
-                    // 1. Lấy chuỗi dữ liệu JSON
-                    const presetDataString = presetEntry.data; 
-                    
-                    // 2. Phân tích cú pháp JSON
-                    const presetData = JSON.parse(presetDataString);
-                    
-                    // 3. Đổ dữ liệu vào các Input
-                    PRESET_INPUT_IDS.forEach(id => {
-                        document.getElementById(id).value = String(presetData[id] || '0');
-                    });
+            if (presetData) {
+                // Đổ dữ liệu vào các Input
+                PRESET_INPUT_IDS.forEach(id => {
+                    // Đảm bảo dữ liệu được lấy ra là chuỗi, nếu không tồn tại thì là '0'
+                    document.getElementById(id).value = String(presetData[id] || '0');
+                });
 
-                    // 4. Chạy lại tính toán
-                    calculateSalary();
-                    alert(`Preset "${presetName}" đã được tải thành công!`);
-
-                } catch (e) {
-                    // Lỗi xảy ra nếu dữ liệu bị hỏng
-                    console.error("Lỗi tải Preset:", e);
-                    alert("Tải Preset thất bại! Dữ liệu có thể đã bị hỏng.");
-                }
-
-            } else {
-                 alert("Không tìm thấy Preset này.");
+                // Chạy lại tính toán
+                calculateSalary();
+                alert(`Preset "${presetName}" đã được tải thành công!`);
             }
         }
         
