@@ -2,40 +2,39 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>Lịch Trình Chạy Máy</title>
 <style>
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #e7f0ff, #ffffff);
   display: flex; flex-direction: column; align-items: center;
-  min-height: 100vh; margin: 0; padding: 40px 20px;
+  min-height: 100vh; margin: 0; padding: 30px 10px;
 }
 h1 {
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: #0078ff;
   text-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  letter-spacing: 1px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
+  text-align: center;
   animation: fadeIn 0.8s ease-out;
 }
 
-/* CARD NỔI RÕ */
+/* CARD */
 .container {
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15), inset 0 0 15px rgba(0,122,255,0.08);
-  width: 100%; max-width: 520px;
-  padding: 35px;
-  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12), inset 0 0 15px rgba(0,122,255,0.08);
+  width: 100%; max-width: 500px;
+  padding: 25px;
+  margin-bottom: 25px;
   transition: all 0.4s ease;
-  position: relative;
   border: 2px solid rgba(0,123,255,0.25);
 }
 .container:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 20px 45px rgba(0,123,255,0.25), inset 0 0 20px rgba(0,123,255,0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 35px rgba(0,123,255,0.25);
 }
 
 /* INPUT */
@@ -44,50 +43,46 @@ label {
   font-weight: 600;
   color: #004b9a;
   margin-bottom: 6px;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
 }
 input {
   width: 100%;
-  padding: 14px;
-  margin-bottom: 20px;
-  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 10px;
   border: 2px solid #d6e4ff;
   background: linear-gradient(145deg, #f9fbff, #eef5ff);
-  box-shadow: inset 2px 2px 4px rgba(0,0,0,0.05), inset -2px -2px 6px rgba(255,255,255,0.9);
-  font-size: 16px;
+  font-size: 15px;
   text-align: center;
   transition: all 0.3s;
 }
 input:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 10px rgba(0,123,255,0.5), inset 0 0 10px rgba(0,123,255,0.15);
-  transform: scale(1.03);
+  box-shadow: 0 0 8px rgba(0,123,255,0.4);
+  transform: scale(1.02);
 }
 
 /* BUTTON */
 button {
   background: linear-gradient(90deg, #007bff, #00aaff);
-  border: none;
-  color: white;
+  color: #fff;
   font-weight: 700;
-  font-size: 18px;
-  border-radius: 12px;
+  font-size: 16px;
+  border-radius: 10px;
   width: 100%;
-  padding: 15px;
+  padding: 13px;
   cursor: pointer;
-  position: relative;
-  box-shadow: 0 6px 15px rgba(0,123,255,0.35);
+  border: none;
   transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,123,255,0.35);
   overflow: hidden;
 }
 button:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 25px rgba(0,123,255,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,123,255,0.5);
 }
-button:active {
-  transform: scale(0.98);
-}
+button:active { transform: scale(0.97); }
 button::after {
   content: '';
   position: absolute;
@@ -97,13 +92,11 @@ button::after {
   transform: skewX(-20deg);
   transition: left 0.5s;
 }
-button:hover::after {
-  left: 130%;
-}
+button:hover::after { left: 130%; }
 .loading::before {
   content: '';
   display: inline-block;
-  width: 16px; height: 16px;
+  width: 14px; height: 14px;
   margin-right: 8px;
   border: 3px solid rgba(255,255,255,0.3);
   border-top-color: #fff;
@@ -111,69 +104,69 @@ button:hover::after {
   animation: spin 0.8s linear infinite;
 }
 
-/* KẾT QUẢ */
+/* RESULT */
 #result {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-#result.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+#result.show { opacity: 1; transform: translateY(0); }
 h2 {
   color: #006ae0;
   text-align: center;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  font-size: 1.3rem;
 }
 
-/* TABLE 3D NỔI RÕ */
+/* TABLE */
 table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 25px;
-  border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(0,123,255,0.3);
+  box-shadow: 0 6px 18px rgba(0,123,255,0.15);
+  border: 1px solid rgba(0,123,255,0.25);
 }
 th {
   background: linear-gradient(180deg, #007bff, #005ecb);
-  color: white;
-  font-weight: 700;
-  padding: 15px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  color: #fff;
+  padding: 12px;
+  font-size: 0.95rem;
 }
 td {
-  padding: 15px;
+  padding: 12px;
+  font-size: 0.9rem;
   border-bottom: 1px solid rgba(0,123,255,0.1);
   background: #fafdff;
   text-align: center;
-  font-weight: 500;
-  transition: all 0.25s ease;
 }
-tr:nth-child(even) td {
-  background: #f1f6ff;
-}
+tr:nth-child(even) td { background: #f1f6ff; }
 tr:hover td {
   background: #e7f1ff;
-  box-shadow: inset 0 0 10px rgba(0,123,255,0.2);
+  box-shadow: inset 0 0 8px rgba(0,123,255,0.2);
   transform: scale(1.01);
 }
-.animated-row {
-  opacity: 0;
-  animation: slideIn 0.4s ease-out forwards;
-}
+.animated-row { opacity: 0; animation: slideIn 0.4s ease-out forwards; }
 
+/* ANIMATION */
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 480px) {
+  body { padding: 20px 8px; }
+  h1 { font-size: 1.8rem; margin-bottom: 20px; }
+  .container { padding: 20px; border-radius: 16px; }
+  input { font-size: 14px; padding: 10px; }
+  button { font-size: 15px; padding: 12px; }
+  th, td { font-size: 0.85rem; padding: 10px; }
 }
 </style>
 </head>
@@ -185,7 +178,7 @@ tr:hover td {
   <label for="startTime">⏰ Giờ Bắt Đầu:</label>
   <input type="text" id="startTime" placeholder="HH:MM hoặc 8h30">
 
-  <label for="runTime">⚙️ Thời Gian 1 Roll :</label>
+  <label for="runTime">⚙️ Thời Gian 1 Roll:</label>
   <input type="text" id="runTime" placeholder="VD: 1:15 hoặc 75">
 
   <label for="numRolls">🎞️ Số Roll Cần Chạy:</label>
@@ -201,7 +194,6 @@ tr:hover td {
 </div>
 
 <script>
-// Chuẩn hóa định dạng giờ nhập
 function parseTime(input) {
   input = input.trim().toLowerCase().replace(/[h\s]/g, ':');
   if (/^\d{1,2}:\d{1,2}$/.test(input)) {
@@ -244,8 +236,8 @@ function calculateSchedule() {
     }
 
     let total = startMin;
-    let html = '<h2>📋 Lịch trình chi tiết</h2>';
-    html += '<table><thead><tr><th>Roll</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead><tbody>';
+    let html = '<h2>📋 Lịch Trình Chi Tiết</h2>';
+    html += '<table><thead><tr><th>Roll</th><th>Bắt Đầu</th><th>Kết Thúc</th></tr></thead><tbody>';
     for (let i = 1; i <= rolls; i++) {
       const st = formatMinutesToTime(total);
       const et = formatMinutesToTime(total + runMin);
