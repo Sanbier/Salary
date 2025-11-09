@@ -244,12 +244,15 @@ function parseTime(input) {
   let n = parseInt(input);
   return isNaN(n) ? 0 : n;
 }
+
+// Hàm format đã được sửa đổi để chỉ trả về thời gian HH:MM
 function formatMinutesToTime(total) {
-  const day = Math.floor(total / (24 * 60));
-  const t = total % (24 * 60);
-  const h = Math.floor(t / 60), m = t % 60;
-  const time = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-  return day > 0 ? `${time} (Ngày +${day})` : time;
+  // Lấy tổng số phút vượt qua 00:00 của ngày bắt đầu
+  const t = total % (24 * 60); 
+  // Chuyển đổi thành giờ và phút trong 24 giờ
+  const h = Math.floor(t / 60), m = t % 60; 
+  // Trả về định dạng HH:MM
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
 }
 
 function calculateSchedule() {
