@@ -2,39 +2,62 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Lịch Trình Chạy Máy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch Trình Chạy Máy ✨</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #e7f0ff, #ffffff);
-  display: flex; flex-direction: column; align-items: center;
-  min-height: 100vh; margin: 0; padding: 30px 10px;
-}
-h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #0078ff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  margin-bottom: 25px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #c3d9ff, #f0f5ff);
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 10px;
   text-align: center;
-  animation: fadeIn 0.8s ease-out;
+  overflow-x: hidden;
+}
+@keyframes bgMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #006cff;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.25);
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  animation: fadeDown 1s ease-out;
+}
+@keyframes fadeDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
 }
 
 /* CARD */
 .container {
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12), inset 0 0 15px rgba(0,122,255,0.08);
-  width: 100%; max-width: 500px;
-  padding: 25px;
-  margin-bottom: 25px;
-  transition: all 0.4s ease;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1), inset 0 0 20px rgba(0,140,255,0.08);
+  width: 100%;
+  max-width: 520px;
+  padding: 35px;
+  margin-bottom: 30px;
   border: 2px solid rgba(0,123,255,0.25);
+  transition: all 0.4s ease;
 }
 .container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 35px rgba(0,123,255,0.25);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 18px 35px rgba(0,123,255,0.3);
 }
 
 /* INPUT */
@@ -43,78 +66,97 @@ label {
   font-weight: 600;
   color: #004b9a;
   margin-bottom: 6px;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
+
 input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
+  width: 90%;
+  max-width: 400px;
+  padding: 13px;
+  margin: 10px auto 20px auto;
   border-radius: 10px;
   border: 2px solid #d6e4ff;
-  background: linear-gradient(145deg, #f9fbff, #eef5ff);
+  background: linear-gradient(145deg, #fdfdff, #eef5ff);
   font-size: 15px;
   text-align: center;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  display: block;
 }
 input:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0,123,255,0.4);
-  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(0,123,255,0.4);
+  transform: scale(1.03);
 }
 
 /* BUTTON */
 button {
-  background: linear-gradient(90deg, #007bff, #00aaff);
+  background: linear-gradient(90deg, #007bff, #00aaff, #6a5af9);
+  background-size: 200% 100%;
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
-  border-radius: 10px;
-  width: 100%;
-  padding: 13px;
+  font-size: 17px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  padding: 14px;
   cursor: pointer;
   border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,123,255,0.35);
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 15px rgba(0,123,255,0.35);
+  position: relative;
   overflow: hidden;
 }
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0,123,255,0.5);
+  background-position: 100% 0;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,123,255,0.5);
 }
-button:active { transform: scale(0.97); }
-button::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -70%;
-  width: 50%; height: 100%;
-  background: rgba(255,255,255,0.25);
-  transform: skewX(-20deg);
-  transition: left 0.5s;
+button:active {
+  transform: scale(0.97);
 }
-button:hover::after { left: 130%; }
-.loading::before {
+button.loading::before {
   content: '';
   display: inline-block;
-  width: 14px; height: 14px;
-  margin-right: 8px;
+  width: 16px; height: 16px;
+  margin-right: 10px;
   border: 3px solid rgba(255,255,255,0.3);
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
+@keyframes spin {to {transform: rotate(360deg);}}
 
 /* RESULT */
 #result {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(15px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-#result.show { opacity: 1; transform: translateY(0); }
+#result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 h2 {
   color: #006ae0;
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  position: relative;
+}
+h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 8px auto;
+  background: linear-gradient(90deg, #007bff, #6a5af9);
+  border-radius: 2px;
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+  from {opacity: 0.4;}
+  to {opacity: 1;}
 }
 
 /* TABLE */
@@ -122,57 +164,49 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,123,255,0.15);
   border: 1px solid rgba(0,123,255,0.25);
+  animation: fadeIn 0.8s ease forwards;
 }
 th {
   background: linear-gradient(180deg, #007bff, #005ecb);
   color: #fff;
   padding: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 td {
   padding: 12px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   border-bottom: 1px solid rgba(0,123,255,0.1);
   background: #fafdff;
   text-align: center;
 }
-tr:nth-child(even) td { background: #f1f6ff; }
+tr:nth-child(even) td { background: #eef4ff; }
 tr:hover td {
-  background: #e7f1ff;
-  box-shadow: inset 0 0 8px rgba(0,123,255,0.2);
-  transform: scale(1.01);
+  background: #e0ecff;
+  box-shadow: inset 0 0 8px rgba(0,123,255,0.25);
+  transform: scale(1.02);
 }
-.animated-row { opacity: 0; animation: slideIn 0.4s ease-out forwards; }
-
-/* ANIMATION */
-@keyframes spin { to { transform: rotate(360deg); } }
+.animated-row {opacity: 0; animation: slideIn 0.4s ease-out forwards;}
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
 
-/* 📱 RESPONSIVE */
+/* RESPONSIVE */
 @media (max-width: 480px) {
-  body { padding: 20px 8px; }
-  h1 { font-size: 1.8rem; margin-bottom: 20px; }
-  .container { padding: 20px; border-radius: 16px; }
-  input { font-size: 14px; padding: 10px; }
-  button { font-size: 15px; padding: 12px; }
-  th, td { font-size: 0.85rem; padding: 10px; }
+  h1 {font-size: 2rem;}
+  .container {padding: 25px;}
+  input, button {width: 100%;}
+  th, td {font-size: 0.9rem; padding: 10px;}
 }
 </style>
 </head>
 <body>
 
-<h1>🧾 Lịch Chạy Máy</h1>
+<h1>🧾 Lịch Trình Chạy Máy</h1>
 
 <div class="container">
   <label for="startTime">⏰ Giờ Bắt Đầu:</label>
@@ -241,7 +275,7 @@ function calculateSchedule() {
     for (let i = 1; i <= rolls; i++) {
       const st = formatMinutesToTime(total);
       const et = formatMinutesToTime(total + runMin);
-      html += `<tr class="animated-row" style="animation-delay:${i * 0.05}s;"><td>Roll ${i}</td><td>${st}</td><td>${et}</td></tr>`;
+      html += `<tr class="animated-row" style="animation-delay:${i * 0.07}s;"><td>Roll ${i}</td><td>${st}</td><td>${et}</td></tr>`;
       total += runMin;
     }
     html += '</tbody></table>';
