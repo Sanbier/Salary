@@ -30,8 +30,6 @@
             color: #1f2937; /* Gray 800 */
         }
         
-        /* ĐÃ XÓA custom-dialog-text */
-        
         /* Các style khác giữ nguyên */
         .section-title {
             position: relative;
@@ -679,18 +677,18 @@
             if (isYes) {
                 // Người dùng chọn "Có"
                 pcChuyenCanInput.value = 300000; // Giả sử Chuyên Cần là 300,000 VNĐ
-                alert("Đã áp dụng Phụ Cấp Chuyên Cần: 300,000 VNĐ.");
+                // Đã loại bỏ alert()
             } else {
                 // Người dùng chọn "Không"
                 if (chuyenCanValueFromPreset > 0) { 
                      pcChuyenCanInput.value = 0;
-                     alert("Đã xóa Phụ Cấp Chuyên Cần (0 VNĐ).");
+                     // Đã loại bỏ alert()
                 }
             }
             
             // Chạy lại tính toán
             calculateSalary();
-            alert(`Preset "${currentPresetName}" đã được tải thành công!`);
+            // Đã loại bỏ alert() thông báo tải preset thành công
 
             // Reset biến toàn cục
             currentPresetDataToLoad = null;
