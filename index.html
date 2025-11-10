@@ -21,7 +21,7 @@
             background-color: #f3f4f6;
         }
         
-        /* --- ÁP DỤNG FONT LOBSTER CHO TIÊU ĐỀ CHÍNH VÀ MODAL TÙY CHỈNH --- */
+        /* --- ÁP DỤNG FONT LOBSTER CHO TIÊU ĐỀ CHÍNH --- */
         .lobster-title {
             font-family: 'Roboto', sans-serif;
             /* Điều chỉnh kích thước/độ đậm cho nổi bật hơn */
@@ -29,12 +29,8 @@
             letter-spacing: 1px;
             color: #1f2937; /* Gray 800 */
         }
-
-        .custom-dialog-text {
-            /* Dùng Lobster cho dialog tùy chỉnh theo yêu cầu người dùng */
-             font-family: 'Lobster', cursive; 
-             color: #1f2937;
-        }
+        
+        /* ĐÃ XÓA custom-dialog-text */
         
         /* Các style khác giữ nguyên */
         .section-title {
@@ -237,7 +233,7 @@
 
     <div id="chuyencan-modal" class="modal" onclick="closeChuyenCanModal(event)">
         <div class="modal-content text-center" onclick="event.stopPropagation()" style="width: 400px; padding: 2.5rem; background-color: #2D3748; border: 1px solid #4B5563;">
-            <p id="chuyencan-message" class="text-xl mb-6 custom-dialog-text" style="color: #FFFFFF; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+            <p id="chuyencan-message" class="text-xl mb-6 font-bold" style="color: #FFFFFF; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-family: 'Roboto', sans-serif;">
                 </p>
 
             <div class="flex justify-around space-x-4">
@@ -265,7 +261,7 @@
         <p class="text-center">
             <a href="tinhgio.html" 
                class="inline-block bg-pink-600 hover:bg-pink-700 active:scale-95 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-150">
-                🚀 Mở Công Cụ Tính Thời Gian Vận Hành
+                🚀 Mở Công Cụ Tính Lịch Trình Chạy Máy
             </a>
         </p>
     </div>
