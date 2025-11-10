@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="32x32">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" sizes="180x180">
-    <link rel="icon" href="https://i.ibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://iibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" sizes="180x180">
+    <link rel="icon" href="https://iibb.co/TqKdtqPL/18143710-3-E23-4754-A7-BD-E56-F73-CC1-E8-E.jpg" type="image/jpg" sizes="192x192">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -815,9 +815,13 @@
             updatePresetButtons();
         }
 
-        // Tải dữ liệu từ Preset đã chọn vào các Input Field
+        /**
+         * Tải dữ liệu từ Preset đã chọn vào các Input Field và hỏi về Chuyên Cần.
+         * ĐÂY LÀ PHẦN ĐÃ CHỈNH SỬA THEO YÊU CẦU CỦA BẠN.
+         */
         function loadPresetData() {
             const selectElement = document.getElementById('preset_select');
+            const pcChuyenCanInput = document.getElementById('pc_chuyen_can_input');
             const presetName = selectElement.value;
 
             if (!presetName) {
@@ -829,7 +833,10 @@
             const presetData = storedPresets[presetName];
 
             if (presetData) {
-                // Đổ dữ liệu vào các Input chính (và đồng bộ với modal)
+                // Biến tạm để lưu giá trị Chuyên Cần từ preset (Nếu có)
+                let chuyenCanValueFromPreset = parseFloat(presetData['pc_chuyen_can_input']) || 0;
+                
+                // 1. Đổ dữ liệu từ Preset vào các Input chính (và đồng bộ với modal)
                 PRESET_INPUT_IDS.forEach(id => {
                     const value = String(presetData[id] || '0');
                     document.getElementById(id).value = value;
@@ -845,7 +852,26 @@
                     if (id === 'cd_90') document.getElementById('modal_cd_90').value = value;
                 });
 
-                // Chạy lại tính toán
+                // 2. LOGIC XỬ LÝ CHUYÊN CẦN
+                
+                // Sử dụng window.confirm để tạo hộp thoại "Có/Không"
+                const confirmResult = confirm(`Preset "${presetName}" đã được tải. Tháng này bạn có được thưởng CHUYÊN CẦN không?`);
+
+                if (confirmResult) {
+                    // Người dùng chọn "Có"
+                    // Điền 300,000 vào ô Chuyên Cần
+                    pcChuyenCanInput.value = 300000;
+                    alert("Đã áp dụng Phụ Cấp Chuyên Cần: 300,000 VNĐ.");
+                } else {
+                    // Người dùng chọn "Không"
+                    // Xóa dữ liệu Chuyên Cần hiện tại (đặt về 0)
+                    if (chuyenCanValueFromPreset > 0) { 
+                         pcChuyenCanInput.value = 0;
+                         alert("Đã xóa Phụ Cấp Chuyên Cần (0 VNĐ).");
+                    }
+                }
+                
+                // 3. Chạy lại tính toán
                 calculateSalary();
                 alert(`Preset "${presetName}" đã được tải thành công!`);
             }
