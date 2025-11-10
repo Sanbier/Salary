@@ -114,9 +114,120 @@
         .animate-update-bubble {
             animation: bubbleUpdate 0.5s ease-out;
         }
+
+        /* --- STYLE CHO MODAL MỚI --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Lớp phủ làm mờ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200; /* Cao hơn FAB */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
+    
+    <div id="timesheet-modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 class="text-2xl font-bold text-blue-700 mb-4 border-b-2 pb-2 flex justify-between items-center">
+                Nhập Số Liệu Công Chi Tiết 📝
+                <button onclick="closeModal()" class="text-gray-500 hover:text-red-600 text-3xl leading-none">&times;</button>
+            </h3>
+            
+            <div class="space-y-4">
+                <div class="input-group">
+                    <label for="modal_ngay_di_lam" class="text-sm font-medium text-gray-700">1. Số Ngày Đi Làm</label>
+                    <input type="number" id="modal_ngay_di_lam" value="0" min="0" 
+                           onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                           class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-150 input-bounce-effect">
+                </div>
+                
+                <h4 class="text-lg font-bold text-purple-700 mt-6 mb-2">Giờ Tăng Ca (Theo Bảng Công)</h4>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="input-group">
+                        <label for="modal_tc_thuong" class="text-sm">TC Thường (1.5)</label>
+                        <input type="number" id="modal_tc_thuong" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
+                    </div>
+                    <div class="input-group">
+                        <label for="modal_tc_nghi" class="text-sm">TC Ngày Nghỉ (2.0)</label>
+                        <input type="number" id="modal_tc_nghi" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
+                    </div>
+                    <div class="input-group">
+                        <label for="modal_tc_le" class="text-sm">TC Ngày Lễ (3.0)</label>
+                        <input type="number" id="modal_tc_le" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
+                    </div>
+                </div>
+
+                <h4 class="text-lg font-bold text-red-700 mt-6 mb-2">Giờ Ca Đêm (Theo Phụ Cấp)</h4>
+                 <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group">
+                        <label for="modal_cd_30" class="text-sm">Ca Đêm 30%</label>
+                        <input type="number" id="modal_cd_30" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-red-300 rounded-md input-bounce-effect">
+                    </div>
+                    <div class="input-group">
+                        <label for="modal_cd_50" class="text-sm">Ca Đêm 50%</label>
+                        <input type="number" id="modal_cd_50" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-red-300 rounded-md input-bounce-effect">
+                    </div>
+                    <div class="input-group">
+                        <label for="modal_cd_70" class="text-sm">Ca Đêm 70%</label>
+                        <input type="number" id="modal_cd_70" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-red-300 rounded-md input-bounce-effect">
+                    </div>
+                    <div class="input-group">
+                        <label for="modal_cd_90" class="text-sm">Ca Đêm 90%</label>
+                        <input type="number" id="modal_cd_90" value="0" min="0" 
+                               onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
+                               class="w-full p-2 border border-red-300 rounded-md input-bounce-effect">
+                    </div>
+                 </div>
+            </div>
+            
+            <button onclick="applyModalData()" 
+                    class="mt-6 w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-3 px-4 rounded-lg transition duration-150 shadow-md flex items-center justify-center">
+                ✅ Áp Dụng Số Liệu Công
+            </button>
+            <p class="text-xs text-center text-gray-500 mt-2">Lưu ý: Các số liệu này sẽ được điền vào phần 'Tăng Ca và Ca đêm' ở dưới.</p>
+        </div>
+    </div>
     
     <div id="floating-result-bubble" 
          class="fixed bottom-6 right-6 z-50 p-4 rounded-xl shadow-2xl transition duration-300 transform scale-100 hover:scale-[1.05] cursor-pointer">
@@ -177,18 +288,14 @@
         </div>
         <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8 transition duration-300 hover:shadow-xl">
             
-             <div class="mb-4 bg-gray-100 p-3 rounded-lg border border-gray-300">
-                <label for="fast_paste_data" class="text-sm font-bold text-gray-800 block mb-1">
-                    Dán Số Liệu Bảng Công Nhanh (Dùng dấu phẩy hoặc khoảng trắng)
-                </label>
-                <input type="text" id="fast_paste_data" 
-                       placeholder="VD: 26, 24, 40, 0, 88, 0, 16, 0"
-                       class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
-                <p class="text-xs text-red-600 mt-1 italic">Thứ tự: Số Ngày, TC 1.5, TC 2.0, TC Lễ, 30%, 50%, 70%, 90%</p>
-                <button id="fast_import_btn" 
-                        onclick="fastImportTimesheetData()"
-                        class="mt-3 w-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md flex items-center justify-center">
-                    🚀 DÁN & ĐIỀN TỰ ĐỘNG
+             <div class="mb-4 bg-red-100 p-4 rounded-lg border-2 border-red-400 border-dashed">
+                <p class="text-sm font-bold text-gray-800 block mb-3">
+                    Phương án nhập liệu công:
+                </p>
+                 <button id="show_timesheet_modal_btn" 
+                        onclick="showModal()"
+                        class="mt-1 w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md flex items-center justify-center">
+                    🔢 Nhập Số Liệu Công Chi Tiết (Bảng hỏi)
                 </button>
             </div>
             <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
@@ -197,105 +304,94 @@
                     <label for="luong_co_ban_input" class="text-blue-700 font-bold">Lương Cơ Bản</label>
                     <input type="number" id="luong_co_ban_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="luong_tinh_tang_ca_input" class="text-blue-700 font-bold">Lương Tính Tăng Ca</label>
                     <input type="number" id="luong_tinh_tang_ca_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="ngay_di_lam">Số Ngày Đi Làm</label>
                     <input type="number" id="ngay_di_lam" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_chuyen_can_input">Chuyên Cần</label>
                     <input type="number" id="pc_chuyen_can_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_trach_nhiem_input">Trách Nhiệm</label>
                     <input type="number" id="pc_trach_nhiem_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_tham_nien_input" class="text-blue-700 font-bold">Thâm Niên</label>
                     <input type="number" id="pc_tham_nien_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 <div class="input-group">
                     <label for="pc_tay_nghe_input" class="text-blue-700 font-bold">Tay Nghề</label>
                     <input type="number" id="pc_tay_nghe_input" value="0" min="0" 
                         autocomplete="off" 
-                        onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
+                        onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                         class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
                 </div>
                 
                 <div class="col-span-2 grid grid-cols-2 gap-4 mt-2 border-t pt-4 border-blue-200 p-4 rounded-lg bg-white shadow-inner transition duration-300 hover:shadow-md">
+                    <p class="col-span-2 text-center text-sm font-bold text-red-500">
+                        **Thông tin Tăng Ca và Ca Đêm được nhập qua Bảng Hỏi Chi Tiết (Nút ở trên).**
+                    </p>
                     <div class="flex flex-col space-y-4">
                         <div class="input-group">
                             <label for="cd_30">Ca Đêm 30%</label>
-                            <input type="number" id="cd_30" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="cd_30" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div class="input-group">
                             <label for="cd_50">Ca Đêm 50%</label>
-                            <input type="number" id="cd_50" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="cd_50" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div class="input-group">
                             <label for="cd_70">Ca Đêm 70%</label>
-                            <input type="number" id="cd_70" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="cd_70" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div class="input-group">
                             <label for="cd_90">Ca Đêm 90%</label>
-                            <input type="number" id="cd_90" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="cd_90" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                     </div>
 
                     <div class="flex flex-col space-y-4">
                         <div class="input-group">
                             <label for="tc_thuong">Tăng Ca Thường</label>
-                            <input type="number" id="tc_thuong" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="tc_thuong" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div class="input-group">
                             <label for="tc_nghi">Tăng Ca Ngày Nghỉ</label>
-                            <input type="number" id="tc_nghi" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="tc_nghi" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div class="input-group">
                             <label for="tc_le">Tăng Ca Ngày Lễ</label>
-                            <input type="number" id="tc_le" value="0" min="0" 
-                                autocomplete="off" 
-                                onfocus="if (this.value=='0') this.value='';" onblur="if (this.value=='') this.value='0';"
-                                class="w-full p-2 border border-blue-300 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 input-bounce-effect">
+                            <input type="number" id="tc_le" value="0" min="0" disabled
+                                class="w-full p-2 border border-gray-300 rounded-md bg-gray-100">
                         </div>
                     </div>
                 </div>
@@ -428,6 +524,24 @@
         const KH_TIEN_TU_THIEN = 8000;
 
         // ----------------------------------------------------
+        // HÀM XỬ LÝ NHẬP LIỆU (XÓA SỐ 0)
+        // ----------------------------------------------------
+        function clearZero(inputElement) {
+            if (inputElement.value === '0') {
+                inputElement.value = '';
+            }
+        }
+
+        function setZeroIfEmpty(inputElement) {
+            if (inputElement.value === '') {
+                inputElement.value = '0';
+            }
+            // Đảm bảo tính lương được gọi khi người dùng rời khỏi ô
+            calculateSalary();
+        }
+
+
+        // ----------------------------------------------------
         // HÀM TÍNH TOÁN VÀ ANIMATION
         // ----------------------------------------------------
 
@@ -452,59 +566,57 @@
              }
         }
         
-        // --- HÀM FAST IMPORT (DÁN NHANH) ---
-        function fastImportTimesheetData() {
-            
-            // 1. Lấy chuỗi dữ liệu từ ô nhập liệu nhanh
-            const rawData = document.getElementById('fast_paste_data').value.trim();
-            
-            if (!rawData) {
-                alert("Vui lòng dán chuỗi số liệu vào ô nhập liệu nhanh.");
-                return;
-            }
+        // --- HÀM QUẢN LÝ MODAL (BẢNG HỎI) ---
+        function showModal() {
+            // Lấy dữ liệu hiện tại từ input chính để đổ vào modal
+            document.getElementById('modal_ngay_di_lam').value = document.getElementById('ngay_di_lam').value;
+            document.getElementById('modal_tc_thuong').value = document.getElementById('tc_thuong').value;
+            document.getElementById('modal_tc_nghi').value = document.getElementById('tc_nghi').value;
+            document.getElementById('modal_tc_le').value = document.getElementById('tc_le').value;
+            document.getElementById('modal_cd_30').value = document.getElementById('cd_30').value;
+            document.getElementById('modal_cd_50').value = document.getElementById('cd_50').value;
+            document.getElementById('modal_cd_70').value = document.getElementById('cd_70').value;
+            document.getElementById('modal_cd_90').value = document.getElementById('cd_90').value;
 
-            // 2. Phân tách chuỗi thành mảng các giá trị
-            // Tách bằng dấu phẩy, khoảng trắng, hoặc ký tự xuống dòng
-            const dataArray = rawData.split(/[\s,]+/).map(item => parseFloat(item) || 0);
-
-            // THỨ TỰ CỦA DỮ LIỆU ĐƯỢC CHỜ ĐỢI
-            // 0: WD Total
-            // 1: Overtime 1.5
-            // 2: Overtime 2
-            // 3: Overtime HT (Lễ/Tết)
-            // 4: Night 30%
-            // 5: Night 50%
-            // 6: Night 70%
-            // 7: Night 90%
-            
-            // Kiểm tra số lượng giá trị (chỉ cần tối thiểu 8 giá trị)
-            if (dataArray.length < 8) {
-                alert("Lỗi: Vui lòng dán tối thiểu 8 giá trị theo đúng thứ tự (WD Total, TC 1.5, TC 2.0, TC HT, CD 30%, CD 50%, CD 70%, CD 90%).");
-                return;
-            }
-            
-            // 3. ÁNH XẠ DỮ LIỆU VÀO CÁC TRƯỜNG INPUT
-            
-            document.getElementById('ngay_di_lam').value = dataArray[0];  // WD Total
-            
-            document.getElementById('tc_thuong').value = dataArray[1];   // TC 1.5
-            document.getElementById('tc_nghi').value = dataArray[2];     // TC 2.0
-            document.getElementById('tc_le').value = dataArray[3];       // TC HT
-            
-            document.getElementById('cd_30').value = dataArray[4];       // CD 30%
-            document.getElementById('cd_50').value = dataArray[5];       // CD 50%
-            document.getElementById('cd_70').value = dataArray[6];       // CD 70%
-            document.getElementById('cd_90').value = dataArray[7];       // CD 90%
-
-            // Xóa nội dung ô dán nhanh sau khi nhập
-            document.getElementById('fast_paste_data').value = '';
-
-            // Hiển thị thông báo và tính toán
-            alert("Dữ liệu bảng công đã được điền thành công! Bây giờ bạn có thể nhập Lương Cơ Bản.");
-            calculateSalary();
-            document.getElementById('luong_co_ban_input').focus();
+            document.getElementById('timesheet-modal').classList.add('active');
         }
-        // --- KẾT THÚC HÀM FAST IMPORT ---
+
+        function closeModal(event) {
+            // Đóng modal khi bấm vào nút X hoặc lớp phủ (trừ nội dung modal)
+            if (event === undefined || event.target.id === 'timesheet-modal') {
+                document.getElementById('timesheet-modal').classList.remove('active');
+            }
+        }
+
+        function applyModalData() {
+            // 1. Lấy dữ liệu từ modal
+            const ngayDiLamModal = document.getElementById('modal_ngay_di_lam').value || 0;
+            const tcThuongModal = document.getElementById('modal_tc_thuong').value || 0;
+            const tcNghiModal = document.getElementById('modal_tc_nghi').value || 0;
+            const tcLeModal = document.getElementById('modal_tc_le').value || 0;
+            const cd30Modal = document.getElementById('modal_cd_30').value || 0;
+            const cd50Modal = document.getElementById('modal_cd_50').value || 0;
+            const cd70Modal = document.getElementById('modal_cd_70').value || 0;
+            const cd90Modal = document.getElementById('modal_cd_90').value || 0;
+
+            // 2. Đổ dữ liệu vào các input chính (ẩn)
+            document.getElementById('ngay_di_lam').value = ngayDiLamModal;
+            document.getElementById('tc_thuong').value = tcThuongModal;
+            document.getElementById('tc_nghi').value = tcNghiModal;
+            document.getElementById('tc_le').value = tcLeModal;
+            document.getElementById('cd_30').value = cd30Modal;
+            document.getElementById('cd_50').value = cd50Modal;
+            document.getElementById('cd_70').value = cd70Modal;
+            document.getElementById('cd_90').value = cd90Modal;
+
+            // 3. Đóng modal
+            closeModal();
+
+            // 4. Tính toán lại lương
+            calculateSalary();
+            alert("Số liệu công đã được cập nhật!");
+        }
+        // --- KẾT THÚC HÀM QUẢN LÝ MODAL ---
 
 
         let previousThucLanh = 0;
@@ -512,15 +624,12 @@
 
         function calculateSalary() {
             // 1. Số Liệu Đầu Vào (Input)
+            // Đã cập nhật onfocus/onblur nên không cần hàm if (this.value=='0') this.value=''; nữa
             const luong_co_ban_input = parseFloat(document.getElementById('luong_co_ban_input').value) || 0;
             const luong_tinh_tang_ca_input = parseFloat(document.getElementById('luong_tinh_tang_ca_input').value) || 0;
-            const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
-            const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
-            const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
-            const pc_tham_nien_input = parseFloat(document.getElementById('pc_tham_nien_input').value) || 0; 
-            const pc_tay_nghe_input = parseFloat(document.getElementById('pc_tay_nghe_input').value) || 0; 
             
-            // Tăng ca và Ca đêm
+            // Lấy số liệu công từ input chính (đã bị ẩn/vô hiệu hóa nhưng vẫn giữ giá trị)
+            const ngay_di_lam = parseFloat(document.getElementById('ngay_di_lam').value) || 0;
             const tc_thuong = parseFloat(document.getElementById('tc_thuong').value) || 0;
             const tc_nghi = parseFloat(document.getElementById('tc_nghi').value) || 0;
             const tc_le = parseFloat(document.getElementById('tc_le').value) || 0;
@@ -528,6 +637,12 @@
             const cd_50 = parseFloat(document.getElementById('cd_50').value) || 0;
             const cd_70 = parseFloat(document.getElementById('cd_70').value) || 0;
             const cd_90 = parseFloat(document.getElementById('cd_90').value) || 0;
+
+            // Phụ cấp khác
+            const pc_chuyen_can_input = parseFloat(document.getElementById('pc_chuyen_can_input').value) || 0;
+            const pc_trach_nhiem_input = parseFloat(document.getElementById('pc_trach_nhiem_input').value) || 0; 
+            const pc_tham_nien_input = parseFloat(document.getElementById('pc_tham_nien_input').value) || 0; 
+            const pc_tay_nghe_input = parseFloat(document.getElementById('pc_tay_nghe_input').value) || 0; 
 
             const LuongCoBan = luong_co_ban_input;
             const LuongTinhTangCa = luong_tinh_tang_ca_input;
@@ -714,9 +829,20 @@
             const presetData = storedPresets[presetName];
 
             if (presetData) {
-                // Đổ dữ liệu vào các Input
+                // Đổ dữ liệu vào các Input chính (và đồng bộ với modal)
                 PRESET_INPUT_IDS.forEach(id => {
-                    document.getElementById(id).value = String(presetData[id] || '0');
+                    const value = String(presetData[id] || '0');
+                    document.getElementById(id).value = value;
+                    
+                    // Đồng bộ với input trong modal nếu có
+                    if (id === 'ngay_di_lam') document.getElementById('modal_ngay_di_lam').value = value;
+                    if (id === 'tc_thuong') document.getElementById('modal_tc_thuong').value = value;
+                    if (id === 'tc_nghi') document.getElementById('modal_tc_nghi').value = value;
+                    if (id === 'tc_le') document.getElementById('modal_tc_le').value = value;
+                    if (id === 'cd_30') document.getElementById('modal_cd_30').value = value;
+                    if (id === 'cd_50') document.getElementById('modal_cd_50').value = value;
+                    if (id === 'cd_70') document.getElementById('modal_cd_70').value = value;
+                    if (id === 'cd_90') document.getElementById('modal_cd_90').value = value;
                 });
 
                 // Chạy lại tính toán
@@ -822,10 +948,14 @@
         // KHỞI TẠO VÀ SỰ KIỆN
         // ----------------------------------------------------
         window.onload = function() {
-            // Lắng nghe sự kiện thay đổi trên tất cả các trường input
-            const inputs = document.querySelectorAll('#input-section input[type="number"]');
+            // Lắng nghe sự kiện thay đổi trên các trường input chính (Trừ các ô disabled)
+            const inputs = document.querySelectorAll('#input-section input[type="number"]:not([disabled])');
             inputs.forEach(input => {
-                input.addEventListener('input', calculateSalary);
+                // Sử dụng sự kiện 'input' để tính toán ngay khi gõ
+                input.addEventListener('input', calculateSalary); 
+                // Thêm các hàm xóa 0/đặt 0 khi focus/blur
+                input.addEventListener('focus', function() { clearZero(this); });
+                input.addEventListener('blur', function() { setZeroIfEmpty(this); });
             });
             
             // Cài đặt chế độ thu nhỏ
@@ -846,5 +976,4 @@
 
     </script>
 </body>
-
 </html>
