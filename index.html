@@ -158,13 +158,13 @@
     <div id="timesheet-modal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 class="text-2xl font-bold text-blue-700 mb-4 border-b-2 pb-2 flex justify-between items-center">
-                Nhập Số Liệu Công Chi Tiết 📝
+                Nhập Số Liệu Công Chi Tiết
                 <button onclick="closeModal()" class="text-gray-500 hover:text-red-600 text-3xl leading-none">&times;</button>
             </h3>
             
             <div class="space-y-4">
                 <div class="input-group">
-                    <label for="modal_ngay_di_lam" class="text-sm font-medium text-gray-700">1. Số Ngày Đi Làm</label>
+                    <label for="modal_ngay_di_lam" class="text-sm font-medium text-gray-700">Số Ngày Đi Làm</label>
                     <input type="number" id="modal_ngay_di_lam" value="0" min="0" 
                            onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-150 input-bounce-effect">
@@ -173,19 +173,19 @@
                 <h4 class="text-lg font-bold text-purple-700 mt-6 mb-2">Giờ Tăng Ca (Theo Bảng Công)</h4>
                 <div class="grid grid-cols-3 gap-4">
                     <div class="input-group">
-                        <label for="modal_tc_thuong" class="text-sm">TC Thường (1.5)</label>
+                        <label for="modal_tc_thuong" class="text-sm">TC Thường</label>
                         <input type="number" id="modal_tc_thuong" value="0" min="0" 
                                onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                                class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
                     </div>
                     <div class="input-group">
-                        <label for="modal_tc_nghi" class="text-sm">TC Ngày Nghỉ (2.0)</label>
+                        <label for="modal_tc_nghi" class="text-sm">TC Ngày Nghỉ</label>
                         <input type="number" id="modal_tc_nghi" value="0" min="0" 
                                onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                                class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
                     </div>
                     <div class="input-group">
-                        <label for="modal_tc_le" class="text-sm">TC Ngày Lễ (3.0)</label>
+                        <label for="modal_tc_le" class="text-sm">TC Ngày Lễ</label>
                         <input type="number" id="modal_tc_le" value="0" min="0" 
                                onfocus="clearZero(this)" onblur="setZeroIfEmpty(this)"
                                class="w-full p-2 border border-purple-300 rounded-md input-bounce-effect">
@@ -223,9 +223,9 @@
             
             <button onclick="applyModalData()" 
                     class="mt-6 w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-3 px-4 rounded-lg transition duration-150 shadow-md flex items-center justify-center">
-                ✅ Áp Dụng Số Liệu Công
+                ✅ Áp Dụng Dữ Liệu
             </button>
-            <p class="text-xs text-center text-gray-500 mt-2">Lưu ý: Các số liệu này sẽ được điền vào phần 'Tăng Ca và Ca đêm' ở dưới.</p>
+            <p class="text-xs text-center text-gray-500 mt-2">Số liệu này sẽ được điền vào 'Tăng Ca và Ca đêm' ở dưới.</p>
         </div>
     </div>
     
@@ -272,7 +272,7 @@
                 
                 <div>
                     <label for="preset_name_input" class="text-sm font-medium text-green-700">Tên Preset Mới / Cập nhật</label>
-                    <input type="text" id="preset_name_input" placeholder="Ví dụ: Nghĩa Đẹp Trai" 
+                    <input type="text" id="preset_name_input" placeholder="Ví dụ: Nghĩa" 
                            class="w-full p-2 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-150 input-bounce-effect">
                 </div>
                 
@@ -290,12 +290,12 @@
             
              <div class="mb-4 bg-red-100 p-4 rounded-lg border-2 border-red-400 border-dashed">
                 <p class="text-sm font-bold text-gray-800 block mb-3">
-                    Phương án nhập liệu công:
+                    Phương pháp nhập dữ liệu:
                 </p>
                  <button id="show_timesheet_modal_btn" 
                         onclick="showModal()"
                         class="mt-1 w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md flex items-center justify-center">
-                    🔢 Nhập Số Liệu Công Chi Tiết (Bảng hỏi)
+                    🔢 Nhập Dữ Liệu Công Tại Đây
                 </button>
             </div>
             <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
