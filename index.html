@@ -138,6 +138,21 @@
         </h1>
 
         <div id="input-section" class="bg-blue-50 p-5 rounded-xl shadow-lg mb-8 transition duration-300 hover:shadow-xl">
+            
+             <div class="mb-4 bg-gray-100 p-3 rounded-lg border border-gray-300">
+                <label for="fast_paste_data" class="text-sm font-bold text-gray-800 block mb-1">
+                    Dán Số Liệu Bảng Công Nhanh (Dùng dấu phẩy hoặc khoảng trắng)
+                </label>
+                <input type="text" id="fast_paste_data" 
+                       placeholder="VD: 24.003, 3.0, 34.5, 0.0, 56.0, 0, 16.0, 0"
+                       class="w-full p-2 border border-blue-400 rounded-md focus:ring-2 focus:border-blue-500 transition duration-150 bg-white input-bounce-effect">
+                <p class="text-xs text-red-600 mt-1 italic">Thứ tự DÁN: WD Total, TC 1.5, TC 2.0, TC HT, CD 30%, CD 50%, CD 70%, CD 90%</p>
+                <button id="fast_import_btn" 
+                        onclick="fastImportTimesheetData()"
+                        class="mt-3 w-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold py-2 px-4 rounded-md transition duration-150 shadow-md flex items-center justify-center">
+                    🚀 DÁN & ĐIỀN TỰ ĐỘNG
+                </button>
+            </div>
             <h2 class="text-xl font-bold section-title text-blue-800 mb-4">1. Số Liệu Đầu Vào & Mức Lương</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div class="input-group">
@@ -438,6 +453,60 @@
                  bubble.classList.add('animate-update-bubble');
              }
         }
+        
+        // --- HÀM FAST IMPORT (DÁN NHANH) ---
+        function fastImportTimesheetData() {
+            
+            // 1. Lấy chuỗi dữ liệu từ ô nhập liệu nhanh
+            const rawData = document.getElementById('fast_paste_data').value.trim();
+            
+            if (!rawData) {
+                alert("Vui lòng dán chuỗi số liệu vào ô nhập liệu nhanh.");
+                return;
+            }
+
+            // 2. Phân tách chuỗi thành mảng các giá trị
+            // Tách bằng dấu phẩy, khoảng trắng, hoặc ký tự xuống dòng
+            const dataArray = rawData.split(/[\s,]+/).map(item => parseFloat(item) || 0);
+
+            // THỨ TỰ CỦA DỮ LIỆU ĐƯỢC CHỜ ĐỢI
+            // 0: WD Total
+            // 1: Overtime 1.5
+            // 2: Overtime 2
+            // 3: Overtime HT (Lễ/Tết)
+            // 4: Night 30%
+            // 5: Night 50%
+            // 6: Night 70%
+            // 7: Night 90%
+            
+            // Kiểm tra số lượng giá trị (chỉ cần tối thiểu 8 giá trị)
+            if (dataArray.length < 8) {
+                alert("Lỗi: Vui lòng dán tối thiểu 8 giá trị theo đúng thứ tự (WD Total, TC 1.5, TC 2.0, TC HT, CD 30%, CD 50%, CD 70%, CD 90%).");
+                return;
+            }
+            
+            // 3. ÁNH XẠ DỮ LIỆU VÀO CÁC TRƯỜNG INPUT
+            
+            document.getElementById('ngay_di_lam').value = dataArray[0];  // WD Total
+            
+            document.getElementById('tc_thuong').value = dataArray[1];   // TC 1.5
+            document.getElementById('tc_nghi').value = dataArray[2];     // TC 2.0
+            document.getElementById('tc_le').value = dataArray[3];       // TC HT
+            
+            document.getElementById('cd_30').value = dataArray[4];       // CD 30%
+            document.getElementById('cd_50').value = dataArray[5];       // CD 50%
+            document.getElementById('cd_70').value = dataArray[6];       // CD 70%
+            document.getElementById('cd_90').value = dataArray[7];       // CD 90%
+
+            // Xóa nội dung ô dán nhanh sau khi nhập
+            document.getElementById('fast_paste_data').value = '';
+
+            // Hiển thị thông báo và tính toán
+            alert("Dữ liệu bảng công đã được điền thành công! Bây giờ bạn có thể nhập Lương Cơ Bản.");
+            calculateSalary();
+            document.getElementById('luong_co_ban_input').focus();
+        }
+        // --- KẾT THÚC HÀM FAST IMPORT ---
 
 
         let previousThucLanh = 0;
