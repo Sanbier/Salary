@@ -14,11 +14,12 @@ body {
   animation: bgMove 12s ease infinite;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; 
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  padding: 20px 5px; 
+  /* THAY ĐỔI: Giảm padding-top xuống còn 10px để sát mép trên hơn */
+  padding: 10px 5px 20px 5px; 
   text-align: center;
   overflow-x: hidden;
   font-size: 14px; 
@@ -34,6 +35,8 @@ h1 {
   font-weight: 800;
   color: #006cff;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  /* THAY ĐỔI: Đưa tiêu đề lên sát mép trên */
+  margin-top: 10px; 
   margin-bottom: 20px;
   letter-spacing: 0.5px;
   animation: fadeDown 1s ease-out;
@@ -174,12 +177,10 @@ table {
 th {
   background: linear-gradient(180deg, #007bff, #005ecb);
   color: #fff;
-  /* THAY ĐỔI: Giảm padding table header */
   padding: 5px; 
   font-size: 0.85rem; 
 }
 td {
-  /* THAY ĐỔI: Giảm padding table data */
   padding: 5px; 
   font-size: 0.85rem; 
   border-bottom: 1px solid rgba(0,123,255,0.1);
@@ -200,12 +201,13 @@ tr:hover td {
 
 /* RESPONSIVE */
 @media (max-width: 480px) {
-  body {font-size: 13px; padding: 15px 5px;}
-  h1 {font-size: 1.6rem;}
+  /* Điều chỉnh thêm cho màn hình nhỏ */
+  body {font-size: 13px; padding: 5px 5px 15px 5px;}
+  h1 {font-size: 1.6rem; margin-top: 5px;}
   .container {max-width: 95%; padding: 15px;}
   input {width: 85%; max-width: 150px;}
   button {width: 100%;}
-  th, td {font-size: 0.8rem; padding: 4px;} /* Giảm padding cho màn hình nhỏ */
+  th, td {font-size: 0.8rem; padding: 4px;}
 }
 </style>
 </head>
