@@ -18,9 +18,10 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  padding: 40px 10px;
+  padding: 20px 5px; 
   text-align: center;
   overflow-x: hidden;
+  font-size: 14px; 
 }
 @keyframes bgMove {
   0% {background-position: 0% 50%;}
@@ -29,12 +30,12 @@ body {
 }
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 1.8rem; 
   font-weight: 800;
   color: #006cff;
-  text-shadow: 0 3px 6px rgba(0,0,0,0.25);
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
   animation: fadeDown 1s ease-out;
 }
 @keyframes fadeDown {
@@ -46,18 +47,18 @@ h1 {
 .container {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(12px);
-  border-radius: 22px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1), inset 0 0 20px rgba(0,140,255,0.08);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1), inset 0 0 15px rgba(0,140,255,0.08);
   width: 100%;
-  max-width: 350px;
-  padding: 35px;
-  margin-bottom: 30px;
-  border: 2px solid rgba(0,123,255,0.25);
+  max-width: 250px; 
+  padding: 20px; 
+  margin-bottom: 20px;
+  border: 1px solid rgba(0,123,255,0.2);
   transition: all 0.4s ease;
 }
 .container:hover {
-  transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 18px 35px rgba(0,123,255,0.3);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(0,123,255,0.25);
 }
 
 /* INPUT ĐÃ SỬA ĐỔI */
@@ -65,20 +66,19 @@ label {
   display: block;
   font-weight: 600;
   color: #004b9a;
-  margin-bottom: 6px;
-  font-size: 1rem;
+  margin-bottom: 4px;
+  font-size: 0.9rem; 
 }
 
 input {
-  /* Giảm width và max-width để làm ô input ngắn lại */
-  width: 60%; /* Đảm bảo ô input ngắn hơn */
-  max-width: 250px; /* Giới hạn tối đa nhỏ hơn */
-  padding: 13px;
-  margin: 10px auto 20px auto; /* Căn giữa */
-  border-radius: 10px;
-  border: 2px solid #d6e4ff;
+  width: 70%; 
+  max-width: 180px; 
+  padding: 8px; 
+  margin: 8px auto 15px auto; 
+  border-radius: 8px;
+  border: 1px solid #d6e4ff;
   background: linear-gradient(145deg, #fdfdff, #eef5ff);
-  font-size: 15px;
+  font-size: 14px; 
   text-align: center;
   transition: all 0.3s ease;
   display: block;
@@ -86,7 +86,7 @@ input {
 input:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 12px rgba(0,123,255,0.4);
+  box-shadow: 0 0 8px rgba(0,123,255,0.3);
   transform: scale(1.03);
 }
 
@@ -95,23 +95,23 @@ button {
   background: linear-gradient(90deg, #007bff, #00aaff, #6a5af9);
   background-size: 200% 100%;
   color: #fff;
-  font-weight: 700;
-  font-size: 17px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  padding: 14px;
+  font-weight: 600;
+  font-size: 14px; 
+  border-radius: 10px; 
+  width: 95%;
+  max-width: 250px;
+  padding: 10px; 
   cursor: pointer;
   border: none;
   transition: all 0.4s ease;
-  box-shadow: 0 6px 15px rgba(0,123,255,0.35);
+  box-shadow: 0 4px 10px rgba(0,123,255,0.3);
   position: relative;
   overflow: hidden;
 }
 button:hover {
   background-position: 100% 0;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(0,123,255,0.5);
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0,123,255,0.4);
 }
 button:active {
   transform: scale(0.97);
@@ -119,8 +119,8 @@ button:active {
 button.loading::before {
   content: '';
   display: inline-block;
-  width: 16px; height: 16px;
-  margin-right: 10px;
+  width: 14px; height: 14px;
+  margin-right: 8px;
   border: 3px solid rgba(255,255,255,0.3);
   border-top-color: #fff;
   border-radius: 50%;
@@ -141,18 +141,18 @@ button.loading::before {
 h2 {
   color: #006ae0;
   text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+  font-size: 1.1rem; 
+  margin-bottom: 10px;
   position: relative;
 }
 h2::after {
   content: "";
   display: block;
-  width: 60px;
-  height: 3px;
-  margin: 8px auto;
+  width: 50px;
+  height: 2px;
+  margin: 6px auto;
   background: linear-gradient(90deg, #007bff, #6a5af9);
-  border-radius: 2px;
+  border-radius: 1px;
   animation: glow 2s infinite alternate;
 }
 @keyframes glow {
@@ -164,22 +164,24 @@ h2::after {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  border-radius: 14px;
+  margin-top: 15px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,123,255,0.15);
-  border: 1px solid rgba(0,123,255,0.25);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.1);
+  border: 1px solid rgba(0,123,255,0.2);
   animation: fadeIn 0.8s ease forwards;
 }
 th {
   background: linear-gradient(180deg, #007bff, #005ecb);
   color: #fff;
-  padding: 12px;
-  font-size: 1rem;
+  /* THAY ĐỔI: Giảm padding table header */
+  padding: 5px; 
+  font-size: 0.85rem; 
 }
 td {
-  padding: 12px;
-  font-size: 0.95rem;
+  /* THAY ĐỔI: Giảm padding table data */
+  padding: 5px; 
+  font-size: 0.85rem; 
   border-bottom: 1px solid rgba(0,123,255,0.1);
   background: #fafdff;
   text-align: center;
@@ -187,23 +189,23 @@ td {
 tr:nth-child(even) td { background: #eef4ff; }
 tr:hover td {
   background: #e0ecff;
-  box-shadow: inset 0 0 8px rgba(0,123,255,0.25);
-  transform: scale(1.02);
+  box-shadow: inset 0 0 6px rgba(0,123,255,0.2);
+  transform: scale(1.01);
 }
 .animated-row {opacity: 0; animation: slideIn 0.4s ease-out forwards;}
 @keyframes slideIn {
-  from {opacity: 0; transform: translateY(10px);}
+  from {opacity: 0; transform: translateY(5px);}
   to {opacity: 1; transform: translateY(0);}
 }
 
 /* RESPONSIVE */
 @media (max-width: 480px) {
-  h1 {font-size: 2rem;}
-  .container {padding: 25px;}
-  /* Đảm bảo ô input ngắn hơn trên thiết bị nhỏ */
-  input {width: 80%; max-width: 200px;}
+  body {font-size: 13px; padding: 15px 5px;}
+  h1 {font-size: 1.6rem;}
+  .container {max-width: 95%; padding: 15px;}
+  input {width: 85%; max-width: 150px;}
   button {width: 100%;}
-  th, td {font-size: 0.9rem; padding: 10px;}
+  th, td {font-size: 0.8rem; padding: 4px;} /* Giảm padding cho màn hình nhỏ */
 }
 </style>
 </head>
